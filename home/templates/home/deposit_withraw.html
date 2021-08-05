@@ -151,10 +151,20 @@
 									<p class="date">
 									</p>
 								</div>
+
+								{% comment %} <form method="post" action="{% url 'account:checkout' %}">
+								{% csrf_token %}
+								<h5>Amount(USD) :{{ form.amount }}</h5>
+								<button  type="submit">Proceed to Paypal</button>
+								</form> {% endcomment %}
+
+
+
+
 								<div class="right">
-                {% comment %} <a href={% url 'account:mpesa_deposit' %} > {% endcomment %}
+								<a href={% url 'account:process_payment' %} >
 									<p class="id">Deposit</p>
-                {% comment %} </a>   {% endcomment %}
+								</a> 
 
                   <p class="id">Withraw</p>
 								</div>

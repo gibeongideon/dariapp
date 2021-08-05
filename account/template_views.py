@@ -161,6 +161,7 @@ def cash_trans(request):
 # paypal
 
 def process_payment(request):
+    print(request.body)
     latest_id = max((obj.id for obj in Checkout.objects.filter(
         user=request.user)))
 
@@ -169,7 +170,7 @@ def process_payment(request):
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': f'{amount}',
-        'item_name': f'Topup-{latest_id}-for-{request.user.id}',
+        'item_name': f'Dari-Topup-{latest_id}-for-{request.user.id}',
         'invoice': f'{latest_id}',
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
@@ -202,7 +203,7 @@ def checkout(request):
             return redirect('/account/process-payment')
     else:
         form = CheckoutForm()
-        return render(request, 'account/paypal/checkout.html', locals())
+        return render(request, 'home/deposit_withrawal.html', locals())
 
 
 @csrf_exempt

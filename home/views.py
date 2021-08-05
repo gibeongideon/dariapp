@@ -4,7 +4,8 @@ from django.template import loader
 from django.http import HttpResponse,HttpResponseNotFound
 from django import template
 from random import randint
-
+from account.models import Checkout
+from account.forms import CheckoutForm
 
 # @login_required(login_url="/user/login")
 def homepage(request):
@@ -37,8 +38,18 @@ def pages(request):
 
 @login_required(login_url="/user/login")
 def deposit_withraw(request):
-
-    return render(request, "home/deposit_withraw.html")
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.email = request.user.email
+            form.save()
+            # cleaned_data = form.cleaned_data
+            return redirect('/account/process-payment')
+    else:
+        form = CheckoutForm()
+        return render(request, 'home/deposit_withraw.html', locals())
 
 
 # @login_required(login_url="/user/login")

@@ -1,5 +1,5 @@
 
-{% extends "dashboard/layouts/base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
 <div class="col-md-12">
@@ -28,31 +28,6 @@
   
 </div>
 
-{% comment %} 
-
-<div class="col-md-12">
-  <div class="card ">
-    <div class="card-header">
-      <h4 class="card-title"><img class="avatar" src="/static/paypalogo.png" alt="Paypal logo">Paypal</h4>
-
-    </div>
-    <div class="card-body">
-
-<form  method="post">
-{% csrf_token %}
-
-<div class="col-md-4 pl-md-1">
-  <div class="form-group">
-    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
-  </div>
-</div>
-
-<button class="btn btn-secondary type="submit">Submit</button>
-</form>
-    </div>
-  </div>
-  
-</div> {% endcomment %}
 
 
 
