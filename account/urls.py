@@ -44,8 +44,10 @@ urlpatterns = [
 
     # path("paypal_pro/", views.paypal_pro, name="paypal_pro"),
     # path("paypal/", include('paypal.standard.ipn.urls')),
-    
-    path("deposit/", pviews.accept_payment_view),
-    # path("payment-success/", pviews.payment_success),
+
+    path("deposit/", views.deposit, name='deposit'), 
+    path("withraw/", views.withraw, name='withraw'),
+    path("deposit/paypal", pviews.accept_payment_view),
+    path("payment-success/", pviews.payment_success),
     # path("withdraw/", pviews.paypal_payout_view)
 ]

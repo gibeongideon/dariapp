@@ -3,10 +3,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 # from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
 import os
-# from .models import Transaction, UserFund
+# from .models import Transaction, Account
 import json
 import random
 import string
+
 # from paypal_client import PayPalClient
 # from paypalpayoutssdk.payouts import PayoutsPostRequest
 # from paypalhttp.serializers.json_serializer import Json
@@ -81,9 +82,13 @@ import string
 
 #         return response
 
+from account.models import Account
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url="/user/login")
 def accept_payment_view(request):
-    return render(request, "paypal/accept-payment.html")
+    client_id='ARV38-NsL_7uctGU6Ap8FnQoPkxtbs3g3yx5i11dY46VHTk5PSKrG8kGvW0lKIhTv-Fub2Gb2VZX-gl-'
+    return render(request, "account/payp/accept-payment.html",{"client_id":client_id})
 
 @csrf_exempt # security issue
 def payment_success(request):
@@ -92,12 +97,13 @@ def payment_success(request):
         post_data = json.loads(request.body.decode("utf-8"))
 
         try:
-            uf = UserFund.objects.get(user=request.user)
-        except UserFund.DoesNotExist:
-            UserFund(user=request.user, fund=0).save()
-            uf = UserFund.objects.get(user=request.user)
+            uf = Account.objects.get(user=request.user)
+        except Account.DoesNotExist:
+            Account(user=request.user, balance=0).save()
+            uf = Account.objects.get(user=request.user)
 
-        uf.fund += float(post_data["amount"])
+        uf.balance =float(uf.balance)+ float(post_data["amount"])
+        # uf.confirmed=True
         uf.save()
 
         print(post_data)
@@ -108,15 +114,15 @@ def payment_success(request):
 #     if request.method == "POST":
 #         create_response = CreatePayouts(str(float(request.POST['amount'])), request.user.username).create_payouts(True)
 #         if int(create_response.status_code) == 201:
-#             uf = UserFund.objects.get(user=request.user)
-#             uf.fund = uf.fund - float(request.POST['amount'])
+#             uf = Account.objects.get(user=request.user)
+#             uf.amount = uf.amount - float(request.POST['amount'])
 #             uf.save()
 #         return JsonResponse({"status code": create_response.status_code})
 #     else:
 #         try:
-#             uf = UserFund.objects.get(user=request.user)
-#         except UserFund.DoesNotExist:
-#             uf = UserFund(user=request.user, fund=0).save()
+#             uf = Account.objects.get(user=request.user)
+#         except Account.DoesNotExist:
+#             uf = Account(user=request.user, amount=0).save()
 #         return render(request, "paypal/payment.html", {
 #             "uf": uf
 #         })

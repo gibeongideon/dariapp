@@ -1,7 +1,171 @@
+{% extends 'layouts/base.html' %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% block title %} Wallet {% endblock %} 
 
-<div id="smart-button-container">
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block mainmenu %}
+<!--Main-Menu Area Start-->
+		<div class="mainmenu-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">                 
+						<nav class="navbar navbar-expand-lg navbar-light">
+							<a class="navbar-brand" href="/">
+								<img src="/static/assets/images/logo.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse fixed-height" id="main_menu">
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
+										<a class="nav-link" href="/">Home
+										<div class="mr-hover-effect"></div></a>
+									</li>
+
+									<li class="nav-item">
+									{% if user.is_authenticated %}
+										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
+												<div class="mr-hover-effect"></div></a>
+									{% endif %}
+									{% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Play
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}   
+																					
+									</li>									
+                  <li class="nav-item dropdown">
+										<a class="nav-link active dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>						
+										</ul>
+									</li>
+
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/bonus"> <i class="fa fa-angle-double-right"></i>Bonus</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions-details"> <i class="fa fa-angle-double-right"></i>Condition Details</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
+											<a class="nav-link" href="contact.html">Contact
+													<div class="mr-hover-effect"></div></a>
+									</li>
+
+								</ul>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Main-Menu Area Start-->
+		
+{% endblock mainmenu %}
+{% block content %}
+
+	<!-- Breadcrumb Area Start -->
+	{% comment %} <section class="breadcrumb-area bc-affiliate"> {% endcomment %}
+		{% comment %} <img class="bc-img" src="assets/images/breadcrumb/affiliate.png" alt=""> {% endcomment %}
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h4 class="title">"
+          
+          "	</h4>
+					<ul class="breadcrumb-list">
+
+						<li>
+							<span><i class="fas fa-chevron-right"></i> </span>
+						</li>
+				
+					</ul>
+				</div>
+			</div>
+		</div>
+	{% comment %} </section> {% endcomment %}
+
+	<!-- Recent Winners Area Start -->
+	<section class="recent-winners">
+		<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+						<div class="section-heading">
+							<h5 class="subtitle">
+								Deposits
+							</h5>
+							{% comment %} <h5 class="title">
+									Paypal & Credit CARD
+							</h5> {% endcomment %}
+							<p class="text">
+								Deposited amount reflect in account immediatelly.You can withraw your winnings instantly.Enjoy!
+							</p>
+						</div>
+
+
+            <div id="smart-button-container" align="center">
+            {% comment %} <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> {% endcomment %}
+                <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
+                <div style="text-align: center">
+                    <label for="amount">Deposit Amount </label>
+                        <input name="amountInput" type="number" id="amount" value="" ><span> USD</span>
+                </div>
+                <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a Amount</p>
+                
+                <div id="invoiceidDiv" style="text-align: center; display: none;">
+                    <label for="invoiceid"> </label>
+                     <input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" >
+                </div>
+                <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+                <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+				{% comment %} <div class="row">
+					<div class="col-lg-4" align="center">
+						<div class="single-winer" align="center">
+             {% endcomment %}
+
+
+                   
+			
+
+						{% comment %} </div>
+					</div>
+
+
+		</div> {% endcomment %}
+	</section> 
+	<!-- Recent Winners Area End -->
+
+
+
+{% comment %} <div id="smart-button-container">
     <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div>
       <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
     <div style="text-align: center"><label for="amount">Deposit Amount </label><input name="amountInput" type="number" id="amount" value="" ><span> USD</span></div>
@@ -9,8 +173,17 @@
     <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
       <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
     <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
-  </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=AZiZ9sfSHzd0C6UVtobX2sMRhQxnGI7jaZOapChsOzIpiJBGfwk1cvM5euJ1mo0I5k6PRn5XIXnH_5bp&currency=USD" data-sdk-integration-source="button-factory"></script>
+  </div> {% endcomment %}
+
+  {% endblock content %}
+
+
+  <!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% comment %} ARV38-NsL_7uctGU6Ap8FnQoPkxtbs3g3yx5i11dY46VHTk5PSKrG8kGvW0lKIhTv-Fub2Gb2VZX-gl- {% endcomment %}
+  <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
 
 function getCookie(name) {
@@ -110,7 +283,7 @@ function getCookie(name) {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
           console.log(details)
-          fetch("/paypal/payment-success/", {
+          fetch("/account/payment-success/", {
               method: "POST",
               credentials: 'include',
                 headers: {
@@ -134,3 +307,5 @@ function getCookie(name) {
   }
   initPayPalButton();
   </script>
+
+{% endblock javascripts %}

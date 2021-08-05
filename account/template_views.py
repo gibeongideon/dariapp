@@ -270,3 +270,9 @@ def payment_canceled(request):
 #               success_url="/",              # redirect location after success
 #               nvp_handler=nvp_handler)
 #     return ppp(request)
+
+def deposit(request):
+    return render(request, 'account/deposit.html')
+
+def withraw(request):
+    return render(request, 'account/withraw.html')

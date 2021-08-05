@@ -1,6 +1,6 @@
-{% extends 'dashboard/layouts/based.html' %}
+{% extends 'layouts/base.html' %}
 
-{% block title %} Wallet {% endblock %} 
+{% block title %} Deposit {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -12,59 +12,74 @@
 					<div class="col-lg-12">                 
 						<nav class="navbar navbar-expand-lg navbar-light">
 							<a class="navbar-brand" href="/">
-								<img src="/static/assets/images/logo.png" alt="">
+								<img src="/static/assets/images/loggo.png" alt="">
 							</a>
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
 								aria-expanded="false" aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
 							</button>
 							<div class="collapse navbar-collapse fixed-height" id="main_menu">
-								<ul class="navbar-nav ml-auto"> 
-								    <li class="nav-item">
-										<a class="nav-link" href="/">Home
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
+										<a class="nav-link " href="/">Home
 										<div class="mr-hover-effect"></div></a>
 									</li>
 
-									<li class="nav-item">
-										<a class="nav-link" href="/">About
-												<div class="mr-hover-effect"></div></a>
-									</li>
 									<li class="nav-item">
 									{% if user.is_authenticated %}
 										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
 												<div class="mr-hover-effect"></div></a>
 									{% endif %}
 									{% if not user.is_authenticated %}
-									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Play
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Spin
 									       <div class="mr-hover-effect"></div>
 									   </a>
 									{% endif %}   
 																					
-									</li>									
-									<li class="nav-item">
-										<a class="nav-link" href="{% url 'dashboard:affiliate' %}">Affiliate
-												<div class="mr-hover-effect"></div></a>
-									</li>
+									</li>	
+									 <li class="nav-item dropdown">
+									 {% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %} 
+									{% if  user.is_authenticated %}
+										<a class="nav-link active dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
+											<li><a class="dropdown-item" href=""> <i class="fa fa-angle-double-right"></i>Deposit</a></li>
+								
+										</ul>	
+									{% endif %} 
 
-									<li class="nav-item">
-											<a class="nav-link" href="/">Contact
+									</li>
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
+											<a class="nav-link" href="/contact">Contact
 													<div class="mr-hover-effect"></div></a>
 									</li>
 
-
-									<li class="nav-item">
-									{% if user.is_authenticated %}
-									   <a class="nav-link active" href="{% url 'dashboard:deposit_withraw' %}">Account
-									       <div class="mr-hover-effect"></div>
-									   </a>
-									{% endif %}
-
-
-									</li>
-
-
 								</ul>
-								{% comment %} <a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Join us to Win</a> {% endcomment %}
+
 							</div>
 						</nav>
 					</div>
@@ -74,10 +89,39 @@
 		<!--Main-Menu Area Start-->
 		
 {% endblock mainmenu %}
+
+
+
 {% block content %}
 
-
-
+	<!-- Breadcrumb Area Start -->
+	<section class="breadcrumb-area bc-affiliate">
+		<img class="bc-img" src="assets/images/breadcrumb/affiliate.png" alt="">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h4 class="title">
+						Withraw
+					</h4>
+					<ul class="breadcrumb-list">
+						<li>
+							<a href="index.html">
+									<i class="fas fa-home"></i>
+									Account
+							</a>
+						</li>
+						<li>
+							<span><i class="fas fa-chevron-right"></i> </span>
+						</li>
+						<li>
+							<a href="affiliate.html">Withraw</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Area End -->
 
 
 
@@ -88,13 +132,13 @@
 					<div class="col-lg-8 col-md-10">
 						<div class="section-heading">
 							<h5 class="subtitle">
-								Deposits & Withrawals
+								Choose your Prefered Withrawal means
 							</h5>
 							{% comment %} <h2 class="title">
 									Recent Winners
 							</h2> {% endcomment %}
 							<p class="text">
-								We update our site regularly; more and more deposit & withrawals means are added regulally.
+								We update our site regularly; more and more withrawal means are added regulally.
 							</p>
 						</div>
 					</div>
@@ -113,101 +157,45 @@
 											
 									</p>
 								</div>
-								<div class="right">
-                {% comment %} <a href={% url 'account:mpesa_deposit' %} > {% endcomment %}
-									<p class="id">Deposit</p>
-                {% comment %} </a>   {% endcomment %}
-
-                  <p class="id">Withraw</p>
-								</div>
+			
 							</div>
                                  
-
-
-
-
-
-
-							
-              <div class="bottom-area">
-								{% comment %} <div class="left">
-										
-								</div> {% endcomment %}
-								{% comment %} <div class="right">
-										<img src="/static/assets/images/icon2.png" alt="">
-								</div> {% endcomment %}
-							</div>
 						</div>
 					</div>
+					<div class="col-lg-4">
+						<div class="single-winer">
+            
 
+							<div class="top-area">
+								<div class="left">
+									<h4 class="name">
+											PAYPAL 
+									</h4>
+									<p class="date">
+											
+									</p>
+								</div>
+			
+							</div>
+                                 
+						</div>
+					</div>
 
 					<div class="col-lg-4">
 						<div class="single-winer">
 							<div class="top-area">
 								<div class="left">
 									<h4 class="name">
-											PAYPAL
+											CREDIT & DEBIT CARD
 									</h4>
 									<p class="date">
 									</p>
 								</div>
-								<div class="right">
-                {% comment %} <a href={% url 'account:mpesa_deposit' %} > {% endcomment %}
-									<p class="id">Deposit</p>
-                {% comment %} </a>   {% endcomment %}
 
-                  <p class="id">Withraw</p>
-								</div>
-							</div>
-
-							<div class="bottom-area">
-								{% comment %} <div class="left">
-										100
-								</div>
-                <div class="left">
-										TOP UP
-								</div> {% endcomment %}
-								{% comment %} <div class="right">
-										<img src="/static/assets/images/icon2.png" alt="">
-								</div> {% endcomment %}
-							</div>
 
 						</div>
 					</div>
 
-
-					{% comment %} <div class="col-lg-4">
-						<div class="single-winer">
-							<div class="top-area">
-								<div class="left">
-									<h4 class="name">
-											Neal Morris
-									</h4>
-									<p class="date">
-											01.08.2019
-									</p>
-								</div>
-								<div class="right">
-									<p class="id">#5747e75482</p>
-								</div>
-							</div>
-							<div class="bottom-area">
-								<div class="left">
-										0.099 ETH
-								</div>
-								<div class="right">
-										<img src="assets/images/icon2.png" alt="">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> {% endcomment %}
-
-				<div class="row">
-					<div class="col-lg-12 text-xl-center">
-						<a class="mybtn2" href="#">View All </a>
-					</div>
-				</div>
 		</div>
 	</section> 
 	<!-- Recent Winners Area End -->

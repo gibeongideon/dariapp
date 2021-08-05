@@ -206,3 +206,80 @@ class Footer(models.Model):
 
     def __str__(self):
         return str(self.text)
+        
+        
+        
+        
+        
+        
+class InfoPage(Page):
+    
+    # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+    # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+    intro_quote1 = models.CharField(max_length=200, blank=True,null=True)
+    intro_quote2 = models.CharField(max_length=200, blank=True,null=True)
+    intro_quote3 = models.CharField(max_length=200, blank=True,null=True)
+
+    body = RichTextField(blank=True)
+#     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
+    
+    tittle1 = models.CharField(max_length=250 ,blank=True,null=True)  
+    tittle2 = models.CharField(max_length=250 ,blank=True,null=True)
+    tittle3 = models.CharField(max_length=250 ,blank=True,null=True) 
+    tittle4 = models.CharField(max_length=250 ,blank=True,null=True)
+
+    bodi1 = models.CharField(max_length=250 ,blank=True,null=True) 
+    bodi2 = models.CharField(max_length=250 ,blank=True,null=True)
+    bodi3 = models.CharField(max_length=250 ,blank=True,null=True)
+    bodi4 = models.CharField(max_length=250 ,blank=True,null=True)
+
+
+    advert = models.ForeignKey(
+        'home.Advert',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,related_name='+')
+# 
+    header = models.ForeignKey(
+        'home.Header',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,related_name='+')
+
+    footer = models.ForeignKey(
+        'home.Footer',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,related_name='+')        
+
+
+    content_panels=Page.content_panels + [
+        SnippetChooserPanel('advert'),
+        SnippetChooserPanel('header'),
+        SnippetChooserPanel('footer'),
+        FieldPanel('body',classname = "full"),
+        # FieldPanel('image0'),
+        # FieldPanel('signature_01'),      
+
+
+        FieldPanel('intro_quote1'),
+        FieldPanel('intro_quote2'),
+        FieldPanel('intro_quote3'),
+
+        FieldPanel('tittle1'),
+        FieldPanel('bodi1'),
+        FieldPanel('tittle2'),
+        FieldPanel('bodi2'),
+        FieldPanel('tittle3'),
+        FieldPanel('bodi3'),
+        FieldPanel('tittle4'),
+        FieldPanel('bodi4'),
+
+#         # InlinePanel('latestnewz',label="Latest News"),
+
+
+    ]
+
+
+
+        

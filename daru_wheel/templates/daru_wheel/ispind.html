@@ -18,60 +18,67 @@
 				<div class="row">
 					<div class="col-lg-12">                 
 						<nav class="navbar navbar-expand-lg navbar-light">
-							<a class="navbar-brand" href="index.html">
-								<img src="assets/images/logo.png" alt="">
+							<a class="navbar-brand" href="/">
+								<img src="/static/assets/images/logo.png" alt="">
 							</a>
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
 								aria-expanded="false" aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
 							</button>
 							<div class="collapse navbar-collapse fixed-height" id="main_menu">
-								<ul class="navbar-nav ml-auto"> 
-								    <li class="nav-item">
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
 										<a class="nav-link" href="/">Home
 										<div class="mr-hover-effect"></div></a>
 									</li>
 
 									<li class="nav-item">
-										<a class="nav-link" href="/about">About
-												<div class="mr-hover-effect"></div></a>
-									</li>
-									<li class="nav-item">
 									{% if user.is_authenticated %}
-										<a class="nav-link active" href="#">Spin
+										<a class="nav-link active" href="{% url 'daru_wheel:spin' %}">Spin
 												<div class="mr-hover-effect"></div></a>
 									{% endif %}
 									{% if not user.is_authenticated %}
-									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Play
+									   <a class="nav-link active" href="#" data-toggle="modal" data-target="#login">Play
 									       <div class="mr-hover-effect"></div>
 									   </a>
 									{% endif %}   
 																					
 									</li>									
-									<li class="nav-item">
-										<a class="nav-link" href="/affiliate">Affiliate
-												<div class="mr-hover-effect"></div></a>
+                  <li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>						
+										</ul>
 									</li>
 
-									<li class="nav-item">
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
 											<a class="nav-link" href="/contact">Contact
 													<div class="mr-hover-effect"></div></a>
 									</li>
 
-
-									<li class="nav-item">
-									{% if user.is_authenticated %}
-									   <a class="nav-link" href="{% url 'home:deposit_withraw' %}">Account
-									       <div class="mr-hover-effect"></div>
-									   </a>
-									{% endif %}
-
-
-									</li>
-
-
 								</ul>
-								{% comment %} <a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Join us to Win</a> {% endcomment %}
+
 							</div>
 						</nav>
 					</div>
@@ -140,7 +147,7 @@
 										{% comment %} <input type="radio" name="options" autocomplete="off" name="marketselection" value="1" > Red {% endcomment %}
 									 </label>
 								
-									 <label class="btn btn-warning">
+									 <labels class="btn btn-warning">
 									    <input type="radio" name="marketselection" value="2"  >YELLOW
 										{% comment %} <input type="radio" name="options" autocomplete="off" name="marketselection" value="2" > Yellow {% endcomment %}
 									 </label>
@@ -198,11 +205,8 @@
 								</div> {% endcomment %}
 							</div>
 							<div class="bottom-area">
+		<div class="table-responsive">
 
-
-
-
-                    <div class="table-responsive">
         <table  id="">
           <thead class=" text-primary">
             <tr>
@@ -246,55 +250,27 @@
             {%endfor%}
           </tbody>
         </table>
+		
       </div>
-
-
-
 
 
 	
 							</div>
+							<a class="mybtn2" href="{% url 'daru_wheel:spin' %}">Refresh</a>
 						</div>
+						
 					</div>
 
-
-
-
-
-        
-
-					{% comment %} <div class="col-lg-4">
-						<div class="single-winer">
-							<div class="top-area">
-								<div class="left">
-									<h4 class="name">
-											Neal Morris
-									</h4>
-									<p class="date">
-											01.08.2019
-									</p>
-								</div>
-								<div class="right">
-									<p class="id">#5747e75482</p>
-								</div>
-							</div>
-							<div class="bottom-area">
-								<div class="left">
-										0.099 ETH
-								</div>
-								<div class="right">
-										<img src="/static/assets/images/icon2.png" alt="">
-								</div>
-							</div>
-						</div>
-					</div> {% endcomment %}
           
 				</div>
-
+				
+				{% comment %} <div class="col-lg-12 text-xl-center">
+						<a class="mybtn2" href="{% url 'daru_wheel:i_spin' %}"Refresh </a>
+					</div> {% endcomment %}
 
 				<div class="row">
 					<div class="col-lg-12 text-xl-center">
-						<a class="mybtn2" href="#">View All Bets </a>
+						<a class="mybtn2" href="/stakes">View All Bets </a>
 					</div>
 				</div>
 		</div>
