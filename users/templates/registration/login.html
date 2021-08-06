@@ -1,7 +1,96 @@
 {% extends "layouts/base.html" %}
+{% block mainmenu %}
+<!--Main-Menu Area Start-->
+		<div class="mainmenu-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">                 
+						<nav class="navbar navbar-expand-lg navbar-light">
+							<a class="navbar-brand" href="/">
+								<img src="/static/assets/images/loggo.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse fixed-height" id="main_menu">
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
+										<a class="nav-link" href="/">Home
+										<div class="mr-hover-effect"></div></a>
+									</li>
 
+									<li class="nav-item">
+									{% if user.is_authenticated %}
+										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
+												<div class="mr-hover-effect"></div></a>
+									{% endif %}
+									{% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Spin
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}   
+																					
+									</li>	
+									 <li class="nav-item dropdown">
+									 {% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %} 
+									{% if  user.is_authenticated %}
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>
+								
+										</ul>	
+									{% endif %} 
+
+									</li>
+
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
+											<a class="nav-link" href="/contact">Contact
+													<div class="mr-hover-effect"></div></a>
+									</li>
+
+								</ul>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Main-Menu Area Start-->
+		
+{% endblock mainmenu %}
 {% block content %}
-		<div class="container">
+
+
+
+
+<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<h4 class="title">"
@@ -19,31 +108,56 @@
 		</div>
 
 
+	<!-- Footer Area Start -->
+	<footer class="footer" id="footer">
+			<div class="subscribe-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="subscribe-box">
+
+
+
+
+
+
 					<div class="header-area">
 						<h4 class="title">Great to have you back!</h4>
 						<p class="sub-title">Enter your details below.</p>
 					</div>
-					<div class="form-area">
+					{% comment %} <div class="form-area"> {% endcomment %}
 						<form role="form" method="POST" action="{% url 'users:login' %}">
 						    {% csrf_token %}
-							<div class="form-group">
-									<label for="login-input-email">username*</label>
-									<input type="text"  class="input-field" name="username" id="username" placeholder="Phone number you sign up with" required autofocus>
-									
-							</div>
-							<div class="form-group">
-									<label for="login-input-password">Password*</label>
-									<input type="password" class="input-field" name="password" class="form-control" id="password" placeholder="Password" required>
-									<input type="checkbox" onclick="sPass()">Show Password
+                            
+                            {% if form.errors %}
+                            <div class='text-danger'>
+                                Invalid credentials. Please try again.
+                            </div>
+                            {% endif %}
 
-							</div>
+
+                            <div class="col-lg-6 col-8 d-flex align-self-center">
+                                <div class="form-area">                   
+									{% comment %} <label for="login-input-email">username*</label> {% endcomment %}
+									<input type="text"  class="input-field" name="username" id="username" placeholder="Phone number you sign up with" required autofocus>									
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-8 d-flex align-self-center">
+                                <div class="form-area">                   
+									<input type="password" class="input-field" name="password" class="form-control" id="password" placeholder="Password" required>
+									
+                                </div>
+              
+                            </div>
+       
+								<div class="box" align="left">
+                                <input type="checkbox" onclick="sPass()">Show Password
+
+								</div>
+	
 							<div class="form-group">
-								<div class="box">
-									{% comment %} <div class="left">
-											<input type="checkbox" class="check-box-field" id="input-save-password" checked>
-										<label for="input-save-password">Remember Password</lasbel>
-										
-									</div> {% endcomment %}
+								<div class="box" align="right">
+				
 									<div class="right">
 										<a href="{% url 'users:password_reset' %}">
 											Forgot Password?
@@ -55,7 +169,7 @@
 								   <button type="submit" class="mybtn1">Log In</button>
 							</div>
 						</form>
-					</div>
+					{% comment %} </div> {% endcomment %}
 					<div class="form-footer">
 						<p>Not a member? 
 								{% comment %} <a href="#">Create account <i class="fas fa-angle-double-right"></i></a> {% endcomment %}
@@ -66,140 +180,13 @@
 
 
 
+						</div>
+					</div>
+				</div>
+			</div>
 
 
+	</footer> 
 
 
-
-
-
-
-
-
-
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-
-    {% endif %}
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-<div class="row">
-
-    <div class="col-12">
-      <div class="card card-chart">
-          
-        <!-- <div class="card-header ">
-          <div class="row">
-            <div class="col-sm-6 text-left">
-              <h1 class="card-category">Please Login</h1>
-              <h2 class="card-title">Please Login</h2>
-            </div>
-    
-          </div>
-        </div> -->
-        <div class="card-body">
-          <!-- <div class="chart-area"> -->
-
-            <form class="form-horizontal" role="form" method="POST" action="{% url 'users:login' %}">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}" />
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <h3>Login to continue</h3>
-                        <div>
-                            Don't have an account? <a href="{% url 'users:register' %}" class="text-info">Signup here</a>
-                           </div>
-                        <hr>
-                        {% if form.errors %}
-                            <div class='text-danger'>
-                                Invalid credentials. Please try again.
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="sr-only" for="email">E-Mail Address</label>
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <!-- <div class="input-group-addon"></div> -->
-                                <input type="text" name="username" class="form-control" id="username"
-                                       placeholder="Phone number you sign up with" required autofocus>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            <label class="sr-only" for="password">Password</label>
-                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                <!-- <div class="input-group-addon"></div> -->
-                                <input type="password" name="password" class="form-control" id="password"
-                                       placeholder="Password" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6" style="padding-top: .35rem">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" name="remember_me"
-                                       type="checkbox" >
-                                <!-- <span style="padding-bottom: .15rem">Remember me</span> -->
-                                <span class="form-check-sign">
-                                    <span class="check">Remember me</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="padding-top: 1rem">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-fill btn-primary"><i class="fa fa-sign-in"></i>Login</button>
-                        <div class="float-right">
-                            <a class="btn btn-link" href="{% url 'users:password_reset' %}">Forgot Your Password?</a>
-                        </div>
-                        <div class="col-md-3"></div>
-                        <!-- <div>
-                         Don't have an account? <a href="{% url 'users:register' %}" class="text-primary">Create</a>
-                        </div> -->
-                        
-                    </div>
-            
-                    
-                </div>
-            </form>
-
-
-
-
-
-          <!-- </div> -->
-        </div>
-      </div>
-    </div>
-
-</div>
-
-
-{% endblock %}
-<!-- % url 'password_reset' % -->
+{% endblock content %}
