@@ -107,14 +107,14 @@ class Currency(TimeStamp):
     """Store currencies with specified name and rate to token amount."""
 
     name = models.CharField(max_length=30, blank=True, null=True)
-    rate = models.DecimalField(max_digits=6, decimal_places=5, blank=True, null=True)
+    rate = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
 
     class Meta:
         db_table = "d_currency"
 
     def __str__(self):
         """Simply present currency name and it's rate."""
-        return self.name + " - " + str(self.rate)
+        return self.name + " |Rate: " + str(self.rate)
 
     @classmethod
     def get_tokens_amount(cls, currency_name, value):
@@ -362,16 +362,24 @@ class CashDeposit(TimeStamp):
     #     except Account.DoesNotExist:
     #         pass
 
+
     def update_cum_depo(self):
         try:
             if not self.deposited:
                 ctotal_balanc = current_account_cum_depo_of(self.user_id)  # F'
-                new_bal = ctotal_balanc + int(self.amount)
+                new_bal = ctotal_balanc + int(self.amount_converted_to_tokens)
                 update_account_cum_depo_of(self.user_id, new_bal)  # F
                 # self.deposited = True
         except Exception as e:
             print(f"Daru:CashDeposit-update_cum_depo Error:{e}")  # Debug
             pass
+
+    @property
+    def amount_converted_to_tokens(self):
+        # currency_name=Currency.objects.get(id=self.currency_id.id).name
+        tokens=Currency.get_tokens_amount(self.currency_id.name, float(self.amount))
+        print(tokens)
+        return tokens
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on deposit  """
@@ -381,7 +389,7 @@ class CashDeposit(TimeStamp):
                 try:
                     if self.confirmed and not self.deposited:
                         ctotal_balanc = current_account_bal_of(self.user_id)  # F
-                        new_bal = ctotal_balanc + int(self.amount)
+                        new_bal = ctotal_balanc + int(self.amount_converted_to_tokens)
                         update_account_bal_of(self.user_id, new_bal)  # F
                         self.update_cum_depo()  #####
                         # self.update_tokens()###

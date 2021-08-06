@@ -154,6 +154,7 @@ class CashDepositAdmin(admin.ModelAdmin):
         "deposit_type",
         "has_record",
         "amount",
+        "currency_id",
         "current_bal",
         "created_at",
         "updated_at",

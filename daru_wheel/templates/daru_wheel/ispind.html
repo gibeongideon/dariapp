@@ -146,11 +146,11 @@
 									    <input type="radio" name="marketselection" value="1" required=True >RED
 										{% comment %} <input type="radio" name="options" autocomplete="off" name="marketselection" value="1" > Red {% endcomment %}
 									 </label>
-								
-									 <labels class="btn btn-warning">
-									    <input type="radio" name="marketselection" value="2"  >YELLOW
-										{% comment %} <input type="radio" name="options" autocomplete="off" name="marketselection" value="2" > Yellow {% endcomment %}
-									 </label>
+									 <label class="btn btn-warning">
+									    <input type="radio" name="marketselection" value="2" required=True >YELLOW										{% comment %} <input type="radio" name="options" autocomplete="off" name="marketselection" value="1" > Red {% endcomment %}
+									 </label>									 
+						
+
 									</div>
 									{% comment %} {{stake_form.marketselection}} {% endcomment %}
 
@@ -166,13 +166,13 @@
 							</div>
 		              
 							<div class="bottom-area">
-								<div class="left">
-									<div class="btn btn-secondary" data-toggle="buttons">
+								<div >
+									{% comment %} <div class="btn btn-secondary" data-toggle="buttons"> {% endcomment %}
 									  {% comment %} <label class="btn btn-secondary active"> {% endcomment %}
 									      {% comment %} <input type="checkbox" checked autocomplete="off">Real Cash {% endcomment %}
 										  <input type="checkbox" name="bet_on_real_account" id="id_bet_on_real_account" >Real Cash
 									  {% comment %} </label> {% endcomment %}
-									</div>
+									{% comment %} </div> {% endcomment %}
 
 									
 								{% comment %} <input type="checkbox" name="bet_on_real_account" id="id_bet_on_real_account" > {% endcomment %}

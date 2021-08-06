@@ -315,6 +315,13 @@ PAYPAL_WPP_SIGNATURE = config(
     "PAYPAL_WPP_SIGNATURE",
     default="AM1aGgn2bz5QbLwfJWgM8rQPCVdfAjz3hKc8w9Pa8XdIFnHt-9r143O2")
 
+
+PAYPAL_CLIENT_ID = config(
+    "PAYPAL_CLIENT_ID",
+    default="ARV38-NsL_7uctGU6Ap8FnQoPkxtbs3g3yx5i11dY46VHTk5PSKrG8kGvW0lKIhTv-Fub2Gb2VZX-gl-")
+
+
+
 DJANGO_SETTINGS_MODULE = config(
     "DJANGO_SETTINGS_MODULE",
     default='daruapp.settings')
