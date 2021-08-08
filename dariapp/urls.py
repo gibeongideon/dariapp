@@ -22,9 +22,9 @@ urlpatterns = [
 
     path('search/', search_views.search, name='search'),
 
-    path("", include("home.urls", namespace="dashboard")),
+    path("", include("home.urls", namespace="home")),
     path("user/", include("users.urls", namespace="users")),
-    path("daru_wheel/", include("daru_wheel.urls", namespace="daru_wheel")),
+    path("wheel/", include("daru_wheel.urls", namespace="daru_wheel")),
     path("account/", include("account.urls", namespace="account")),
     path("pesa/", include("mpesa_api.core.urls", "mpesa")),
     path('paypal/', include('paypal.standard.ipn.urls')), 

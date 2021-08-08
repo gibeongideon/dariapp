@@ -12,7 +12,7 @@ urlpatterns = [
     # The home page
     path("", views.homepage, name="homepage"),
     # path('', views.index, name='index'),
-    path("deposit_withraw", views.deposit_withraw, name="deposit_withraw"),
+    path("wallet", views.deposit_withraw, name="deposit_withraw"),
     path("affiliate", views.affiliate, name="affiliate"),
     # path("maps", views.maps, name="maps"),
     # path("topo", views.topo, name="topo"),
