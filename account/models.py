@@ -72,6 +72,14 @@ class Account(TimeStamp):
         # if self.withraw_powe,< self.balance:
         #     return self.withraw_power
         # return self.balance
+        
+    @property
+    def balance_usd(self):
+        rate_to_usd=Currency.objects.get(name='USD').rate
+        print(rate_to_usd)
+        print('RATE')
+
+        return round(self.balance/rate_to_usd,2)
 
     def add_tokens(self, number):
         """Increase user tokens amount watch over not to use negative value.
