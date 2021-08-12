@@ -108,64 +108,11 @@
 
 	<!-- Recent Winners Area Start -->
 	<section class="recent-winners">
-		<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-8 col-md-10">
-						<div class="section-heading">
-							<h5 class="subtitle">
-								Deposits
-							</h5>
-							{% comment %} <h5 class="title">
-									Paypal & Credit CARD
-							</h5> {% endcomment %}
-							<p class="text">
-								Deposited amount reflect in account immediatelly.You can withraw your winnings instantly.Enjoy!
-							</p>
-						</div>
 
 
-            <div id="smart-button-container" align="center">
-            {% comment %} <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> {% endcomment %}
-                <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
-                <div style="text-align: center">
-                    <label for="amount">Deposit Amount </label>
-                        <input name="amountInput" type="number" id="amount" value="" ><span> USD</span>
-                </div>
-                <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a Amount</p>
-                
-                <div id="invoiceidDiv" style="text-align: center; display: none;">
-                    <label for="invoiceid"> </label>
-                     <input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" >
-                </div>
-                <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
-                <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
-            </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-          </div>
-        </div>
-
-
-
-				{% comment %} <div class="row">
-					<div class="col-lg-4" align="center">
-						<div class="single-winer" align="center">
-             {% endcomment %}
-
-
-                   
-			
-
-						{% comment %} </div>
-					</div>
-
-
-		</div> {% endcomment %}
-	</section> 
-	<!-- Recent Winners Area End -->
-
-
-
-{% comment %} <div id="smart-button-container">
+<div id="smart-button-container">
     <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div>
       <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
     <div style="text-align: center"><label for="amount">Deposit Amount </label><input name="amountInput" type="number" id="amount" value="" ><span> USD</span></div>
@@ -173,19 +120,11 @@
     <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
       <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
     <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
-  </div> {% endcomment %}
-
-  {% endblock content %}
-
-
-  <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{% comment %} ARV38-NsL_7uctGU6Ap8FnQoPkxtbs3g3yx5i11dY46VHTk5PSKrG8kGvW0lKIhTv-Fub2Gb2VZX-gl- {% endcomment %}
+  </div>
   <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
 
+ 
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -307,5 +246,22 @@ function getCookie(name) {
   }
   initPayPalButton();
   </script>
+
+
+	</section> 
+
+	<!-- Recent Winners Area End -->
+
+
+  {% endblock content %}
+
+
+  <!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  {% comment %} <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
+  <script> {% endcomment %}
 
 {% endblock javascripts %}
