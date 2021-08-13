@@ -713,6 +713,7 @@ class CashTransfer(TimeStamp):
         blank=True,
         null=True,
     )
+    # pin = models.IntegerField(max_digits=6, blank=True, null=True)
     amount = models.DecimalField(max_digits=20, decimal_places=2)
     approved = models.BooleanField(default=False, blank=True, null=True)
     success = models.BooleanField(blank=True, null=True)
