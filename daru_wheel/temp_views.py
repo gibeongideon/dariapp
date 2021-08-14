@@ -159,3 +159,18 @@ def spin_it(request):
         return JsonResponse(response_data)
 
     return JsonResponse({"Error": "Postin Error"})
+
+
+
+@login_required(login_url="/user/login")
+def stakes(request):
+    trans_logz = Stake.objects.filter(
+        user=request.user, market=None, has_market=False
+    ).order_by("-created_at")#[:2]
+
+
+    context = {
+        "trans_logz": trans_logz,
+        }
+
+    return render(request, "daru_wheel/stakes.html", context)

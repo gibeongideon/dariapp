@@ -1,16 +1,128 @@
 
 {% extends "layouts/base.html" %}
+{% block mainmenu %}
+<!--Main-Menu Area Start-->
+		<div class="mainmenu-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">                 
+						<nav class="navbar navbar-expand-lg navbar-light">
+							<a class="navbar-brand" href="/">
+								<img src="/static/assets/images/loggo.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse fixed-height" id="main_menu">
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
+										<a class="nav-link" href="/">Home
+										<div class="mr-hover-effect"></div></a>
+									</li>
 
+									<li class="nav-item">
+									{% if user.is_authenticated %}
+										<a class="nav-link active" href="{% url 'daru_wheel:spin' %}">Spin
+												<div class="mr-hover-effect"></div></a>
+									{% endif %}
+									{% if not user.is_authenticated %}
+									   <a class="nav-link active" href="#" data-toggle="modal" data-target="#login">Play
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}   
+																					
+									</li>									
+                  <li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>						
+										</ul>
+									</li>
+
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
+											<a class="nav-link" href="/contact">Contact
+													<div class="mr-hover-effect"></div></a>
+									</li>
+
+								</ul>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Main-Menu Area Start-->
+		
+{% endblock mainmenu %}
 {% block content %}
-<div class="col-md-12">
-  <div class="card ">
-    
-    <div class="card-header">
-        <!-- <a href="#"><img src={{web.image.url}} alt=""></a> -->
-         <h4 class="card-title"><img class="avatar" src="/static/mpesalogo.png" alt="Mpesa logo"> Mpesa</h4>
-    </div>
-    <div class="card-body">
-      <div class="text-info"> {{mpesa_header_depo_msg}} </div>      
+	<!-- Breadcrumb Area Start -->
+	<section class="breadcrumb-area bc-affiliate">
+		{% comment %} <img class="bc-img" src="/static/assets/images/breadcrumb/affiliate.png" alt=""> {% endcomment %}
+		<div class="container">
+			{% comment %} <div class="row"> {% endcomment %}
+				{% comment %} <div class="col-lg-12">
+					<h4 class="title">
+						Deposit
+					</h4>
+					<ul class="breadcrumb-list">
+						<li>
+							<a href="index.html">
+									<i class="fas fa-home"></i>
+									Account
+							</a>
+						</li>
+						<li>
+							<span><i class="fas fa-chevron-right"></i> </span>
+						</li>
+						<li>
+							<a href="affiliate.html">Deposit</a>
+						</li>
+					</ul>
+				</div> {% endcomment %}
+			{% comment %} </div> {% endcomment %}
+		</div>
+	</section>
+	<!-- Breadcrumb Area End -->
+
+
+
+
+	<!-- Awards Area Start -->
+	<section class="awards-area">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="section-heading">
+						<h5 class="subtitle">
+							Deposit 
+						</h5>
+
+
+
+                <div class="text-info"> {{mpesa_header_depo_msg}} </div>      
 
 <form action="{% url 'account:mpesa_deposit' %}" method="post">
 {% csrf_token %}
@@ -23,34 +135,22 @@
 
 <button class="btn btn-secondary type="submit">Submit</button>
 </form>
-    </div>
-  </div>
-  
-</div>
 
 
 
 
+						<h2 class="title">
+							Recent Deposits
+						</h2>
+						{% comment %} <p class="text">
+							We update our site regularly; more and more winners are added every day! To locate the most recent winner's information
+						</p> {% endcomment %}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+      <div class="table-responsive">
 
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card ">
-        <div class="card-header">
-
-          <a href="{% url 'account:mpesa_deposit' %}" >
-            <button class="btn btn-secondary">
-              <i class="tim-icons icon-refresh-01"></i>                    
-              Refresh 
-            </button>
-      
-          </a>
-
-
-          <h4 class="card-title"> Recent Deposits</h4>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
             <table class="table tablesorter " id="">
               <thead class=" text-primary">
                 <tr>
@@ -60,15 +160,15 @@
                   <th>
                     Amount
                   </th>
-                  <!-- <th>
-                    Approved
-                  </th> -->
+                  <th>
+                    Currency
+                  </th>
                   <th class="text-center">
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody  class=" text-info">
                 {% for trans in trans_logz%}
   
                 <tr>
@@ -78,9 +178,9 @@
                   <td>
                     {{trans.amount}}
                   </td>
-                  <!-- <td>
-                    {{trans.approved}}
-                  </td> -->
+                  <td>
+                    {{trans.currency_id.name}}
+                  </td>
                   <td class="text-center">
                     {{trans.status}}
                   </td>
@@ -88,12 +188,28 @@
                 {% endfor %}
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  </div>
+            </div>
+
+            </div>
+							<a class="mybtn2" href="{% url 'account:mpesa_deposit' %}">  Refresh</a>
+						</div>
+
+     
+
+
+			</div>
+      				{% comment %} <div class="row">
+					<div class="col-lg-12 text-xl-center">
+						<a class="mybtn2" href="{% url 'account:deposit' %}">Ot Deposits </a>
+					</div>
+				</div> {% endcomment %}
+
+
+		</div>
+	</section>
+	<!-- Awards Area End -->
+
+
 
 
 {% endblock content %}

@@ -4,6 +4,7 @@
 from django.urls import path, include
 from . import template_views as views
 from .payp_view import views as pviews 
+from .m_pesa_view import views as mviews 
 
 
 
@@ -30,7 +31,7 @@ urlpatterns = [
     # path("trans_log/", trans_log, name="trans_log"),
     path("refer_credit/", views.refer_credit, name="refer_credit"),
     path("mpesa_withrawal/", views.mpesa_withrawal, name="mpesa_withrawal"),
-    path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
+    # path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
     path("cash_trans/", views.cash_trans, name="cash_trans"),
     
     path('checkout/', views.checkout, name='checkout'),
@@ -48,6 +49,7 @@ urlpatterns = [
     path("deposit/", views.deposit, name='deposit'), 
     path("withraw/", views.withraw, name='withraw'),
     path("deposit/paypal", pviews.accept_payment_view),
+    path("deposit/m-pesa/", views.mpesa_deposit,name='mpesa_deposit'),
     path("payment-success/", pviews.payment_success),
     # path("withdraw/", pviews.paypal_payout_view)
 ]

@@ -72,6 +72,14 @@ class Account(TimeStamp):
         # if self.withraw_powe,< self.balance:
         #     return self.withraw_power
         # return self.balance
+        
+    @property
+    def balance_usd(self):
+        rate_to_usd=Currency.objects.get(name='USD').rate
+        print(rate_to_usd)
+        print('RATE')
+
+        return round(self.balance/rate_to_usd,2)
 
     def add_tokens(self, number):
         """Increase user tokens amount watch over not to use negative value.
@@ -705,6 +713,7 @@ class CashTransfer(TimeStamp):
         blank=True,
         null=True,
     )
+    # pin = models.IntegerField(max_digits=6, blank=True, null=True)
     amount = models.DecimalField(max_digits=20, decimal_places=2)
     approved = models.BooleanField(default=False, blank=True, null=True)
     success = models.BooleanField(blank=True, null=True)

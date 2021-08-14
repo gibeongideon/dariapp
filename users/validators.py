@@ -16,7 +16,7 @@ def validate_refercode(refercode):
     except User.DoesNotExist:
         raise ValidationError(
             _(
-                "No one has such refer-code.Enter correctly or Use %(usecode)s if you  dont have one"
+                "Wrong code.Ask your referer their REF CODE or Use %(usecode)s if you  dont have one"
             ),
             params={"refercode": refercode, "usecode": usecode},
         )
