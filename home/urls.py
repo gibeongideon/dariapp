@@ -7,15 +7,13 @@ from daru_wheel.temp_views import spin
 app_name = "home"
 
 urlpatterns = [
-    # Matches any html file
-    
-    # The home page
+    # Matches any html file    
+    # The home pages
     path("", views.homepage, name="homepage"),
     # path('', views.index, name='index'),
     path("wallet", views.deposit_withraw, name="deposit_withraw"),
     path("affiliate", views.affiliate, name="affiliate"),
-    # path("maps", views.maps, name="maps"),
-    # path("topo", views.topo, name="topo"),
+    # path("", views.subscribe, name="subscribe"),
     # path("support", views.support, name="support"),
     # re_path(r"^.*\/", views.pages, name="pages"),
 ]
