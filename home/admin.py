@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WebPa ,HomePage
+from .models import WebPa ,HomePage ,Subscriber
 
 # Register your models here.
 class WebPaAdmin(admin.ModelAdmin):
@@ -20,3 +20,4 @@ admin.site.register(WebPa, WebPaAdmin)
 
 
 admin.site.register(HomePage)
+admin.site.register(Subscriber)

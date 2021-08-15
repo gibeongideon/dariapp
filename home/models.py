@@ -27,7 +27,14 @@ class TimeStamp(models.Model):
 
     class Meta:
         abstract = True
+        
+class Subscriber(TimeStamp):
+    email = models.EmailField(blank=True, null=True)
 
+    def __str__(self):
+        return str(self.email)
+    
+       
 
 class WebPa(TimeStamp):
     navbar_eder = models.CharField(
@@ -279,6 +286,8 @@ class InfoPage(Page):
 
 
     ]
+
+
 
 
 

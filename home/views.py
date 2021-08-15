@@ -6,6 +6,7 @@ from django import template
 from random import randint
 from account.models import Checkout
 from account.forms import CheckoutForm
+from .forms import SubscriberForm
 
 # @login_required(login_url="/user/login")
 def homepage(request):
@@ -56,16 +57,20 @@ def deposit_withraw(request):
 def affiliate(request):
     return render(request, "home/affiliate.html")
 
-@login_required(login_url="/user/login")
-def maps(request):
-    return render(request, "home/ui-maps.html")
 
 
-@login_required(login_url="/user/login")
-def topo(request):
-    return render(request, "home/ui-typography.html")
 
+# def subscribe(request):
+#     if request.method == "POST":
+#         form = SubscriberForm(request.POST)
+#         if form.is_valid():
+#              form.save()
+#         return redirect('/spin')
+#     else:
+#         sub_form = SubscriberForm()
 
-@login_required(login_url="/user/login")
-def support(request):
-    return render(request, "home/page-rtl-support.html")
+#     context = {
+#         "form": form,
+#     }
+
+#     # return render(request, "home/home_page.html", context)

@@ -49,20 +49,28 @@
 									   </a>
 									{% endif %}   
 																					
-									</li>									
-                  <li class="nav-item dropdown">
+
+									 <li class="nav-item dropdown">
+									 {% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %} 
+									{% if  user.is_authenticated %}
 										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false">
 											Account
 											<div class="mr-hover-effect"></div>
 										</a>
 										<ul class="dropdown-menu" >
-											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>						
-										</ul>
-									</li>
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>	
+								
+										</ul>	
+									{% endif %} 
 
+									</li>
 									<li class="nav-item dropdown">
 										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false">
@@ -165,17 +173,15 @@
             </span>
           </label>  
           <!-- </div>    -->
+		  
 
-        </div>   
+        </div class="col-lg-6 col-8 d-flex align-self-center"> 
+		<input type="number" name="amount" class="input-field" placeholder="Amount to bet" required=True id="amount_id" autofocus>
 
-  
+			{% comment %} <input type="number" id="amount_id" class="input-field"  placeholder="Amount to bet" step=10,name="amount" required=True > {% endcomment %}
+		</div>		{% comment %} </p> {% endcomment %}
+								
 
-
-					
-									
-									<input type="number" id="amount_id" class="form-control"  placeholder="Amount to bet" name="amount" required=True >
-									{% comment %} </p> {% endcomment %}
-								</div>
 								<div class="right">
 									<p class="id">   </p>
 								</div>
@@ -187,34 +193,23 @@
 							<div class="bottom-area">
 							 <div class="btn-group btn-group-toggle float-left" data-toggle="buttons"  name="marketselection" id="id_marketselection" >
 
-          <label class="btn btn-sm btn-success btn-simple">
+          <label class="btn btn-sm btn-warning btn-simple">
             <input type="radio" class="d-none d-sm-none" name="bet_on_real_account" id="id_bet_on_real_account">  
 			{% comment %} <input type="checkbox" name="bet_on_real_account" id="id_bet_on_real_account">               {% endcomment %}
-            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Real</span>
+            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Real Cash</span>
             <span class="d-block d-sm-none">
               <i class="tim-icons icon-gift-2"> Real Account</i>
             </span>
           </label>        
    
 
+
+
+
         </div> 
 
 
-							              {% comment %} <div class="btn-group btn-group-toggle float-left" data-toggle="buttons" >
-                <label class="btn btn-sm btn-info btn-simple" >
-                  <input type="checkbox" name="bet_on_real_account" id="id_bet_on_real_account">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Bet Real</span>
-                  <span class="d-block d-sm-none">
-                    <i class="tim-icons icon-wallet-43"> Bet Real Money</i>
-                  </span>
-                </label>
-              </div>
-								<div > {% endcomment %}
-
-										  {% comment %} <input type="checkbox" name="bet_on_real_account" id="id_bet_on_real_account" >Real Cash {% endcomment %}
-
-								{% comment %} </div> {% endcomment %}
-
+							  
 								<div class="right">
 								    <button class="mybtn1" type="submit">Bet</button>
 								</div>
