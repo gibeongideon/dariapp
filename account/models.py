@@ -334,7 +334,7 @@ class CashDeposit(TimeStamp):
         null=True,
     )
 
-    currency_id = models.ForeignKey(
+    currency = models.ForeignKey(
         Currency, on_delete=models.CASCADE, blank=True, null=True
     )
 
@@ -384,9 +384,8 @@ class CashDeposit(TimeStamp):
 
     @property
     def amount_converted_to_tokens(self):
-        # currency_name=Currency.objects.get(id=self.currency_id.id).name
-        tokens=Currency.get_tokens_amount(self.currency_id.name, float(self.amount))
-        print(tokens)
+        currency=Currency.objects.get(id=self.currency_id)#.name
+        tokens=Currency.get_tokens_amount(currency.name, float(self.amount))
         return tokens
 
     def save(self, *args, **kwargs):
@@ -449,7 +448,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         blank=True,
         null=True,
     )
-    currency_id = models.ForeignKey(
+    currency = models.ForeignKey(
         Currency, on_delete=models.CASCADE, blank=True, null=True
     )
 

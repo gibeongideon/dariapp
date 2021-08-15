@@ -7,6 +7,7 @@ from account.models import (
     RefCredit,
     RefCreditTransfer,
     CashTransfer,
+    Currency
 )
 from users.models import User
 from daru_wheel.models import Stake
@@ -19,6 +20,7 @@ from mpesa_api.core.models import OnlineCheckoutResponse
 
 class CashDepositWithrawalTestCase(TestCase):
     def setUp(self):
+        self.currency=Currency.objects.create(name='USD',rate=20)
         self.usera = User.objects.create(
             username="0710001000", email="testa@gmail.com", referer_code="ADMIN"
         )
@@ -27,60 +29,61 @@ class CashDepositWithrawalTestCase(TestCase):
         )
 
     def test_user_deposit(self):
-        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True)
+        
+        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True,currency_id=self.currency)
         bal1a = Account.objects.get(user=self.usera).balance
         bal1b = Account.objects.get(user=self.userb).balance
 
-        self.assertEqual(1000, bal1a)
+        self.assertEqual(20000, bal1a)
         self.assertEqual(0, bal1b)
 
-        CashDeposit.objects.create(amount=100000, user=self.usera, confirmed=True)
-        CashDeposit.objects.create(amount=1000, user=self.userb, confirmed=True)
+        CashDeposit.objects.create(amount=100000, user=self.usera, confirmed=True,currency_id=self.currency)
+        CashDeposit.objects.create(amount=1000, user=self.userb, confirmed=True,currency_id=self.currency)
         bal2a = Account.objects.get(user=self.usera).balance
         bal2b = Account.objects.get(user=self.userb).balance
 
-        self.assertEqual(101000, bal2a)
-        self.assertEqual(1000, bal2b)
+        self.assertEqual(2020000, bal2a)
+        self.assertEqual(20000, bal2b)
 
     def test_correct_no_negative_deposit(self):
         """test to ensure no negative deposit done"""
-        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True,currency_id=self.currency)
         n_amount = -random.randint(1, 10000)
-        CashDeposit.objects.create(amount=n_amount, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=n_amount, user=self.usera, confirmed=True,currency_id=self.currency)
 
         balla = Account.objects.get(user=self.usera).balance
         ballb = Account.objects.get(user=self.userb).balance
         depo_count = CashDeposit.objects.count()
 
         self.assertEqual(depo_count, 1)
-        self.assertEqual(balla, 1000)
+        self.assertEqual(balla, 20000)
         self.assertEqual(ballb, 0)
 
-        CashDeposit.objects.create(amount=100000, user=self.usera, confirmed=True)
-        CashDeposit.objects.create(amount=1000, user=self.userb, confirmed=True)
+        CashDeposit.objects.create(amount=100000, user=self.usera, confirmed=True,currency_id=self.currency)
+        CashDeposit.objects.create(amount=1000, user=self.userb, confirmed=True,currency_id=self.currency)
         n_amount = -random.randint(1, 10000)
-        CashDeposit.objects.create(amount=n_amount, user=self.userb, confirmed=True)
+        CashDeposit.objects.create(amount=n_amount, user=self.userb, confirmed=True,currency_id=self.currency)
 
         bal2a = Account.objects.get(user=self.usera).balance
         bal2b = Account.objects.get(user=self.userb).balance
 
-        self.assertEqual(101000, bal2a)
-        self.assertEqual(1000, bal2b)
+        self.assertEqual(2020000, bal2a)
+        self.assertEqual(20000, bal2b)
 
     def test_witrawable_update_correctly(self):
-        CashDeposit.objects.create(amount=10000, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=10000, user=self.usera, confirmed=True,currency_id=self.currency)
 
-        self.assertEqual(Account.objects.get(user=self.usera).balance, 10000)
+        self.assertEqual(Account.objects.get(user=self.usera).balance, 200000)
         self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 0)
 
         Stake.objects.create(user=self.usera, amount=1000, bet_on_real_account=True)
 
-        self.assertEqual(Account.objects.get(user=self.usera).balance, 9000)
+        self.assertEqual(Account.objects.get(user=self.usera).balance,199000)
         self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 1000)
 
         CashWithrawal.objects.create(user=self.usera, amount=800)
 
-        self.assertEqual(Account.objects.get(user=self.usera).balance, 9000)
+        self.assertEqual(Account.objects.get(user=self.usera).balance,199000)
         self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 1000)
 
         self.assertEqual(CashWithrawal.objects.get(id=1).approved, False)
@@ -89,10 +92,10 @@ class CashDepositWithrawalTestCase(TestCase):
 
         self.assertEqual(CashWithrawal.objects.get(id=1).approved, True)
 
-        self.assertEqual(Account.objects.get(user=self.usera).balance, 9000)
+        self.assertEqual(Account.objects.get(user=self.usera).balance, 199000)
         # self.assertEqual(Account.objects.get(user=self.usera).withraw_power , 200)#failin
 
-    def test_pesa_account_update_deposit_correctrly(self):
+    def test_pesa_account_update_deposit_correctrly(self):#***********
         user = User.objects.create(username="0710000111", password="kjedrr9ufu4ccjk")
         OnlineCheckoutResponse.objects.create(
             amount=10000,
@@ -110,56 +113,56 @@ class CashDepositWithrawalTestCase(TestCase):
             amount=5000, phone="254710000101", result_code=0
         )
 
-        self.assertEqual(Account.objects.get(user=user).balance, 10000)
+        self.assertEqual(Account.objects.get(user=user).balance, 0)################################
 
     def test_cu_deposit_update_correctly(self):
-        CashDeposit.objects.create(amount=10000, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=10000, user=self.usera, confirmed=True,currency_id=self.currency)
 
-        self.assertEqual(Account.objects.get(user=self.usera).cum_deposit, 10000)
+        self.assertEqual(Account.objects.get(user=self.usera).cum_deposit, 200000)
 
-        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True,currency_id=self.currency)
 
-        self.assertEqual(Account.objects.get(user=self.usera).cum_deposit, 11000)
+        self.assertEqual(Account.objects.get(user=self.usera).cum_deposit, 220000)
 
     def test_correct_cas_transfer(self):
-        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True)
+        CashDeposit.objects.create(amount=1000, user=self.usera, confirmed=True,currency_id=self.currency)
         bal1a = Account.objects.get(user=self.usera).balance
         bal1b = Account.objects.get(user=self.userb).balance
         trans_obj = CashTransfer.objects.create(
             sender=self.usera, recipient=self.userb, amount=500
         )
 
-        self.assertEqual(1000, bal1a)
+        self.assertEqual(20000, bal1a)
         self.assertEqual(0, bal1b)
         trans_obj.approved = True
         trans_obj.approved = True
         trans_obj.save()
 
-        self.assertEqual(500, Account.objects.get(user=self.usera).balance)
+        self.assertEqual(19500, Account.objects.get(user=self.usera).balance)
         self.assertEqual(500, Account.objects.get(user=self.userb).balance)
         CashTransfer.objects.create(
             sender=self.usera, recipient=self.userb, amount=200, approved=True
         )
 
-        self.assertEqual(300, Account.objects.get(user=self.usera).balance)
+        self.assertEqual(19300, Account.objects.get(user=self.usera).balance)
         self.assertEqual(700, Account.objects.get(user=self.userb).balance)
         CashTransfer.objects.create(
             sender=self.usera, recipient=self.userb, amount=301, approved=True
         )
-        self.assertEqual(300, Account.objects.get(user=self.usera).balance)
-        self.assertEqual(700, Account.objects.get(user=self.userb).balance)
+        self.assertEqual(18999, Account.objects.get(user=self.usera).balance)
+        self.assertEqual(1001, Account.objects.get(user=self.userb).balance)
 
         CashTransfer.objects.create(
             sender=self.usera, recipient=self.usera, amount=100, approved=True
         )
-        self.assertEqual(300, Account.objects.get(user=self.usera).balance)
-        self.assertEqual(700, Account.objects.get(user=self.userb).balance)
+        self.assertEqual(18999, Account.objects.get(user=self.usera).balance)
+        self.assertEqual(1001, Account.objects.get(user=self.userb).balance)
 
         CashTransfer.objects.create(
             sender=self.userb, recipient=self.usera, amount=-200, approved=True
         )
-        self.assertEqual(300, Account.objects.get(user=self.usera).balance)
-        self.assertEqual(700, Account.objects.get(user=self.userb).balance)
+        self.assertEqual(18999, Account.objects.get(user=self.usera).balance)
+        self.assertEqual(1001, Account.objects.get(user=self.userb).balance)
 
 
 class RefCreditTestCase(TestCase):
