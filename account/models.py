@@ -384,9 +384,13 @@ class CashDeposit(TimeStamp):
 
     @property
     def amount_converted_to_tokens(self):
-        currency=Currency.objects.get(id=self.currency_id)#.name
-        tokens=Currency.get_tokens_amount(currency.name, float(self.amount))
-        return tokens
+        try:
+            tokens=Currency.get_tokens_amount(self.currency.name, float(self.amount))
+        except Currency.DoesNotExist:
+            print('FAIL CONVERT')
+            tokens= self.amount/5  
+
+        return tokens     
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on deposit  """
