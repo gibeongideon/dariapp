@@ -183,7 +183,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "users.User"
 
 # email backend
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"#D
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="kipngeno.gibeon@gmail.com")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="tetyty9iodjw!")

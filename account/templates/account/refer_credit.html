@@ -20,17 +20,7 @@
     </div>
     <div class="card-body">
 
-<form action="{% url 'account:refer_credit' %}" method="post">
-{% csrf_token %}
 
-<div class="col-md-4 pl-md-1">
-  <div class="form-group">
-    <input type="number" name="amount" class="form-control" placeholder="amount here" step="10" required id="id_amount"">      
-  </div>
-</div>
-
-<button class="btn btn-secondary type="submit">Send</button>
-</form>
     </div>
   </div>
 </div>
