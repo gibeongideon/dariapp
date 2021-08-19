@@ -63,8 +63,9 @@
 											<div class="mr-hover-effect"></div>
 										</a>
 										<ul class="dropdown-menu" >
-											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:refer_credit' %}"> <i class="fa fa-angle-double-right"></i>Ref.Com : {{user.user_accounts.refer_balance}}T</a></li>
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}T</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}T</a></li>
 											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>	
 								
 										</ul>	
