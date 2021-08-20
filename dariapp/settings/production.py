@@ -2,6 +2,7 @@ from .base import *
 
 SECRET_KEY = config("SECRET_KEY", default="dadmin")
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+# ALLOWED_HOSTS = ['0.0.0.0', '.herokuapp.com', '127.0.0.1']
 DEBUG = False
 
 try:
