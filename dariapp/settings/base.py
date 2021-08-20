@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'home',
-    "channels",
+    # "channels",
     # "functional_tests",
     # ...
     "admin_interface",
