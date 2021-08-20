@@ -35,24 +35,52 @@
 																					
 									</li>	
 									 <li class="nav-item dropdown">
-									 {% if not user.is_authenticated %}
+									 {% comment %} {% if not user.is_authenticated %}
 									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
 									       <div class="mr-hover-effect"></div>
 									   </a>
-									{% endif %} 
-									{% if  user.is_authenticated %}
+									{% endif %}  {% endcomment %}
+									{% comment %} {% if  user.is_authenticated %} {% endcomment %}
 										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false">
 											Account
 											<div class="mr-hover-effect"></div>
 										</a>
 										<ul class="dropdown-menu" >
-											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>	
+										    {% comment %} <li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Deposit
+												</a>																																		
+											</li> {% endcomment %}
+															
+									
+
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}T</a></li>
+											{% comment %} <li><a class="dropdown-item" href="{% url 'account:refer_credit' %}"> <i class="fa fa-angle-double-right"></i>Ref.Com : {{user.user_accounts.refer_balance}}T</a></li> {% endcomment %}
+											{% comment %} <li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}T</a></li> {% endcomment %}
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#referc">
+													<i class="fa fa-angle-double-right"></i> Ref.Com : {{user.user_accounts.refer_balance}}T
+												</a>
+																																		
+											</li>
+
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
+													<i class="fa fa-angle-double-right"></i> Withdraw: {{user.user_accounts.withrawable_balance}}T
+												</a>
+																																		
+											</li>											
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Deposit
+												</a>
+																																		
+											</li>
+																						
 								
 										</ul>	
-									{% endif %} 
+									{% comment %} {% endif %}  {% endcomment %}
 
 									</li>
 
@@ -92,7 +120,7 @@
 {% block content %}
 	<!-- Breadcrumb Area Start -->
 	<section class="breadcrumb-area play">
-		<img class="bc-img" src="/static/assets/images/breadcrumb/cart-bg.png" alt="">
+		<img class="bc-img" src="/static/assets/images/breadcrumb/cart-bg 99.png" alt="">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">

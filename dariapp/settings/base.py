@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY", default="dadmin")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'home',
@@ -81,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -183,7 +182,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "users.User"
 
 # email backend
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"#D
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="kipngeno.gibeon@gmail.com")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="tetyty9iodjw!")
@@ -324,7 +322,7 @@ PAYPAL_CLIENT_ID = config(
 
 DJANGO_SETTINGS_MODULE = config(
     "DJANGO_SETTINGS_MODULE",
-    default='daruapp.settings')
+    default='dariapp.settings.dev')
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
