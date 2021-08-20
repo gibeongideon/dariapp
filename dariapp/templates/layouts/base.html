@@ -217,6 +217,272 @@
 		</div>
 		<!-- M-Pesa Area End -->
 
+
+	<!-- Wallet Area Start -->
+	<div class="modal fade login-modal" id="wallet" tabindex="-1" role="dialog" aria-labelledby="wallet" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					{% comment %} <div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div> {% endcomment %}
+					{% comment %} <div class="header-area">
+						<h4 class="title">Wallet</h4>
+						<p class="sub-title">Account Information</p>
+					</div> {% endcomment %}
+					<div class="form-area">
+
+
+
+
+
+	<!-- Marketing Tools Area Start -->
+	<section class="marketing-tools">
+		<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+					<div class="section-heading">
+								<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+						<h5 class="subtitle">
+								Account Information
+						</h5>
+						<h2 class="title">
+								Wallet
+						</h2>
+						{% comment %} <p class="text">
+						Balance is your tokens USD equivalent.Withrawable is amount you can withraw at the moment.
+						</p> {% endcomment %}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon one">
+								<img src="assets/images/affiliate/ic7.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+										Tokens
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance}} T
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								Bal
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance_usd}} $
+								</p>
+							</div>
+						</div>
+					</div>
+
+					
+					{% comment %} <div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon three">
+								<img src="assets/images/affiliate/ic9.png" alt="">
+							</div>
+							<div class="content">
+							<a  href="{% url 'account:withraw' %}"> <h4 class="title">
+								Withr.B
+								</h4>{{user.user_accounts.withrawable_balance}} T</a>
+							</div>
+						</div>
+					</div> {% endcomment %}
+					{% comment %} <div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon three">
+								<img src="assets/images/affiliate/ic10.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								Withraw Power
+								</h4>
+								<p class="text">
+								{{user.user_accounts.withraw_power}} T
+								</p>
+							</div>
+						</div>
+					</div> {% endcomment %}
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
+								Ref.Bal
+								</h4>{{user.user_accounts.refer_balance}} T</a>
+							</div>
+						</div>
+				</div>
+				{% comment %} <div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								Trial Balance
+								</h4>
+								<p class="text">
+								{{user.user_accounts.trial_balance}} T
+								</p>
+							</div>
+						</div>
+				</div> {% endcomment %}
+			</div>
+
+
+					
+		{% comment %} </div> {% endcomment %}
+
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="single-winer">
+						<a href="/account/deposit">
+            
+
+							{% comment %} <div class="top-area"> {% endcomment %}
+								<div class="left">
+									<h4 class="name">
+											Deposit 
+									</h4>
+									{% comment %} <p class="date">
+											
+									</p> {% endcomment %}
+								</div>
+								</a>
+		
+							{% comment %} </div> {% endcomment %}
+                                 
+
+
+
+
+
+
+							
+              <div class="bottom-area">
+								{% comment %} <div class="left">
+										
+								</div> {% endcomment %}
+								{% comment %} <div class="right">
+										<img src="/static/assets/images/icon2.png" alt="">
+								</div> {% endcomment %}
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-lg-4">
+						<div class="single-winer">
+							{% comment %} <div class="top-area"> {% endcomment %}
+							<a href="/account/withraw">
+								<div class="center">
+									<h4 class="name">
+											Withraw
+									</h4>
+									{% comment %} <p class="date">
+									{{user.user_accounts.withrawable_balance}}
+
+									</p> {% endcomment %}
+								</div>
+								</a>
+
+
+
+							{% comment %} </div> {% endcomment %}
+
+							<div class="bottom-area">
+		
+							</div>
+
+						</div>
+					</div>
+									    <div class="col-lg-4">
+						<div class="single-winer">
+							{% comment %} <div class="top-area"> {% endcomment %}
+							<a href="/account/cash_trans">
+								<div class="center">
+									<h4 class="name">
+											Tranfer (T)o Your Friend 
+									</h4>
+									{% comment %} <p class="date">
+									{{user.user_accounts.withrawable_balance}}
+
+									</p> {% endcomment %}
+								</div>
+								</a>
+
+
+
+							{% comment %} </div> {% endcomment %}
+
+							<div class="bottom-area">
+		
+							</div>
+
+						</div>
+					</div>
+
+
+
+		{% comment %} </div> {% endcomment %}
+
+		</div>
+	</section>
+	<!-- Marketing Tools Area End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+					</div>
+					{% comment %} <div class="form-footer">
+						<p>Check Wallet? 
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Wallet Area End -->
+
+
+
 	<!-- Deposit Area Start -->
 	<div class="modal fade login-modal" id="withraw" tabindex="-1" role="dialog" aria-labelledby="withraw" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
