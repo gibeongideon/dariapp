@@ -16,11 +16,14 @@ class DuserAdmin(UserAdmin):
         "referer_code",
         "last_login",
         "active",
+        "referees_no"
     )
 
     list_display_links = ("id",)
     search_fields = ("id",)
     ordering = ("id",)
+
+    # list_filter = ("username","phone_number","referer_code", "active",)
 
     list_editable = (
         "phone_number",

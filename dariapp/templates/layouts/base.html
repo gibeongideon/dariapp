@@ -54,7 +54,226 @@
 		<i class="fas fa-chevron-right"></i>
 	</div>
 	<!-- Back to Top End -->
+	<!-- Wallet Area Start -->
+	<div class="modal fade login-modal" id="wallet" tabindex="-1" role="dialog" aria-labelledby="wallet" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					{% comment %} <div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div> {% endcomment %}
+					{% comment %} <div class="header-area">
+						<h4 class="title">Wallet</h4>
+						<p class="sub-title">Account Information</p>
+					</div> {% endcomment %}
+					<div class="form-area">
 
+
+
+
+
+	<!-- Marketing Tools Area Start -->
+	<section class="marketing-tools">
+		<div class="container">
+		    <div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="section-heading">
+								{% comment %} <div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div> {% endcomment %}
+						<h5 class="subtitle">
+								Account Information
+						</h5>
+						<h2 class="title">
+								Wallet
+						</h2>
+			
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon one">
+								<img src="assets/images/affiliate/ic7.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+										Tokens
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance}} T
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								Bal
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance_usd}} $
+								</p>
+							</div>
+						</div>
+					</div>
+
+
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
+								Ref.Bal
+								</h4>{{user.user_accounts.refer_balance}} T</a>
+							</div>
+						</div>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+	
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon three">
+								<img src="assets/images/affiliate/ic10.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								With.P
+								</h4>
+								<p class="text">
+								{{user.user_accounts.withraw_power}} T
+								</p>
+							</div>
+						</div>
+					</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
+								With.B
+								</h4>{{user.user_accounts.withrawable_balance}} T</a>
+							</div>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 class="title">
+								Trial
+								</h4>
+								<p class="text">
+								{{user.user_accounts.trial_balance}} T
+								</p>
+							</div>
+						</div>
+			</div>
+
+					
+		{% comment %} </div> {% endcomment %}
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#deposit">
+								       <button type="submit" class="mybtn1">Deposit</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Deposit</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>	
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#withraw">
+								       <button type="submit" class="mybtn1">Withraw</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Withraw</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>							
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#tofriend">
+								       <button type="submit" class="mybtn1">Tranfer (T)o Your Friend</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Tranfer (T)o Your Friend</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>
+
+				<div class="row">
+
+				</div>
+
+		</div>
+
+
+
+	</section>
+	<!-- Marketing Tools Area End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</div>
+					{% comment %} <div class="form-footer">
+						<p>Check Wallet? 
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Wallet Area End -->
 
 	<!-- Deposit Area Start -->
 	<div class="modal fade login-modal" id="deposit" tabindex="-1" role="dialog" aria-labelledby="deposit" aria-hidden="true">
@@ -63,11 +282,11 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Deposit</h4>
-						<p class="sub-title">Choose prefered deposit means</p>
+						<p class="sub-title">Choose prefered deposit means.More deposit means are added regularly.</p>
 					</div>
 					<div class="form-area">
 							<div class="form-group">
@@ -117,7 +336,21 @@
 									{% endif %} 
 
 							</div>
-										
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#crypto">
+								       <button type="submit" class="mybtn1">Cryptocurrency</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Cryptocurrency</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>										
 			
 
 					</div>
@@ -141,7 +374,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Paypal& Credit/Debit Card</h4>
@@ -185,7 +418,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">M-Pesa Deposit</h4>
@@ -218,283 +451,22 @@
 		<!-- M-Pesa Area End -->
 
 
-	<!-- Wallet Area Start -->
-	<div class="modal fade login-modal" id="wallet" tabindex="-1" role="dialog" aria-labelledby="wallet" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<div class="modal-body">
-					{% comment %} <div class="logo-area">
-							<img class="logo" src="/static/assets/images/logoz.png" alt="">
-					</div> {% endcomment %}
-					{% comment %} <div class="header-area">
-						<h4 class="title">Wallet</h4>
-						<p class="sub-title">Account Information</p>
-					</div> {% endcomment %}
-					<div class="form-area">
 
 
 
 
-
-	<!-- Marketing Tools Area Start -->
-	<section class="marketing-tools">
-		<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-8 col-md-10">
-					<div class="section-heading">
-								<div class="logo-area">
-							<img class="logo" src="/static/assets/images/logoz.png" alt="">
-					</div>
-						<h5 class="subtitle">
-								Account Information
-						</h5>
-						<h2 class="title">
-								Wallet
-						</h2>
-						{% comment %} <p class="text">
-						Balance is your tokens USD equivalent.Withrawable is amount you can withraw at the moment.
-						</p> {% endcomment %}
-					</div>
-				</div>
-			</div>
-			<div class="row">
-					<div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon one">
-								<img src="assets/images/affiliate/ic7.png" alt="">
-							</div>
-							<div class="content">
-								<h4 class="title">
-										Tokens
-								</h4>
-								<p class="text">
-										{{user.user_accounts.balance}} T
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon two">
-								<img src="assets/images/affiliate/ic8.png" alt="">
-							</div>
-							<div class="content">
-								<h4 class="title">
-								Bal
-								</h4>
-								<p class="text">
-										{{user.user_accounts.balance_usd}} $
-								</p>
-							</div>
-						</div>
-					</div>
-
-					
-					{% comment %} <div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon three">
-								<img src="assets/images/affiliate/ic9.png" alt="">
-							</div>
-							<div class="content">
-							<a  href="{% url 'account:withraw' %}"> <h4 class="title">
-								Withr.B
-								</h4>{{user.user_accounts.withrawable_balance}} T</a>
-							</div>
-						</div>
-					</div> {% endcomment %}
-					{% comment %} <div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon three">
-								<img src="assets/images/affiliate/ic10.png" alt="">
-							</div>
-							<div class="content">
-								<h4 class="title">
-								Withraw Power
-								</h4>
-								<p class="text">
-								{{user.user_accounts.withraw_power}} T
-								</p>
-							</div>
-						</div>
-					</div> {% endcomment %}
-				<div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon two">
-								<img src="static/assets/images/affiliate/ic8.png" alt="">
-							</div>
-							<div class="content">
-							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
-								Ref.Bal
-								</h4>{{user.user_accounts.refer_balance}} T</a>
-							</div>
-						</div>
-				</div>
-				{% comment %} <div class="col-lg-3 col-md-6">
-						<div class="single-tools">
-							<div class="icon two">
-								<img src="assets/images/affiliate/ic8.png" alt="">
-							</div>
-							<div class="content">
-								<h4 class="title">
-								Trial Balance
-								</h4>
-								<p class="text">
-								{{user.user_accounts.trial_balance}} T
-								</p>
-							</div>
-						</div>
-				</div> {% endcomment %}
-			</div>
-
-
-					
-		{% comment %} </div> {% endcomment %}
-
-				<div class="row">
-
-					<div class="col-lg-4">
-						<div class="single-winer">
-						<a href="/account/deposit">
-            
-
-							{% comment %} <div class="top-area"> {% endcomment %}
-								<div class="left">
-									<h4 class="name">
-											Deposit 
-									</h4>
-									{% comment %} <p class="date">
-											
-									</p> {% endcomment %}
-								</div>
-								</a>
-		
-							{% comment %} </div> {% endcomment %}
-                                 
-
-
-
-
-
-
-							
-              <div class="bottom-area">
-								{% comment %} <div class="left">
-										
-								</div> {% endcomment %}
-								{% comment %} <div class="right">
-										<img src="/static/assets/images/icon2.png" alt="">
-								</div> {% endcomment %}
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-lg-4">
-						<div class="single-winer">
-							{% comment %} <div class="top-area"> {% endcomment %}
-							<a href="/account/withraw">
-								<div class="center">
-									<h4 class="name">
-											Withraw
-									</h4>
-									{% comment %} <p class="date">
-									{{user.user_accounts.withrawable_balance}}
-
-									</p> {% endcomment %}
-								</div>
-								</a>
-
-
-
-							{% comment %} </div> {% endcomment %}
-
-							<div class="bottom-area">
-		
-							</div>
-
-						</div>
-					</div>
-									    <div class="col-lg-4">
-						<div class="single-winer">
-							{% comment %} <div class="top-area"> {% endcomment %}
-							<a href="/account/cash_trans">
-								<div class="center">
-									<h4 class="name">
-											Tranfer (T)o Your Friend 
-									</h4>
-									{% comment %} <p class="date">
-									{{user.user_accounts.withrawable_balance}}
-
-									</p> {% endcomment %}
-								</div>
-								</a>
-
-
-
-							{% comment %} </div> {% endcomment %}
-
-							<div class="bottom-area">
-		
-							</div>
-
-						</div>
-					</div>
-
-
-
-		{% comment %} </div> {% endcomment %}
-
-		</div>
-	</section>
-	<!-- Marketing Tools Area End -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
-
-					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-						</p>
-					</div> {% endcomment %}
-				</div>
-			</div>
-			</div>
-		</div>
-		<!-- Wallet Area End -->
-
-
-
-	<!-- Deposit Area Start -->
+	<!-- Withraw Area Start -->
 	<div class="modal fade login-modal" id="withraw" tabindex="-1" role="dialog" aria-labelledby="withraw" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Withdraw</h4>
-						<p class="sub-title">Choose your prefered withrawal means</p>
+						<p class="sub-title">Choose your prefered withrawal means.More withrawal means are added regularly.</p>
 					</div>
 					<div class="form-area">
 							<div class="form-group">
@@ -545,7 +517,21 @@
 									{% endif %} 
 									
 							</div>												
-			
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#crypto">
+								       <button type="submit" class="mybtn1">To your Crypto Wallet</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">To your Crypto Wallet</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>			
 
 					</div>
 					{% comment %} <div class="form-footer">
@@ -557,7 +543,7 @@
 			</div>
 			</div>
 		</div>
-		<!-- Deposit Area End -->
+		<!-- Withraw Area End -->
 
 	<!-- Wmpesa Area Start -->
 	<div class="modal fade login-modal" id="wmpesa" tabindex="-1" role="dialog" aria-labelledby="wmpesa" aria-hidden="true">
@@ -566,33 +552,79 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">M-Pesa Withdraw</h4>
 						<p class="sub-title">Enter Amount to withraw</p>
 					</div>
 					<div class="form-area">
-							<div class="form-group">
-								   <button type="submit" class="mybtn1">M-Pesa</button>
-							</div>
-				
+<form action="{% url 'account:mpesa_withrawal' %}" method="post">
+{% csrf_token %}
+
+  <div class="form-group">
+    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
+  </div>
+
+
+<button class="mybtn1 type="submit">Submit</button>
+</form>
 					</div>
 					
-					<div class="form-footer">
-						<p>Withdraw now? 
-								{% comment %} <a href="#">Create account <i class="fas fa-angle-double-right"></i></a> {% endcomment %}
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Withdraw</a>
-								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
-						</p>
-					</div>
+
 				</div>
 			</div>
 			</div>
 		</div>
 		<!-- WM-Pesa Area End -->	
 
+	<!-- ToFriend Area Start -->
+	<div class="modal fade login-modal" id="tofriend" tabindex="-1" role="dialog" aria-labelledby="tofriend" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Transfer To Friend</h4>
+						<p class="sub-title">Help your Friend Kickstart</p>
+					</div>
+					<div class="form-area">
+<form action="{% url 'account:cash_trans' %}" method="post">
+    {% csrf_token %}
 
+    <div>
+      {% if form.errors %}
+      <span class="text-danger">{{ form.errors }}</span>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-6 col-8 d-flex align-self-center">
+        <div class="form-area"> 
+            <input type="text" name="recipient"  class="input-field" placeholder="Recipient Username/Mobile" id="id_recipient"required autofocus>       
+        </div>
+    </div>   
+    
+    <div class="col-lg-6 col-8 d-flex align-self-center">
+        <div class="form-area"> 
+            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" required id="id_amount" autofocus>                    
+        </div>
+    </div>  
+
+    <div class="form-group">
+        <button type="submit" class="mybtn1">Send</button>
+		</div>
+
+  </form>
+					</div>
+
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Tofriend Area End -->	
 
 
 	<!-- TransRefer Start -->
@@ -602,7 +634,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Ref.CoM Transfer</h4>
@@ -627,7 +659,7 @@
 					
 					<div class="form-footer">
 						<p> 
-						<a href="{% url 'account:refer_credit' %}" class="mybtn1"  > My Company</a>
+						<a href="{% url 'account:refer_credit' %}" class="mybtn1"  >My Company</a>
 						</p>
 					</div> 
 				</div>
@@ -636,6 +668,37 @@
 		</div>
 		<!-- Trans_Refer -->
 
+	<!-- Wmpesa Area Start -->
+	<div class="modal fade login-modal" id="crypto" tabindex="-1" role="dialog" aria-labelledby="crypto" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					{% comment %} <div class="header-area">
+						<h4 class="title">M-Pesa Withdraw</h4>
+						<p class="sub-title">Enter Amount to withraw</p>
+					</div> {% endcomment %}
+					<div class="form-area">
+							<div class="form-group">
+								   <button type="submit" class="mybtn1">Coming Soon</button>
+							</div>
+				
+					</div>
+					
+					{% comment %} <div class="form-footer">
+						<p>Withdraw now? 
+						<a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Withdraw</a>
+						
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!--Cryptocurrency Area End -->	
 
 	<!-- Login Area Start -->
 	<div class="modal fade login-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
@@ -644,7 +707,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Great to have you back!</h4>
@@ -703,7 +766,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<div class="modal-body">
 						<div class="logo-area">
-								<img class="logo" src="/static/assets/images/loggo.png" alt="">
+								<img class="logo" src="/static/assets/images/logoz.png" alt="">
 						</div>
 						<div class="header-area">
 							<h4 class="title">Welcome new member!</h4>
