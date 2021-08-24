@@ -72,7 +72,16 @@ class Account(TimeStamp):
         # if self.withraw_powe,< self.balance:
         #     return self.withraw_power
         # return self.balance
-        
+
+    @property
+    def min_refer_to_transfer(self):
+        try:
+            set_up=account_setting()
+            return set_up.min_redeem_refer_credit
+        except:
+            return 200 #TODO    
+
+
     @property
     def balance_usd(self):
         rate_to_usd=Currency.objects.get(name='USD').rate

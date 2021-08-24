@@ -627,6 +627,8 @@
 		<!-- Tofriend Area End -->	
 
 
+
+
 	<!-- TransRefer Start -->
 	<div class="modal fade login-modal" id="referc" tabindex="-1" role="dialog" aria-labelledby="referc" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -637,8 +639,11 @@
 							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
-						<h4 class="title">Ref.CoM Transfer</h4>
+						<h4 class="title">Ref.Com Transfer</h4>
 						<p class="sub-title">Transfer to main account</p>
+						<h5 class="title">Bal:{{user.user_accounts.refer_balance}}T</h5>
+					    Minimum Transfer Amount:{{user.user_accounts.min_refer_to_transfer}}T
+			
 					</div>
 					<div class="form-area">
 					
@@ -653,6 +658,7 @@
 </div>
 
 <button class="mybtn1" type="submit">Transfer To Main Account</button>
+
 </form>
 				
 					</div>
@@ -699,6 +705,38 @@
 			</div>
 		</div>
 		<!--Cryptocurrency Area End -->	
+	<!-- ToFriend Area Start -->
+	<div class="modal fade login-modal" id="share" tabindex="-1" role="dialog" aria-labelledby="share" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Share To Your Friends</h4>
+						<p class="sub-title">You get 5% of their bet,Whether they win or loose ,You win!</p>
+					</div>
+					<div class="form-area">
+						Your Ref code is {{request.user.code}}	
+
+					</div>
+
+										<div class="form-footer">
+						<p>got friends? 
+								{% comment %} <a href="#">Create account <i class="fas fa-angle-double-right"></i></a> {% endcomment %}
+								<a href="#" class="mybtn1"  > Share & Earn</a>
+								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
+						</p>
+					</div>
+
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Share Area End -->	
+
 
 	<!-- Login Area Start -->
 	<div class="modal fade login-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
@@ -759,6 +797,7 @@
 		</div>
 		<!-- Login Area End -->
 	
+
 		<!-- SignUp Area Start -->
 		<div class="modal fade login-modal sign-in" id="signin" tabindex="-1" role="dialog" aria-labelledby="signin" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered " role="document">

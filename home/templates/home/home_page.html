@@ -117,7 +117,7 @@
 											<li>											
 											
 											{% if user.is_authenticated %}
-											<	<a href="user/my_users/" class="dropdown-item" >
+												<a href="user/my_users/" class="dropdown-item" >
 													<i class="fa fa-angle-double-right"></i> Users No : {{user.referees_no}}
 												</a>
 											{% endif %}
@@ -143,22 +143,9 @@
 											{% endif %} 
 																			
 											</li>
-
+										
 											<li>
-
-											{% if user.is_authenticated %}
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
-													<i class="fa fa-angle-double-right"></i> Income: {{user.user_accounts.withrawable_balance}}T
-												</a>
-											{% endif %}
-											{% if not user.is_authenticated %}
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
-													<i class="fa fa-angle-double-right"></i> Income
-												</a>
-											{% endif %} 																																		
-											</li>											
-											<li>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#share">
 													<i class="fa fa-angle-double-right"></i> Share
 												</a>
 																																		
