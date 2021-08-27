@@ -100,7 +100,7 @@
 								<img src="assets/images/affiliate/ic7.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+								<h4 >
 										Tokens
 								</h4>
 								<p class="text">
@@ -115,7 +115,7 @@
 								<img src="assets/images/affiliate/ic8.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+								<h4 >
 								Bal
 								</h4>
 								<p class="text">
@@ -132,8 +132,12 @@
 								<img src="static/assets/images/affiliate/ic8.png" alt="">
 							</div>
 							<div class="content">
-							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
+							<h4 >
 								Ref.Bal
+								</h4>
+
+						
+							<a  a href="#" data-toggle="modal" data-target="#referc">
 								</h4>{{user.user_accounts.refer_balance}} T</a>
 							</div>
 						</div>
@@ -150,7 +154,7 @@
 								<img src="assets/images/affiliate/ic10.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+								<h4 >
 								With.P
 								</h4>
 								<p class="text">
@@ -165,9 +169,13 @@
 								<img src="static/assets/images/affiliate/ic8.png" alt="">
 							</div>
 							<div class="content">
-							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
+			
+							<h4>
 								With.B
+								</h4>
+								<a  a href="#" data-toggle="modal" data-target="#withraw">
 								</h4>{{user.user_accounts.withrawable_balance}} T</a>
+
 							</div>
 						</div>
 				</div>
@@ -177,7 +185,7 @@
 								<img src="assets/images/affiliate/ic8.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+								<h4 >
 								Trial
 								</h4>
 								<p class="text">
@@ -641,8 +649,8 @@
 					<div class="header-area">
 						<h4 class="title">Ref.Com Transfer</h4>
 						<p class="sub-title">Transfer to main account</p>
-						<h5 class="title">Bal:{{user.user_accounts.refer_balance}}T</h5>
-					    Minimum Transfer Amount:{{user.user_accounts.min_refer_to_transfer}}T
+						<h5 class="title">Bal: {{user.user_accounts.refer_balance}}T</h5>
+					    Minimum Transfer Amount: {{user.user_accounts.min_refer_to_transfer}}T
 			
 					</div>
 					<div class="form-area">
@@ -665,7 +673,7 @@
 					
 					<div class="form-footer">
 						<p> 
-						<a href="{% url 'account:refer_credit' %}" class="mybtn1"  >My Company</a>
+						<a href="{% url 'account:refer_credit' %}" class="mybtn1"  >Income Source Details</a>
 						</p>
 					</div> 
 				</div>
