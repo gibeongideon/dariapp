@@ -11,8 +11,11 @@ from .forms import SubscriberForm
 # @login_required(login_url="/user/login")
 def homepage(request):
     # print(request.user)
-    spin_players_no = randint(800, 1200)
+    spin_players_no = randint(900, 1300)
+    spin_players=round(spin_players_no/3*2,-2)
+
     return render(request, "home/home_page.html",{
+        "spin_players": spin_players,
         "spin_players_no": spin_players_no})
 
 
