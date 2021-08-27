@@ -16,6 +16,7 @@ from celery.schedules import crontab
 # import dj_database_url
 from decouple import config
 from decouple import Csv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'home',
-    "channels",
+    # "channels",
     # "functional_tests",
     # ...
     "admin_interface",
@@ -81,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -338,3 +340,7 @@ WAGTAIL_SITE_NAME = "dariapp"
 BASE_URL = 'http://example.com'
 
 
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
