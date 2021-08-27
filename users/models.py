@@ -21,6 +21,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    @classmethod
+    def referees(cls,code):
+        return cls.objects.filter(referer_code=code).count()
+
+    @property
+    def referees_no(self):
+        return self.referees(self.code)
+
     @staticmethod
     def format_mobile_no(mobile):  # hard coded for kenya # need refactor
         mobile = str(mobile)

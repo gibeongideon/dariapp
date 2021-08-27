@@ -148,9 +148,10 @@ def cash_trans(request):
         form = CashTransferForm(data=data)
         if form.is_valid():
             form.save()
-        if form.errors:
-            print(form.errors)
 
+        if form.errors:
+            pass
+            # return redirect('/')#sError For TODO
     trans_logz = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
 
     return render(
