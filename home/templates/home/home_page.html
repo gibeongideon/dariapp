@@ -196,10 +196,24 @@
 {% block content %}
 	<!-- Breadcrumb Area Start -->
 	<section class="breadcrumb-area play">
+	{% if user.is_authenticated %}
 	    <a class="navbar-brand" href="/wheel/ispin">
 		    <img class="bc-img" src="/static/assets/images/breadcrumb/cart-bg 99.png" alt="">
 		</a>
-		
+		{% endif %}   
+
+		{% if not user.is_authenticated %}
+		  <a class="navbar-brand"  href="#" data-toggle="modal" data-target="#login">
+		    <img class="bc-img" src="/static/assets/images/breadcrumb/cart-bg 99.png" alt="">
+		</a>
+		{% endif %} 
+
+
+
+
+
+
+
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
