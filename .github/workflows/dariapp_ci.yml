@@ -1,5 +1,5 @@
 
-name: daruapp CI/CD
+name: dariapp CI/CD
 
 on:
   push:
@@ -40,12 +40,12 @@ jobs:
     - name: Collectstatic, makemigrations & migrate
       run: |
 
-        # cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        # cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py collectstatic
         python manage.py makemigrations users
         python manage.py makemigrations account
         python manage.py makemigrations daru_wheel
-        python manage.py makemigrations dashboard
+        python manage.py makemigrations home
         python manage.py makemigrations core
         python manage.py makemigrations
 
@@ -53,7 +53,7 @@ jobs:
 
     - name: Run Tests
       run: |
-        python manage.py test account users daru_wheel
+        python manage.py test account users daru_wheel #@
 
 
 
@@ -73,7 +73,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pwd
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp
+        cd ~/actions-runner/deploy/dariapp/dariapp
         
         python -m pip install --upgrade pip    
         python -m pip install tree
@@ -81,48 +81,48 @@ jobs:
 
     - name: Create ENV VAR
       run: |  
-        touch ~/daruapp/.env
-        cp ~/daruapp/.env  ~/daruapp/actions-runner/deploy/daruapp/daruapp
+        touch ~/dariapp/.env
+        cp ~/dariapp/.env  ~/actions-runner/deploy/dariapp/dariapp
 
 
     - name: Create Migrations Backup Directories
       run: |  
-        mkdir -p ~/daruapp/daruapp/migrations/account/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/daru_wheel/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/dashboard/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/users/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/mpesa_api/core/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/paypal/standard/ipn/migrations
-        mkdir -p ~/daruapp/daruapp/migrations/paypal/pro/migrations
+        mkdir -p ~/dariapp/migrations/account/migrations
+        mkdir -p ~/dariapp/migrations/daru_wheel/migrations
+        mkdir -p ~/dariapp/migrations/home/migrations
+        mkdir -p ~/dariapp/migrations/users/migrations
+        mkdir -p ~/dariapp/migrations/mpesa_api/core/migrations
+        mkdir -p ~/dariapp/migrations/paypal/standard/ipn/migrations
+        mkdir -p ~/dariapp/migrations/paypal/pro/migrations
 
-        cd ~/daruapp/daruapp/migrations
+        cd ~/dariapp/migrations
         tree
 
 
     - name: RSYNC Backup Migrations To Workin Directory
       run: |
-        rsync -a --delete ~/daruapp/daruapp/migrations/account/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/account
-        rsync -a --delete ~/daruapp/daruapp/migrations/daru_wheel/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/daru_wheel
-        rsync -a --delete ~/daruapp/daruapp/migrations/dashboard/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/dashboard
-        rsync -a --delete ~/daruapp/daruapp/migrations/users/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/users
-        rsync -a --delete ~/daruapp/daruapp/migrations/mpesa_api/core/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/mpesa_api/core
-        rsync -a --delete ~/daruapp/daruapp/migrations/paypal/standard/ipn/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/paypal/standard/ipn
-        rsync -a --delete ~/daruapp/daruapp/migrations/paypal/pro/migrations ~/daruapp/actions-runner/deploy/daruapp/daruapp/paypal/pro
+        rsync -a --delete ~/dariapp/migrations/account/migrations ~/actions-runner/deploy/dariapp/dariapp/account
+        rsync -a --delete ~/dariapp/migrations/daru_wheel/migrations ~/actions-runner/deploy/dariapp/dariapp/daru_wheel
+        rsync -a --delete ~/dariapp/migrations/home/migrations ~/actions-runner/deploy/dariapp/dariapp/home
+        rsync -a --delete ~/dariapp/migrations/users/migrations ~/actions-runner/deploy/dariapp/dariapp/users
+        rsync -a --delete ~/dariapp/migrations/mpesa_api/core/migrations ~/actions-runner/deploy/dariapp/dariapp/mpesa_api/core
+        rsync -a --delete ~/dariapp/migrations/paypal/standard/ipn/migrations ~/actions-runner/deploy/dariapp/dariapp/paypal/standard/ipn
+        rsync -a --delete ~/dariapp/migrations/paypal/pro/migrations ~/actions-runner/deploy/dariapp/dariapp/paypal/pro
 
         
     - name: COLLECTSTATIC
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp                
+        cd ~/actions-runner/deploy/dariapp/dariapp                
         python manage.py collectstatic
 
     - name: MAKEMIGRATIONS
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp  
+        cd ~/actions-runner/deploy/dariapp/dariapp  
 
         python manage.py makemigrations users
         python manage.py makemigrations account
         python manage.py makemigrations daru_wheel
-        python manage.py makemigrations dashboard
+        python manage.py makemigrations home
         python manage.py makemigrations core
         # python manage.py makemigrations ipn
         python manage.py makemigrations pro
@@ -130,89 +130,89 @@ jobs:
     ## account
     - name: MIGRATE-account
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py migrate account
 
     - name: Rsync Workin Directory to Backup Migrations-account
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/account/migrations ~/daruapp/daruapp/migrations/account
-        cd ~/daruapp/daruapp/migrations/account
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/account/migrations ~/dariapp/migrations/account
+        cd ~/dariapp/migrations/account
         tree
 
     ## daru_wheel
     - name: MIGRATE-daru_wheel
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py migrate daru_wheel
 
     - name: Rsync Workin Directory to Backup Migrations-daru_wheel
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/daru_wheel/migrations ~/daruapp/daruapp/migrations/daru_wheel
-        cd ~/daruapp/daruapp/migrations/daru_wheel
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/daru_wheel/migrations ~/dariapp/migrations/daru_wheel
+        cd ~/dariapp/migrations/daru_wheel
         tree
-    ## dashboard    
-    - name: MIGRATE-dashboard
+    ## home    
+    - name: MIGRATE-home
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
-        python manage.py migrate dashboard
+        cd ~/actions-runner/deploy/dariapp/dariapp        
+        python manage.py migrate home
 
-    - name: Rsync Workin Directory to Backup Migrations-dashboard
+    - name: Rsync Workin Directory to Backup Migrations-home
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/dashboard/migrations ~/daruapp/daruapp/migrations/dashboard
-        cd ~/daruapp/daruapp/migrations/dashboard
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/home/migrations ~/dariapp/migrations/home
+        cd ~/dariapp/migrations/home
         tree
 
     ## users
     - name: MIGRATE-users
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py migrate users
 
     - name: Rsync Workin Directory to Backup Migrations-users
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/users/migrations ~/daruapp/daruapp/migrations/users
-        cd ~/daruapp/daruapp/migrations/users
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/users/migrations ~/dariapp/migrations/users
+        cd ~/dariapp/migrations/users
         tree    
 
     ## core
     - name: MIGRATE-core
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py migrate core
 
     - name: Rsync Workin Directory to Backup Migrations-core
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/mpesa_api/core/migrations ~/daruapp/daruapp/migrations/mpesa_api/core
-        cd ~/daruapp/daruapp/migrations/mpesa_api/core
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/mpesa_api/core/migrations ~/dariapp/migrations/mpesa_api/core
+        cd ~/dariapp/migrations/mpesa_api/core
         tree   
 
     ## ipn
     - name: MIGRATE-ipn
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         # python manage.py migrate ipn
 
     - name: Rsync Workin Directory to Backup Migrations-ipn
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/paypal/standard/ipn/migrations ~/daruapp/daruapp/migrations/paypal/standard/ipn 
-        cd ~/daruapp/daruapp/migrations/paypal/standard/ipn
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/paypal/standard/ipn/migrations ~/dariapp/migrations/paypal/standard/ipn 
+        cd ~/dariapp/migrations/paypal/standard/ipn
         tree 
 
     ## pro
     - name: MIGRATE-pro
       run: |
-        cd ~/daruapp/actions-runner/deploy/daruapp/daruapp        
+        cd ~/actions-runner/deploy/dariapp/dariapp        
         python manage.py migrate pro
 
     - name: Rsync Workin Directory to Backup Migrations-pro
       run: |
-        rsync -a --delete ~/daruapp/actions-runner/deploy/daruapp/daruapp/paypal/pro/migrations ~/daruapp/daruapp/migrations/paypal/pro 
-        cd ~/daruapp/daruapp/migrations/paypal/pro
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/paypal/pro/migrations ~/dariapp/migrations/paypal/pro 
+        cd ~/dariapp/migrations/paypal/pro
         tree 
 
     - name: Backup Migrations_Updated
       run: |
-        cd ~/daruapp/daruapp/migrations
+        cd ~/dariapp/migrations
         tree
 
 
