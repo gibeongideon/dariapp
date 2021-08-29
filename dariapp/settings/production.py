@@ -35,4 +35,17 @@ DJANGO_SETTINGS_MODULE = config(
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'    
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'   
+# 
+# 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("DB_NAME", default="darius_db"),
+        "USER": config("DB_USER", default="daru"),
+        "PASSWORD": config("DB_PASSWORD", default="password"),
+        "HOST": "localhost",
+        "PORT": "",
+    }
+}
+  
