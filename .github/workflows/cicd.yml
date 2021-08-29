@@ -128,10 +128,10 @@ jobs:
         python manage.py makemigrations pro
 
     ## account
-    - name: MIGRATE-R-Sync
+    - name: APP-MIGRATE
       run: |
         cd ~/actions-runner/deploy/dariapp/dariapp        
-        python manage.py migrate --run-syncdb
+        python manage.py migrate
 
     ## account
     - name: MIGRATE-account
