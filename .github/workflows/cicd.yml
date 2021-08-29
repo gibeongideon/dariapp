@@ -132,7 +132,7 @@ jobs:
     - name: MIGRATE-account
       run: |
         cd ~/actions-runner/deploy/dariapp/dariapp        
-        python manage.py migrate account
+        python manage.py migrate  --run-syncdb
 
     - name: Rsync Workin Directory to Backup Migrations-account
       run: |
