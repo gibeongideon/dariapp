@@ -1,18 +1,18 @@
 from django.db import models
-from modelcluster.fields import ParentalKey
+# from modelcluster.fields import ParentalKey
 
-from wagtail.core.models import Page, Orderable
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel,InlinePanel, MultiFieldPanel)
+# from wagtail.core.models import Page, Orderable
+# from wagtail.core.fields import RichTextField
+# from wagtail.admin.edit_handlers import (
+#     FieldPanel, FieldRowPanel,InlinePanel, MultiFieldPanel)
     
-from wagtail.images.edit_handlers import ImageChooserPanel 
-from wagtail.search import index
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
+# from wagtail.images.edit_handlers import ImageChooserPanel 
+# from wagtail.search import index
+# from wagtail.snippets.models import register_snippet
+# from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
+# from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+# from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 
 
 
@@ -75,286 +75,286 @@ class WebPa(TimeStamp):
 
 
 
-class HomePage(Page):
+# class HomePage(Page):
     
-    # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    intro_quote1 = models.CharField(default="Our quest to empower & change ",max_length=200, blank=True,null=True)
-    intro_quote2 = models.CharField(default="every hustler's",max_length=200, blank=True,null=True)
-    intro_quote3 = models.CharField(default=" life.",max_length=200, blank=True,null=True)
+#     # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     intro_quote1 = models.CharField(default="Our quest to empower & change ",max_length=200, blank=True,null=True)
+#     intro_quote2 = models.CharField(default="every hustler's",max_length=200, blank=True,null=True)
+#     intro_quote3 = models.CharField(default=" life.",max_length=200, blank=True,null=True)
 
-    body = RichTextField(blank=True)
-#     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
+#     body = RichTextField(blank=True)
+# #     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
     
-    big_tittlea = models.CharField(max_length=250 ,blank=True,null=True)
-#     join_tittleb = models.CharField(max_length=250 ,blank=True,null=True)
-#     join_tittlec = models.CharField(max_length=250 ,blank=True,null=True)
+#     big_tittlea = models.CharField(max_length=250 ,blank=True,null=True)
+# #     join_tittleb = models.CharField(max_length=250 ,blank=True,null=True)
+# #     join_tittlec = models.CharField(max_length=250 ,blank=True,null=True)
 
-    advert = models.ForeignKey(
-        'home.Advert',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
-# 
-    header = models.ForeignKey(
-        'home.Header',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
+#     advert = models.ForeignKey(
+#         'home.Advert',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
+# # 
+#     header = models.ForeignKey(
+#         'home.Header',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
 
-    footer = models.ForeignKey(
-        'home.Footer',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')        
+#     footer = models.ForeignKey(
+#         'home.Footer',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')        
 
 
-    content_panels=Page.content_panels + [
-        SnippetChooserPanel('advert'),
-        SnippetChooserPanel('header'),
-        SnippetChooserPanel('footer'),
-        FieldPanel('body',classname = "full"),
-        # FieldPanel('image0'),
-        # FieldPanel('signature_01'),
+#     content_panels=Page.content_panels + [
+#         SnippetChooserPanel('advert'),
+#         SnippetChooserPanel('header'),
+#         SnippetChooserPanel('footer'),
+#         FieldPanel('body',classname = "full"),
+#         # FieldPanel('image0'),
+#         # FieldPanel('signature_01'),
 
-        FieldPanel('big_tittlea'),
+#         FieldPanel('big_tittlea'),
+
+
+# #         FieldPanel('intro_quote1'),
+# #         FieldPanel('intro_quote2'),
+# #         FieldPanel('intro_quote3'),
+
+# #         # InlinePanel('latestnewz',label="Latest News"),
+
+
+#     ]
+    
+#     @property
+#     def spin_players_no(self):
+#         return 607
+
+
+
+
+
+
+
+# @register_snippet
+# class Advert(models.Model):
+#     url = models.URLField(null=True, blank=True)
+#     text = models.CharField(max_length=255)
+
+#     panels = [
+#         FieldPanel('url'),
+#         FieldPanel('text'),
+#     ]
+
+#     def __str__(self):
+#         return str(self.text)
+
+
+# @register_snippet
+# class Header(models.Model):
+#     faicon = models.ImageField(upload_to='images/faricon/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     url = models.URLField(null=True, blank=True)
+#     text = models.CharField(max_length=255,blank=True,null=True)
+#     logo = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     logo1 = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+
+    
+
+#     panels = [
+#         FieldPanel('url'),
+#         FieldPanel('text'),
+#         FieldPanel('logo'),
+#         FieldPanel('logo1'),
+#         FieldPanel('faicon'),
+        
+#     ]
+
+#     def __str__(self):
+#         return str(self.text)
+
+
+# @register_snippet
+# class Footer(models.Model):
+#     url = models.URLField(null=True, blank=True)
+#     text = models.CharField(max_length=255, blank=True,null=True)
+#     logofooter = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+
+#     call_no =  models.CharField(max_length=200, default='020 2020 405', blank=True,null=True)
+#     info_mail = models.EmailField(default='info@uda-party.com')
+#     office_location = models.CharField(max_length=200,default="Hustler Center | Nairobi Kenya", blank=True,null=True)
+#     designer = models.CharField(max_length=200, default='+254712748566', blank=True,null=True)
+#     designer_link = models.URLField(default="https://www.linkedin.com/in/kipngeno-gibeon-27b9765a/")
+
+#     instagram_link = models.URLField(null=True, blank=True)
+#     twitter_link = models.URLField(null=True, blank=True)
+#     youtube_link = models.URLField(null=True, blank=True)
+#     facebook_link = models.URLField(null=True, blank=True)
+
+#     panels = [
+#         FieldPanel('url'),
+#         FieldPanel('text'),
+        
+#         FieldPanel('logofooter'),
+
+#         FieldPanel('office_location'),
+#         FieldPanel('info_mail'),
+#         FieldPanel('call_no'),
+#         FieldPanel('designer'),
+#         FieldPanel('designer_link'),
+
+#         FieldPanel('instagram_link'),
+#         FieldPanel('twitter_link'),
+#         FieldPanel('youtube_link'),
+#         FieldPanel('facebook_link'),
+#     ]
+
+#     def __str__(self):
+#         return str(self.text)
+        
+        
+        
+        
+        
+        
+# class InfoPage(Page):
+    
+#     # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     intro_quote1 = models.CharField(max_length=200, blank=True,null=True)
+#     intro_quote2 = models.CharField(max_length=200, blank=True,null=True)
+#     intro_quote3 = models.CharField(max_length=200, blank=True,null=True)
+
+#     body = RichTextField(blank=True)
+# #     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
+    
+#     tittle1 = models.CharField(max_length=250 ,blank=True,null=True)  
+#     tittle2 = models.CharField(max_length=250 ,blank=True,null=True)
+#     tittle3 = models.CharField(max_length=250 ,blank=True,null=True) 
+#     tittle4 = models.CharField(max_length=250 ,blank=True,null=True)
+
+#     bodi1 = models.CharField(max_length=250 ,blank=True,null=True) 
+#     bodi2 = models.CharField(max_length=250 ,blank=True,null=True)
+#     bodi3 = models.CharField(max_length=250 ,blank=True,null=True)
+#     bodi4 = models.CharField(max_length=250 ,blank=True,null=True)
+
+
+#     advert = models.ForeignKey(
+#         'home.Advert',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
+# # 
+#     header = models.ForeignKey(
+#         'home.Header',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
+
+#     footer = models.ForeignKey(
+#         'home.Footer',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')        
+
+
+#     content_panels=Page.content_panels + [
+#         SnippetChooserPanel('advert'),
+#         SnippetChooserPanel('header'),
+#         SnippetChooserPanel('footer'),
+#         FieldPanel('body',classname = "full"),
+#         # FieldPanel('image0'),
+#         # FieldPanel('signature_01'),      
 
 
 #         FieldPanel('intro_quote1'),
 #         FieldPanel('intro_quote2'),
 #         FieldPanel('intro_quote3'),
 
-#         # InlinePanel('latestnewz',label="Latest News"),
+#         FieldPanel('tittle1'),
+#         FieldPanel('bodi1'),
+#         FieldPanel('tittle2'),
+#         FieldPanel('bodi2'),
+#         FieldPanel('tittle3'),
+#         FieldPanel('bodi3'),
+#         FieldPanel('tittle4'),
+#         FieldPanel('bodi4'),
+
+# #         # InlinePanel('latestnewz',label="Latest News"),
 
 
-    ]
-    
-    @property
-    def spin_players_no(self):
-        return 607
-
-
-
-
-
-
-
-@register_snippet
-class Advert(models.Model):
-    url = models.URLField(null=True, blank=True)
-    text = models.CharField(max_length=255)
-
-    panels = [
-        FieldPanel('url'),
-        FieldPanel('text'),
-    ]
-
-    def __str__(self):
-        return str(self.text)
-
-
-@register_snippet
-class Header(models.Model):
-    faicon = models.ImageField(upload_to='images/faricon/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    url = models.URLField(null=True, blank=True)
-    text = models.CharField(max_length=255,blank=True,null=True)
-    logo = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    logo1 = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     ]
 
     
-
-    panels = [
-        FieldPanel('url'),
-        FieldPanel('text'),
-        FieldPanel('logo'),
-        FieldPanel('logo1'),
-        FieldPanel('faicon'),
-        
-    ]
-
-    def __str__(self):
-        return str(self.text)
-
-
-@register_snippet
-class Footer(models.Model):
-    url = models.URLField(null=True, blank=True)
-    text = models.CharField(max_length=255, blank=True,null=True)
-    logofooter = models.ImageField(upload_to='images/logo/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-
-    call_no =  models.CharField(max_length=200, default='020 2020 405', blank=True,null=True)
-    info_mail = models.EmailField(default='info@uda-party.com')
-    office_location = models.CharField(max_length=200,default="Hustler Center | Nairobi Kenya", blank=True,null=True)
-    designer = models.CharField(max_length=200, default='+254712748566', blank=True,null=True)
-    designer_link = models.URLField(default="https://www.linkedin.com/in/kipngeno-gibeon-27b9765a/")
-
-    instagram_link = models.URLField(null=True, blank=True)
-    twitter_link = models.URLField(null=True, blank=True)
-    youtube_link = models.URLField(null=True, blank=True)
-    facebook_link = models.URLField(null=True, blank=True)
-
-    panels = [
-        FieldPanel('url'),
-        FieldPanel('text'),
-        
-        FieldPanel('logofooter'),
-
-        FieldPanel('office_location'),
-        FieldPanel('info_mail'),
-        FieldPanel('call_no'),
-        FieldPanel('designer'),
-        FieldPanel('designer_link'),
-
-        FieldPanel('instagram_link'),
-        FieldPanel('twitter_link'),
-        FieldPanel('youtube_link'),
-        FieldPanel('facebook_link'),
-    ]
-
-    def __str__(self):
-        return str(self.text)
-        
-        
-        
-        
-        
-        
-class InfoPage(Page):
+# class FaqPage(Page):
     
-    # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    intro_quote1 = models.CharField(max_length=200, blank=True,null=True)
-    intro_quote2 = models.CharField(max_length=200, blank=True,null=True)
-    intro_quote3 = models.CharField(max_length=200, blank=True,null=True)
+#     # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
+#     intro_quote1 = models.CharField(max_length=200, blank=True,null=True)
+#     intro_quote2 = models.CharField(max_length=200, blank=True,null=True)
+#     intro_quote3 = models.CharField(max_length=200, blank=True,null=True)
 
-    body = RichTextField(blank=True)
-#     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
+#     body = RichTextField(blank=True)
+# #     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
     
-    tittle1 = models.CharField(max_length=250 ,blank=True,null=True)  
-    tittle2 = models.CharField(max_length=250 ,blank=True,null=True)
-    tittle3 = models.CharField(max_length=250 ,blank=True,null=True) 
-    tittle4 = models.CharField(max_length=250 ,blank=True,null=True)
+#     tittle1 = models.CharField(max_length=250 ,blank=True,null=True)  
+#     tittle2 = models.CharField(max_length=250 ,blank=True,null=True)
+#     tittle3 = models.CharField(max_length=250 ,blank=True,null=True) 
+#     tittle4 = models.CharField(max_length=250 ,blank=True,null=True)
 
-    bodi1 = models.CharField(max_length=250 ,blank=True,null=True) 
-    bodi2 = models.CharField(max_length=250 ,blank=True,null=True)
-    bodi3 = models.CharField(max_length=250 ,blank=True,null=True)
-    bodi4 = models.CharField(max_length=250 ,blank=True,null=True)
-
-
-    advert = models.ForeignKey(
-        'home.Advert',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
-# 
-    header = models.ForeignKey(
-        'home.Header',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
-
-    footer = models.ForeignKey(
-        'home.Footer',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')        
+#     bodi1 = models.CharField(max_length=250 ,blank=True,null=True) 
+#     bodi2 = models.CharField(max_length=250 ,blank=True,null=True)
+#     bodi3 = models.CharField(max_length=250 ,blank=True,null=True)
+#     bodi4 = models.CharField(max_length=250 ,blank=True,null=True)
 
 
-    content_panels=Page.content_panels + [
-        SnippetChooserPanel('advert'),
-        SnippetChooserPanel('header'),
-        SnippetChooserPanel('footer'),
-        FieldPanel('body',classname = "full"),
-        # FieldPanel('image0'),
-        # FieldPanel('signature_01'),      
+#     advert = models.ForeignKey(
+#         'home.Advert',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
+# # 
+#     header = models.ForeignKey(
+#         'home.Header',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')
+
+#     footer = models.ForeignKey(
+#         'home.Footer',
+#         null=True,
+#         blank=True,
+#         on_delete=models.SET_NULL,related_name='+')        
 
 
-        FieldPanel('intro_quote1'),
-        FieldPanel('intro_quote2'),
-        FieldPanel('intro_quote3'),
-
-        FieldPanel('tittle1'),
-        FieldPanel('bodi1'),
-        FieldPanel('tittle2'),
-        FieldPanel('bodi2'),
-        FieldPanel('tittle3'),
-        FieldPanel('bodi3'),
-        FieldPanel('tittle4'),
-        FieldPanel('bodi4'),
-
-#         # InlinePanel('latestnewz',label="Latest News"),
+#     content_panels=Page.content_panels + [
+#         SnippetChooserPanel('advert'),
+#         SnippetChooserPanel('header'),
+#         SnippetChooserPanel('footer'),
+#         FieldPanel('body',classname = "full"),
+#         # FieldPanel('image0'),
+#         # FieldPanel('signature_01'),      
 
 
-    ]
+#         FieldPanel('intro_quote1'),
+#         FieldPanel('intro_quote2'),
+#         FieldPanel('intro_quote3'),
 
-    
-class FaqPage(Page):
-    
-    # image0 = models.ImageField(upload_to='images/intro/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    # signature_01 = models.ImageField(upload_to='images/signature/%Y/%m/%d/',max_length=2000,blank=True ,null =True)
-    intro_quote1 = models.CharField(max_length=200, blank=True,null=True)
-    intro_quote2 = models.CharField(max_length=200, blank=True,null=True)
-    intro_quote3 = models.CharField(max_length=200, blank=True,null=True)
+#         FieldPanel('tittle1'),
+#         FieldPanel('bodi1'),
+#         FieldPanel('tittle2'),
+#         FieldPanel('bodi2'),
+#         FieldPanel('tittle3'),
+#         FieldPanel('bodi3'),
+#         FieldPanel('tittle4'),
+#         FieldPanel('bodi4'),
 
-    body = RichTextField(blank=True)
-#     latest_new_title = models.CharField(max_length=200, default='Latest News', blank=True,null=True)
-    
-    tittle1 = models.CharField(max_length=250 ,blank=True,null=True)  
-    tittle2 = models.CharField(max_length=250 ,blank=True,null=True)
-    tittle3 = models.CharField(max_length=250 ,blank=True,null=True) 
-    tittle4 = models.CharField(max_length=250 ,blank=True,null=True)
-
-    bodi1 = models.CharField(max_length=250 ,blank=True,null=True) 
-    bodi2 = models.CharField(max_length=250 ,blank=True,null=True)
-    bodi3 = models.CharField(max_length=250 ,blank=True,null=True)
-    bodi4 = models.CharField(max_length=250 ,blank=True,null=True)
+# #         # InlinePanel('latestnewz',label="Latest News"),
 
 
-    advert = models.ForeignKey(
-        'home.Advert',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
-# 
-    header = models.ForeignKey(
-        'home.Header',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')
-
-    footer = models.ForeignKey(
-        'home.Footer',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,related_name='+')        
-
-
-    content_panels=Page.content_panels + [
-        SnippetChooserPanel('advert'),
-        SnippetChooserPanel('header'),
-        SnippetChooserPanel('footer'),
-        FieldPanel('body',classname = "full"),
-        # FieldPanel('image0'),
-        # FieldPanel('signature_01'),      
-
-
-        FieldPanel('intro_quote1'),
-        FieldPanel('intro_quote2'),
-        FieldPanel('intro_quote3'),
-
-        FieldPanel('tittle1'),
-        FieldPanel('bodi1'),
-        FieldPanel('tittle2'),
-        FieldPanel('bodi2'),
-        FieldPanel('tittle3'),
-        FieldPanel('bodi3'),
-        FieldPanel('tittle4'),
-        FieldPanel('bodi4'),
-
-#         # InlinePanel('latestnewz',label="Latest News"),
-
-
-    ]
+#     ]
 
 
 

@@ -4,7 +4,7 @@
 from django.urls import path, include
 from . import template_views as views
 from .payp_view import views as pviews 
-from .m_pesa_view import views as mviews 
+# from .m_pesa_view import views as mviews 
 
 
 
