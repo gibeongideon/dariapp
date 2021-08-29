@@ -117,7 +117,7 @@
 											<li>											
 											
 											{% if user.is_authenticated %}
-												<a href="user/my_users/" class="dropdown-item" >
+												<a href="{% url 'users:mine_users' %}" class="dropdown-item" >
 													<i class="fa fa-angle-double-right"></i> Users No : {{user.referees_no}}
 												</a>
 											{% endif %}
