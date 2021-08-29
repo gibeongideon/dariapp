@@ -39,8 +39,7 @@ jobs:
     
     - name: Collectstatic, makemigrations & migrate
       run: |
-
-        # cd ~/actions-runner/deploy/dariapp/dariapp        
+        
         python manage.py collectstatic
         python manage.py makemigrations users
         python manage.py makemigrations account
