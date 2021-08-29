@@ -41,14 +41,14 @@ jobs:
       run: |
         
         python manage.py collectstatic
-        python manage.py makemigrations users
-        python manage.py makemigrations account
-        python manage.py makemigrations daru_wheel
-        python manage.py makemigrations home
-        python manage.py makemigrations core
-        python manage.py makemigrations
+        # python manage.py makemigrations users
+        # python manage.py makemigrations account
+        # python manage.py makemigrations daru_wheel
+        # python manage.py makemigrations home
+        # python manage.py makemigrations core
+        # python manage.py makemigrations
 
-        python manage.py migrate
+        # python manage.py migrate
 
     # - name: Run Tests
     #   run: |
