@@ -16,7 +16,6 @@
   <!-- CSS Files -->
   <link href="{% static 'assets/css/black-dashboard.css' %}" rel="stylesheet" />
 {% endblock stylesheets %}
-
 {% block mainmenu %}
 <!--Main-Menu Area Start-->
 		<div class="mainmenu-area">
@@ -34,7 +33,7 @@
 							<div class="collapse navbar-collapse fixed-height" id="main_menu">
                  <ul class="navbar-nav ml-auto">
                  								    <li class="nav-item">
-										<a class="nav-link" href="/">Home
+										<a class="nav-link " href="/">Home
 										<div class="mr-hover-effect"></div></a>
 									</li>
 
@@ -133,7 +132,7 @@
 											<li>											
 											
 											{% if user.is_authenticated %}
-											<	<a href="#" class="dropdown-item" data-toggle="modal" data-target="#wallet">
+												<a href="{% url 'users:mine_users' %}" class="dropdown-item" >
 													<i class="fa fa-angle-double-right"></i> Users No : {{user.referees_no}}
 												</a>
 											{% endif %}
@@ -159,22 +158,9 @@
 											{% endif %} 
 																			
 											</li>
-
+										
 											<li>
-
-											{% if user.is_authenticated %}
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
-													<i class="fa fa-angle-double-right"></i> Income: {{user.user_accounts.withrawable_balance}}T
-												</a>
-											{% endif %}
-											{% if not user.is_authenticated %}
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
-													<i class="fa fa-angle-double-right"></i> Income
-												</a>
-											{% endif %} 																																		
-											</li>											
-											<li>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#share">
 													<i class="fa fa-angle-double-right"></i> Share
 												</a>
 																																		
@@ -200,7 +186,7 @@
 											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
 											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
 											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
-											<li><a class="dropdown-item" href="/terms-conditions"> <i class="fa fa-angle-double-right"></i>Terms & Condition</a></li>
+											<li><a class="dropdown-item" href="/faq"> <i class="fa fa-angle-double-right"></i>FAQ</a></li>
 
 										</ul>
 									</li> 
@@ -220,6 +206,7 @@
 		<!--Main-Menu Area Start-->
 		
 {% endblock mainmenu %}
+
 
 {% block content %}
 <section class="recent-winners">
