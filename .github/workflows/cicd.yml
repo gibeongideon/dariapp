@@ -79,7 +79,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Create ENV VAR
-      run: |  
+      run: |
+        mkdir ~/dariapp
         touch ~/dariapp/.env
         cp ~/dariapp/.env  ~/actions-runner/deploy/dariapp/dariapp
 
