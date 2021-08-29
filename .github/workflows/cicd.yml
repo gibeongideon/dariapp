@@ -124,7 +124,7 @@ jobs:
         python manage.py makemigrations daru_wheel
         python manage.py makemigrations home
         python manage.py makemigrations core
-        # python manage.py makemigrations ipn
+        python manage.py makemigrations ipn
         python manage.py makemigrations pro
 
     ## account
