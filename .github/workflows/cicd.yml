@@ -126,6 +126,7 @@ jobs:
         python manage.py makemigrations core
         python manage.py makemigrations ipn
         python manage.py makemigrations pro
+        python manage.py makemigrations
 
     ## account
     - name: MIGRATE-account
