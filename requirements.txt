@@ -105,7 +105,6 @@ txaio==20.4.1
 typed-ast==1.4.2
 urllib3==1.26.2
 vine==5.0.0
-wagtail==2.13.2
 wcwidth==0.2.5
 websocket-client==0.57.0
 whitenoise==5.2.0
