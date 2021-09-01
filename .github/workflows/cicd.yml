@@ -50,12 +50,11 @@ jobs:
 
         # python manage.py migrate
 
-    # - name: Run Tests
-    #   run: |
-    #     python manage.py test account users daru_wheel
+    - name: Run Tests
+      run: |
+        python manage.py test account users daru_wheel home
 
-
-
+        
   deploy:
     runs-on: self-hosted
     needs: build

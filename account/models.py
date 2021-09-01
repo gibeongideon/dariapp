@@ -408,10 +408,11 @@ class CashDeposit(TimeStamp):
     @property
     def amount_converted_to_tokens(self):
         try:
+            # currency_name =Currency.objects.get(id=self.currency_id).name
             tokens=Currency.get_tokens_amount(self.currency.name, float(self.amount))
-        except Currency.DoesNotExist:
-            print('FAIL CONVERT')
-            tokens= self.amount/5  
+        except Exception as e:#Currency.DoesNotExist:
+            print('FAIL CONVERT',e)
+            tokens= self.amount 
 
         return tokens     
 

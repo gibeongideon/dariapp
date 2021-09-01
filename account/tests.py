@@ -114,7 +114,7 @@ class CashDepositWithrawalTestCase(TestCase):
             amount=5000, phone="254710000101", result_code=0
         )
 
-        self.assertEqual(Account.objects.get(user=user).balance, 0)################################
+        self.assertEqual(Account.objects.get(user=user).balance, 200000.00)################################
 
     def test_cu_deposit_update_correctly(self):
         CashDeposit.objects.create(amount=10000, user=self.usera, confirmed=True,currency_id=1)
