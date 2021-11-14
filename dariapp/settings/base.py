@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "admin_interface",
     "colorfield",
     # ...
-    'search',
+    # 'search',
     'users',
     "account",
     # "dashboard",
@@ -49,21 +49,6 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     'paypal.pro',
     'paypal.standard',
-
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
-
-    'modelcluster',
-    'taggit',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,7 +67,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'dariapp.urls'
@@ -330,10 +314,3 @@ DJANGO_SETTINGS_MODULE = config(
 # MEDIA_URL = '/media/'
 
 
-# Wagtail settings
-
-WAGTAIL_SITE_NAME = "dariapp"
-
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
