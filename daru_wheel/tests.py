@@ -13,10 +13,6 @@ from daru_wheel.models import (
 )
 from account.models import *  # (
 
-# Account, CashDeposit, current_account_bal_of,current_account_trialbal_of
-# )
-# MODEL TESTS
-
 
 def create_user():
     return User.objects.create(
@@ -34,8 +30,8 @@ def create_test_user(username, referer_code=None):
     )
 
 
-def deposit_to_test_user(user_id, amount=10000):
-    CashDeposit.objects.create(user_id=user_id, amount=amount, confirmed=True)
+def deposit_to_test_user(user_id, amount=10000):    
+    CashDeposit.objects.create(user_id=user_id, amount=amount, confirmed=True,currency_id=1)
 
 
 class MarketTestCase(TestCase):
@@ -48,7 +44,8 @@ class MarketTestCase(TestCase):
 class StakeTestCase(TestCase):
     def setUp(self):
         self.user = create_user()
-        CashDeposit.objects.create(user=self.user, amount=10000, confirmed=True)
+        Currency.objects.create(name='KES',rate=1)
+        CashDeposit.objects.create(user=self.user, amount=10000, confirmed=True,currency_id=1)
         self.spin = WheelSpin.objects.create()
         # self.market = Market.objects.get(id=1)
         # market = WheelSpin.objects.create()
@@ -355,6 +352,7 @@ class StakeTestCase(TestCase):
 
 class BetLogicTest(TestCase):
     def setUp(self):
+        currency=Currency.objects.create(name='KES',rate=1)
         self.spin = WheelSpin.objects.create()
         # self.market = Market.objects.get(id=1)
 

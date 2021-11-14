@@ -50,11 +50,16 @@
 											<div class="mr-hover-effect"></div>
 										</a>
 										<ul class="dropdown-menu" >
-											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}</a></li>
-											<li><a class="dropdown-item" href="{% url 'account:deposit' %}"> <i class="fa fa-angle-double-right"></i>Deposit</a></li>	
-								
-										</ul>	
+											<li><a class="dropdown-item" href="{% url 'home:deposit_withraw' %}"> <i class="fa fa-angle-double-right"></i>Wallet : {{user.user_accounts.balance}}T</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:refer_credit' %}"> <i class="fa fa-angle-double-right"></i>Ref.Com : {{user.user_accounts.refer_balance}}T</a></li>
+											<li><a class="dropdown-item" href="{% url 'account:withraw' %}"> <i class="fa fa-angle-double-right"></i>Withdraw : {{user.user_accounts.withrawable_balance}}T</a></li>
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Deposit
+												</a>
+																																		
+											</li>
+										</ul>
 									{% endif %} 
 
 									</li>
@@ -148,10 +153,10 @@
 							</div>
 							<div class="content">
 								<h4 class="title">
-										Tokens
+										Tokens(T)
 								</h4>
 								<p class="text">
-										{{user.user_accounts.balance}}
+										{{user.user_accounts.balance}} T
 								</p>
 							</div>
 						</div>
@@ -166,7 +171,7 @@
 								Balance(USD)
 								</h4>
 								<p class="text">
-										{{user.user_accounts.balance_usd}}
+										{{user.user_accounts.balance_usd}} $
 								</p>
 							</div>
 						</div>
@@ -179,12 +184,9 @@
 								<img src="assets/images/affiliate/ic9.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+							<a  href="{% url 'account:withraw' %}"> <h4 class="title">
 								Withrawable
-								</h4>
-								<p class="text">
-								{{user.user_accounts.withrawable_balance}}
-								</p>
+								</h4>{{user.user_accounts.withrawable_balance}} T</a>
 							</div>
 						</div>
 					</div>
@@ -198,7 +200,7 @@
 								Withraw Power
 								</h4>
 								<p class="text">
-								{{user.user_accounts.withraw_power}}
+								{{user.user_accounts.withraw_power}} T
 								</p>
 							</div>
 						</div>
@@ -206,15 +208,12 @@
 				<div class="col-lg-3 col-md-6">
 						<div class="single-tools">
 							<div class="icon two">
-								<img src="assets/images/affiliate/ic8.png" alt="">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
 							</div>
 							<div class="content">
-								<h4 class="title">
+							<a  href="{% url 'account:refer_credit' %}"> <h4 class="title">
 								Refer Balance
-								</h4>
-								<p class="text">
-								{{user.user_accounts.refer_balance}}
-								</p>
+								</h4>{{user.user_accounts.refer_balance}} T</a>
 							</div>
 						</div>
 				</div>
@@ -228,7 +227,7 @@
 								Trial Balance
 								</h4>
 								<p class="text">
-								{{user.user_accounts.trial_balance}}
+								{{user.user_accounts.trial_balance}} T
 								</p>
 							</div>
 						</div>
@@ -309,7 +308,7 @@
 							<a href="/account/cash_trans">
 								<div class="center">
 									<h4 class="name">
-											Tranfer To Your Friend 
+											Tranfer (T)o Your Friend 
 									</h4>
 									{% comment %} <p class="date">
 									{{user.user_accounts.withrawable_balance}}

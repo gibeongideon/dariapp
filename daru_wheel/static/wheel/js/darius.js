@@ -36,7 +36,7 @@
 
 // Create new wheel object specifying the parameters at creation time.
 let theWheel = new Winwheel({
-    'outerRadius'     : 212,        // Set outer radius so wheel fits inside the background.
+    'outerRadius'     : 212,        // S et outer radius so wheel fits inside the background.
     'innerRadius'     : 45,   
     'responsive'      : false, // Make wheel hollow so segments don't go all way to center.
     'textFontSize'    : 24,         // Set default font size for the segments.

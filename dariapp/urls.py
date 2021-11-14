@@ -2,15 +2,21 @@ from django.conf import settings
 from django.urls import include, path
 from django.contrib import admin
 
-from search import views as search_views
+# from wagtail.admin import urls as wagtailadmin_urls
+# from wagtail.core import urls as wagtail_urls
+# from wagtail.documents import urls as wagtaildocs_urls
+
+# from search import views as search_views
 admin.site.site_header = "DariApp Admin"
 
 
 urlpatterns = [
     path(
-        settings.SECRET_ADMIN_URL + "/admin/",
+        settings.SECRET_ADMIN_URL + "/dj-admin/",
         admin.site.urls),
 
+
+    # path('documents/', include(wagtaildocs_urls)),
 
     # path('search/', search_views.search, name='search'),
 

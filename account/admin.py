@@ -154,14 +154,14 @@ class CashDepositAdmin(admin.ModelAdmin):
         "deposit_type",
         "has_record",
         "amount",
-        "currency_id",
+        "currency",
         "current_bal",
         "created_at",
         "updated_at",
     )
     list_display_links = ("amount",)
     search_fields = ("amount",)
-    list_filter = ("user","currency_id", "deposit_type")
+    list_filter = ("user","currency", "deposit_type")
     readonly_fields = (
         "deposited",
         "has_record",
@@ -185,13 +185,14 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "withraw_status",
         "has_record",
         "amount",
+        "currency",
         "user_account",
         "created_at",
         "updated_at",
     )
     list_display_links = ("id",)
     search_fields = ("user",)
-    list_filter = ("user", "approved", "cancelled", "active")
+    list_filter = ("user", "approved", "cancelled","currency", "active")
     readonly_fields = (
         "withrawned",
         "has_record",

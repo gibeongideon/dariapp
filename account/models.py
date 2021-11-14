@@ -72,7 +72,16 @@ class Account(TimeStamp):
         # if self.withraw_powe,< self.balance:
         #     return self.withraw_power
         # return self.balance
-        
+
+    @property
+    def min_refer_to_transfer(self):
+        try:
+            set_up=account_setting()
+            return set_up.min_redeem_refer_credit
+        except:
+            return 200 #TODO    
+
+
     @property
     def balance_usd(self):
         rate_to_usd=Currency.objects.get(name='USD').rate
@@ -239,36 +248,50 @@ class RefCreditTransfer(TimeStamp):
     def __str__(self):
         return "User {0}:{1}".format(self.user, self.amount)
 
-    def transfer_refer_credit_to_balance(self):
-        set_up = account_setting()
-        curr_refer_bal = current_account_referbal_of(self.user_id)
-        if (
-            self.amount <= curr_refer_bal
-            and self.amount >= set_up.min_redeem_refer_credit
-        ):
+    # def transfer_refer_credit_to_balance(self):
+    #     set_up = account_setting()
+    #     curr_refer_bal = current_account_referbal_of(self.user_id)
+    #     if (
+    #         self.amount <= curr_refer_bal
+    #         and self.amount >= set_up.min_redeem_refer_credit
+    #     ):
 
-            new_refer_bal = curr_refer_bal - float(self.amount)
-            update_account_referbal_of(self.user_id, new_refer_bal)
+    #         new_refer_bal = curr_refer_bal - float(self.amount)
+    #         update_account_referbal_of(self.user_id, new_refer_bal)
 
-            curr_bal = current_account_bal_of(self.user_id)
-            new_bal = curr_bal + float(self.amount)
-            update_account_bal_of(self.user_id, new_bal)
-            self.succided = True
-        else:
-            pass
+    #         curr_bal = current_account_bal_of(self.user_id)
+    #         new_bal = curr_bal + float(self.amount)
+    #         update_account_bal_of(self.user_id, new_bal)
+    #         self.succided = True
+    #     else:
+    #         pass
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on deposit  """
         if not self.pk and self.amount > 0:
             try:
-                self.transfer_refer_credit_to_balance()
+                set_up = account_setting()
+                curr_refer_bal = current_account_referbal_of(self.user_id)
+                if (
+                    self.amount <= curr_refer_bal
+                    and self.amount >= set_up.min_redeem_refer_credit
+                    ):
+                    new_refer_bal = curr_refer_bal - float(self.amount)
+                    update_account_referbal_of(self.user_id, new_refer_bal)
+                    curr_bal = current_account_bal_of(self.user_id)
+                    new_bal = curr_bal + float(self.amount)
+                    update_account_bal_of(self.user_id, new_bal)
+                    self.succided = True
+                    super().save(*args, **kwargs)
+                else:
+                    return
             except Exception as e:
                 print("ReferTransERROR:", e)
-                pass
+                return
         else:
             return
 
-        super().save(*args, **kwargs)
+        
 
 
 # class TransactionLog(TimeStamp):
@@ -385,10 +408,11 @@ class CashDeposit(TimeStamp):
     @property
     def amount_converted_to_tokens(self):
         try:
+            # currency_name =Currency.objects.get(id=self.currency_id).name
             tokens=Currency.get_tokens_amount(self.currency.name, float(self.amount))
-        except Currency.DoesNotExist:
-            print('FAIL CONVERT')
-            tokens= self.amount/5  
+        except Exception as e:#Currency.DoesNotExist:
+            print('FAIL CONVERT',e)
+            tokens= self.amount 
 
         return tokens     
 

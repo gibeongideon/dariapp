@@ -3,7 +3,7 @@ import os
 from django.core.asgi import get_asgi_application
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dariapp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dariapp.settings.dev')
 # os.environ['DJANGO_SETTINGS_MODULE'] = settings.DJANGO_SETTINGS_MODULE
 
 asgi_app = get_asgi_application()

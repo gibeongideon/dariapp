@@ -16,6 +16,7 @@ from celery.schedules import crontab
 # import dj_database_url
 from decouple import config
 from decouple import Csv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,16 +29,23 @@ SECRET_KEY = config("SECRET_KEY", default="dadmin")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
-    'home',
     "channels",
-    # "functional_tests",
+        # "functional_tests",
     # ...
     "admin_interface",
     "colorfield",
     # ...
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',    
+    'home',   
+
     # 'search',
     'users',
     "account",
@@ -48,14 +56,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # 'rest_framework.authtoken',
     'paypal.pro',
-    'paypal.standard',
-
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
+    # 'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'dariapp.urls'
@@ -147,7 +148,8 @@ STATICFILES_DIRS = [BASE_DIR / 'staticfiles',]
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -167,7 +169,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "users.User"
 
 # email backend
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"#D
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="kipngeno.gibeon@gmail.com")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="tetyty9iodjw!")
@@ -308,9 +309,22 @@ PAYPAL_CLIENT_ID = config(
 
 DJANGO_SETTINGS_MODULE = config(
     "DJANGO_SETTINGS_MODULE",
-    default='daruapp.settings')
+    default='dariapp.settings.dev')
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
 
 
+# Wagtail settings
+
+# WAGTAIL_SITE_NAME = "dariapp"
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+# BASE_URL = 'http://example.com'
+
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)

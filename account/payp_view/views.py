@@ -96,9 +96,10 @@ def payment_success(request):
         post_data = json.loads(request.body.decode("utf-8"))
         amount=float(post_data["amount"])
         try:
-            usd_id=Currency().get(name="USD").id
+            usd_id=Currency.objects.get(name="USD").id
         except Currency.DoesNotExist:
             Currency.objects.create(name="USD",rate=20) 
+            usd_id=Currency.objects.get(name="USD").id
 
         try:
             CashDeposit.objects.create(

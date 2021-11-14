@@ -65,10 +65,10 @@ def mpesa_deposit(request):
 
 
 # Use redis cashing here for speed
-@login_required(login_url="/users/login")
-def trans_log(request):
-    trans_logz = TransactionLog.objects.filter(user=request.user)
-    return render(request, "account/trans_log.html", {"trans_logz": trans_logz})
+# @login_required(login_url="/users/login")
+# def trans_log(request):
+#     trans_logz = TransactionLog.objects.filter(user=request.user)
+#     return render(request, "account/trans_log.html", {"trans_logz": trans_logz})
 
 
 @login_required(login_url="/user/login")
@@ -148,9 +148,10 @@ def cash_trans(request):
         form = CashTransferForm(data=data)
         if form.is_valid():
             form.save()
-        if form.errors:
-            print(form.errors)
 
+        if form.errors:
+            pass
+            # return redirect('/')#sError For TODO
     trans_logz = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
 
     return render(

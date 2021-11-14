@@ -7,7 +7,7 @@ from .models import (
     current_account_bal_of,
     # log_record,
 )
-from .models import account_setting
+from .models import account_setting,Currency
 from daru_wheel.models import Stake  # DD
 from mpesa_api.core.models import OnlineCheckoutResponse
 
@@ -42,11 +42,13 @@ def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs)
                 this_user = User.objects.create_user(
                     username=str(instance.phone), password=str(instance.phone)
                 )  # 3#??
+            currency=Currency.objects.get(name='USD')    
 
             CashDeposit.objects.create(
                 user=this_user,
                 amount=instance.amount,
                 deposit_type="M-pesa Deposit",
+                currency=currency,
                 confirmed=True,
             )
         else:

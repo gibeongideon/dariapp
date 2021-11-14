@@ -10,14 +10,17 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="forntEnd-Developer" content="Mamunur Rashid">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Darispin - Gaming</title>
 
+  <title>DariSpin|{% block title %}Home{% endblock %} 
+  </title>
 
-	<link href="{% static 'assets/images/favicon.html' %}" rel="shortcut icon"  type="image/x-icon"/>
+	<link href="{% static 'assets/images/faviconz.png' %}" rel="shortcut icon" sizes="32x32"  type="image/x-icon"/>
 	<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/plugin.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" />
+
+	<link rel="apple-touch-icon" href="{% static 'assets/images/faviconz.png' %}" />
 
 {% block stylesheets %}{% endblock stylesheets %}
 </head>
@@ -51,6 +54,697 @@
 		<i class="fas fa-chevron-right"></i>
 	</div>
 	<!-- Back to Top End -->
+	<!-- Wallet Area Start -->
+	<div class="modal fade login-modal" id="wallet" tabindex="-1" role="dialog" aria-labelledby="wallet" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					{% comment %} <div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div> {% endcomment %}
+					{% comment %} <div class="header-area">
+						<h4 class="title">Wallet</h4>
+						<p class="sub-title">Account Information</p>
+					</div> {% endcomment %}
+					<div class="form-area">
+
+
+
+
+
+	<!-- Marketing Tools Area Start -->
+	<section class="marketing-tools">
+		<div class="container">
+		    <div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="section-heading">
+								{% comment %} <div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div> {% endcomment %}
+						<h5 class="subtitle">
+								Account Information
+						</h5>
+						<h2 class="title">
+								Wallet
+						</h2>
+			
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon one">
+								<img src="assets/images/affiliate/ic7.png" alt="">
+							</div>
+							<div class="content">
+								<h4 >
+										Tokens
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance}} T
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 >
+								Bal
+								</h4>
+								<p class="text">
+										{{user.user_accounts.balance_usd}} $
+								</p>
+							</div>
+						</div>
+					</div>
+
+
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+							<h4 >
+								Ref.Bal
+								</h4>
+
+						
+							<a  a href="#" data-toggle="modal" data-target="#referc">
+								</h4>{{user.user_accounts.refer_balance}} T</a>
+							</div>
+						</div>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+	
+					<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon three">
+								<img src="assets/images/affiliate/ic10.png" alt="">
+							</div>
+							<div class="content">
+								<h4 >
+								With.P
+								</h4>
+								<p class="text">
+								{{user.user_accounts.withraw_power}} T
+								</p>
+							</div>
+						</div>
+					</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="static/assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+			
+							<h4>
+								With.B
+								</h4>
+								<a  a href="#" data-toggle="modal" data-target="#withraw">
+								</h4>{{user.user_accounts.withrawable_balance}} T</a>
+
+							</div>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="single-tools">
+							<div class="icon two">
+								<img src="assets/images/affiliate/ic8.png" alt="">
+							</div>
+							<div class="content">
+								<h4 >
+								Trial
+								</h4>
+								<p class="text">
+								{{user.user_accounts.trial_balance}} T
+								</p>
+							</div>
+						</div>
+			</div>
+
+					
+		{% comment %} </div> {% endcomment %}
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#deposit">
+								       <button type="submit" class="mybtn1">Deposit</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Deposit</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>	
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#withraw">
+								       <button type="submit" class="mybtn1">Withraw</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Withraw</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>							
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#tofriend">
+								       <button type="submit" class="mybtn1">Tranfer (T)o Your Friend</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Tranfer (T)o Your Friend</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>
+
+				<div class="row">
+
+				</div>
+
+		</div>
+
+
+
+	</section>
+	<!-- Marketing Tools Area End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</div>
+					{% comment %} <div class="form-footer">
+						<p>Check Wallet? 
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Wallet Area End -->
+
+	<!-- Deposit Area Start -->
+	<div class="modal fade login-modal" id="deposit" tabindex="-1" role="dialog" aria-labelledby="deposit" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Deposit</h4>
+						<p class="sub-title">Choose prefered deposit means.More deposit means are added regularly.</p>
+					</div>
+					<div class="form-area">
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#paypal">
+								       <button type="submit" class="mybtn1">Paypal</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Paypal</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>
+							<div class="form-group">
+								{% if user.is_authenticated %}
+		
+								   <a href="#" data-toggle="modal" data-target="#mpesa">
+								       <button type="submit" class="mybtn1">M-Pesa</button>
+									</a>									
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">M-Pesa</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>		
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#paypal">
+								       <button type="submit" class="mybtn1">Credit/Debit Card</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Credit/Debit Card</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#crypto">
+								       <button type="submit" class="mybtn1">Cryptocurrency</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">Cryptocurrency</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>										
+			
+
+					</div>
+					{% comment %} <div class="form-footer">
+						<p>Check Wallet? 
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
+								
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Deposit Area End -->
+
+		
+	<!-- Paypal Area Start -->
+	<div class="modal fade login-modal" id="paypal" tabindex="-1" role="dialog" aria-labelledby="paypal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Paypal& Credit/Debit Card</h4>
+						<p class="sub-title">Deposit</p>
+					</div>
+					<div class="form-area">
+					    <div id="smart-button-container">
+						    {% comment %} <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> {% endcomment %}
+							    <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
+								<div style="text-align: center">
+									<label for="amount">Amount </label>
+										<input name="amountInput" type="number" id="amount" value="" >
+										<span> USD</span>
+								</div>
+								<p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
+								<div id="invoiceidDiv" style="text-align: center; display: none;">
+								    <label for="invoiceid"> </label>
+									<input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" >
+								</div>
+								<p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+								<div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+
+						</div>
+						<script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
+					</div>							
+					{% comment %} <div class="form-footer">
+						<p>Not a member? 								
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Join us</a>								
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Paypal Area End -->
+
+	<!-- mpesa Area Start -->
+	<div class="modal fade login-modal" id="mpesa" tabindex="-1" role="dialog" aria-labelledby="mpesa" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">M-Pesa Deposit</h4>
+						<p class="sub-title">Enter Amount to checkout</p>
+					</div>
+					<div class="form-area">
+
+<form action="{% url 'account:mpesa_deposit' %}" method="post">
+{% csrf_token %}
+
+  <div class="form-group">
+    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
+  </div>
+
+
+<button class="mybtn1 type="submit">Submit</button>
+</form>
+				
+					</div>
+					
+					{% comment %} <div class="form-footer">
+						<p>Not a member? 
+						<button class="mybtn1 type="submit">Submit</button>
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- M-Pesa Area End -->
+
+
+
+
+
+
+	<!-- Withraw Area Start -->
+	<div class="modal fade login-modal" id="withraw" tabindex="-1" role="dialog" aria-labelledby="withraw" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Withdraw</h4>
+						<p class="sub-title">Choose your prefered withrawal means.More withrawal means are added regularly.</p>
+					</div>
+					<div class="form-area">
+							<div class="form-group">
+
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#wpaypal">
+								       <button type="submit" class="mybtn1">To your Paypal</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">To your Paypal</button>
+									   </a>								 
+						
+									{% endif %} 									
+							</div>
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#wmpesa">
+								       <button type="submit" class="mybtn1">To your M-Pesa</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">To your M-Pesa</button>
+									   </a>								 
+						
+									{% endif %} 
+
+
+							</div>		
+
+							<div class="form-group">
+
+							    {% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#wpaypal">
+								       <button type="submit" class="mybtn1">To your Credit/Debit Card</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">To your Credit/Debit Card</button>
+									   </a>								 
+						
+									{% endif %} 
+									
+							</div>												
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="#" data-toggle="modal" data-target="#crypto">
+								       <button type="submit" class="mybtn1">To your Crypto Wallet</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">To your Crypto Wallet</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div>			
+
+					</div>
+					{% comment %} <div class="form-footer">
+						<p>Check Wallet? 
+								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Withraw Area End -->
+
+	<!-- Wmpesa Area Start -->
+	<div class="modal fade login-modal" id="wmpesa" tabindex="-1" role="dialog" aria-labelledby="wmpesa" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">M-Pesa Withdraw</h4>
+						<p class="sub-title">Enter Amount to withraw</p>
+					</div>
+					<div class="form-area">
+<form action="{% url 'account:mpesa_withrawal' %}" method="post">
+{% csrf_token %}
+
+  <div class="form-group">
+    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
+  </div>
+
+
+<button class="mybtn1 type="submit">Submit</button>
+</form>
+					</div>
+					
+
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- WM-Pesa Area End -->	
+
+	<!-- ToFriend Area Start -->
+	<div class="modal fade login-modal" id="tofriend" tabindex="-1" role="dialog" aria-labelledby="tofriend" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Transfer To Friend</h4>
+						<p class="sub-title">Help your Friend Kickstart</p>
+					</div>
+					<div class="form-area">
+<form action="{% url 'account:cash_trans' %}" method="post">
+    {% csrf_token %}
+
+    <div>
+      {% if form.errors %}
+      <span class="text-danger">{{ form.errors }}</span>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-6 col-8 d-flex align-self-center">
+        <div class="form-area"> 
+            <input type="text" name="recipient"  class="input-field" placeholder="Recipient Username/Mobile" id="id_recipient"required autofocus>       
+        </div>
+    </div>   
+    
+    <div class="col-lg-6 col-8 d-flex align-self-center">
+        <div class="form-area"> 
+            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" required id="id_amount" autofocus>                    
+        </div>
+    </div>  
+
+    <div class="form-group">
+        <button type="submit" class="mybtn1">Send</button>
+		</div>
+
+  </form>
+					</div>
+
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Tofriend Area End -->	
+
+
+
+
+	<!-- TransRefer Start -->
+	<div class="modal fade login-modal" id="referc" tabindex="-1" role="dialog" aria-labelledby="referc" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Ref.Com Transfer</h4>
+						<p class="sub-title">Transfer to main account</p>
+						<h5 class="title">Bal: {{user.user_accounts.refer_balance}}T</h5>
+					    Minimum Transfer Amount: {{user.user_accounts.min_refer_to_transfer}}T
+			
+					</div>
+					<div class="form-area">
+					
+<form action="{% url 'account:refer_credit' %}" method="post">
+{% csrf_token %}
+
+<div class="col-md-4 pl-md-1">
+  <div class="form-group">
+    <input type="number" name="amount" class="input-field" placeholder="amount here" step="10" required id="id_amount"">    
+	
+  </div>
+</div>
+
+<button class="mybtn1" type="submit">Transfer To Main Account</button>
+
+</form>
+				
+					</div>
+					
+					<div class="form-footer">
+						<p> 
+						<a href="{% url 'account:refer_credit' %}" class="mybtn1"  >Income Source Details</a>
+						</p>
+					</div> 
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Trans_Refer -->
+
+	<!-- Wmpesa Area Start -->
+	<div class="modal fade login-modal" id="crypto" tabindex="-1" role="dialog" aria-labelledby="crypto" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					{% comment %} <div class="header-area">
+						<h4 class="title">M-Pesa Withdraw</h4>
+						<p class="sub-title">Enter Amount to withraw</p>
+					</div> {% endcomment %}
+					<div class="form-area">
+							<div class="form-group">
+								   <button type="submit" class="mybtn1">Coming Soon</button>
+							</div>
+				
+					</div>
+					
+					{% comment %} <div class="form-footer">
+						<p>Withdraw now? 
+						<a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Withdraw</a>
+						
+						</p>
+					</div> {% endcomment %}
+				</div>
+			</div>
+			</div>
+		</div>
+		<!--Cryptocurrency Area End -->	
+	<!-- ToFriend Area Start -->
+	<div class="modal fade login-modal" id="share" tabindex="-1" role="dialog" aria-labelledby="share" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Share To Your Friends</h4>
+						<p class="sub-title">You get 5% of their bet,Whether they win or loose ,You win!</p>
+					</div>
+					<div class="form-area">
+						Your Ref code is {{request.user.code}}	
+
+					</div>
+
+										<div class="form-footer">
+						<p>got friends? 
+								{% comment %} <a href="#">Create account <i class="fas fa-angle-double-right"></i></a> {% endcomment %}
+								<a href="#" class="mybtn1"  > Share & Earn</a>
+								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
+						</p>
+					</div>
+
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Share Area End -->	
+
 
 	<!-- Login Area Start -->
 	<div class="modal fade login-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
@@ -59,7 +753,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<div class="modal-body">
 					<div class="logo-area">
-							<img class="logo" src="/static/assets/images/loggo.png" alt="">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
 						<h4 class="title">Great to have you back!</h4>
@@ -111,6 +805,7 @@
 		</div>
 		<!-- Login Area End -->
 	
+
 		<!-- SignUp Area Start -->
 		<div class="modal fade login-modal sign-in" id="signin" tabindex="-1" role="dialog" aria-labelledby="signin" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered " role="document">
@@ -118,7 +813,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<div class="modal-body">
 						<div class="logo-area">
-								<img class="logo" src="/static/assets/images/loggo.png" alt="">
+								<img class="logo" src="/static/assets/images/logoz.png" alt="">
 						</div>
 						<div class="header-area">
 							<h4 class="title">Welcome new member!</h4>
@@ -129,7 +824,7 @@
 							    {% csrf_token %}
 								<div class="form-group">
 										{% comment %} <label for="input-name">Mobile No*</label> {% endcomment %}
-										<input type="text" class="input-field" name="username" id="username"  placeholder="Your Mobile number" required>
+										<input type="text" class="input-field" name="username" id="username"  placeholder="Your Mobile Number" required>
 								</div>
 								<div class="form-group">
 										{% comment %} <label for="input-email">Email*</label> {% endcomment %}
@@ -165,9 +860,133 @@
 				</div>
 				</div>
 			</div>
-		<!-- SignIn Area End -->
-
+		<!-- SignIn Area End -->					
   {% include 'includes/scripts.html' %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+ 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+  function initPayPalButton() {
+    var description = document.querySelector('#smart-button-container #description');
+    var amount = document.querySelector('#smart-button-container #amount');
+    var descriptionError = document.querySelector('#smart-button-container #descriptionError');
+    var priceError = document.querySelector('#smart-button-container #priceLabelError');
+    var invoiceid = document.querySelector('#smart-button-container #invoiceid');
+    var invoiceidError = document.querySelector('#smart-button-container #invoiceidError');
+    var invoiceidDiv = document.querySelector('#smart-button-container #invoiceidDiv');
+
+    var elArr = [description, amount];
+
+    if (invoiceidDiv.firstChild.innerHTML.length > 1) {
+      invoiceidDiv.style.display = "block";
+    }
+
+    var purchase_units = [];
+    purchase_units[0] = {};
+    purchase_units[0].amount = {};
+
+    function validate(event) {
+      return event.value.length > 0;
+    }
+
+    paypal.Buttons({
+      style: {
+        color: 'gold',
+        shape: 'rect',
+        label: 'paypal',
+        layout: 'vertical',
+      },
+
+      onInit: function (data, actions) {
+        actions.disable();
+
+        if(invoiceidDiv.style.display === "block") {
+          elArr.push(invoiceid);
+        }
+
+        elArr.forEach(function (item) {
+          item.addEventListener('keyup', function (event) {
+            var result = elArr.every(validate);
+            if (result) {
+              actions.enable();
+            } else {
+              actions.disable();
+            }
+          });
+        });
+      },
+
+      onClick: function () {
+
+        if (amount.value.length < 1) {
+          priceError.style.visibility = "visible";
+        } else {
+          priceError.style.visibility = "hidden";
+        }
+
+        if (invoiceid.value.length < 1 && invoiceidDiv.style.display === "block") {
+          invoiceidError.style.visibility = "visible";
+        } else {
+          invoiceidError.style.visibility = "hidden";
+        }
+
+        purchase_units[0].description = "deposit fund";
+        purchase_units[0].amount.value = amount.value;
+
+        if(invoiceid.value !== '') {
+          purchase_units[0].invoice_id = invoiceid.value;
+        }
+      },
+
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          purchase_units: purchase_units,
+        });
+      },
+
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+          console.log(details)
+          fetch("/account/payment-success/", {
+              method: "POST",
+              credentials: 'include',
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json'
+                },
+              body: JSON.stringify({
+                  "email": details.payer.email_address,
+                  "amount": details.purchase_units[0].amount.value
+              })
+          })
+          alert('Transaction completed by ' + details.payer.name.given_name + '!');
+        });
+      },
+
+      onError: function (err) {
+        console.log(err);
+      }
+    }).render('#paypal-button-container');
+  }
+  initPayPalButton();
+  </script>
 
   {% block javascripts %}  {% endblock javascripts %}
 </body>
