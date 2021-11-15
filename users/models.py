@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+# from django.contrib.sites.models import Site
 import uuid
-from .validators import validate_refercode
+# from .validators import validate_refercode
 
 
 class User(AbstractUser):
@@ -13,13 +15,22 @@ class User(AbstractUser):
         max_length=150, unique=True, null=True
     )  # auto generated on save
     referer_code = models.CharField(
-        validators=[validate_refercode], max_length=150, blank=True, null=True
+        max_length=150, blank=True, null=True
     )
     phone_number = models.CharField(max_length=150, blank=True, null=True)
     active = models.BooleanField(default=True, blank=True, null=True)
 
     def __str__(self):
         return self.username
+
+    @property
+    def referal_link(self):
+        # path = reverse("pinax_referrals:process_referral", kwargs={"code": self.code})
+        domain =  settings.SITE_DOMAIN
+        protocol = "http"#"https" if settings.PINAX_REFERRALS_SECURE_URLS else "http"
+        return f"{protocol}://{domain}/{self.code}"
+
+
 
     @classmethod
     def referees(cls,code):
@@ -42,11 +53,15 @@ class User(AbstractUser):
         return mobile + "-invalid_phone_number"
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            self.code = (
-                str(uuid.uuid4()).upper()[:3] + "D" + str(self.username[-3:]).upper()
-            )  # Auto generate code
-            # if self.phone_number is None:
-            self.phone_number = self.format_mobile_no(self.username)
-
-        super(User, self).save(*args, **kwargs)
+        try:
+            if not self.pk:
+                self.code = (
+                    str(uuid.uuid4()).upper()[:3] + "D" + str(self.username[-3:]).upper()
+                    )  # Auto generate code
+                       # if self.phone_number is None:
+                self.phone_number = self.format_mobile_no(self.username)
+                
+            super(User, self).save(*args, **kwargs)    
+               
+        except:
+            pass         

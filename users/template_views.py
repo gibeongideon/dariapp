@@ -4,13 +4,13 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponseNotFound
+# from django.http import HttpResponseNotFound
 from django.contrib.auth import views as auth_views
 
 # from django.contrib.auth.models import User
 from .models import User
-from django.forms.utils import ErrorList
-from django.http import HttpResponse
+# from django.forms.utils import ErrorList
+# from django.http import HttpResponse
 from .forms import SignUpForm
 from home.models import WebPa
 
@@ -67,18 +67,50 @@ def register(request):
     and redirect to index path, otherwise return error messages to source
     registration form.
     """
+
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save()#(commit=False)
+
+            try:
+                if request.session['ref_code']:
+                    referer_code=str(request.session['ref_code'])  
+            except Exception as e:
+                referer_code=str(User.objects.get(id=1).code)#use_ref_wit_less_users_REFS_AL#TODO
+
+
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
+            print(referer_code)
+            
+            User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
+
 
             user = authenticate(username=username, password=raw_password)
             user.save()
 
             login(request, user)
             return redirect("/")
+  
+     
     else:
         form = SignUpForm()
     return render(request, "registration/signup.html", {"form": form})
+
+
+
+# def checkout(request):
+#     if request.method == 'POST':
+#         form = CheckoutForm(request.POST)
+#         if form.is_valid():
+#             form = form.save(commit=False)
+#             form.user = request.user
+#             form.email = request.user.email
+#             form.save()
+#             # cleaned_data = form.cleaned_data
+#             return redirect('/account/process-payment')
+#     else:
+#         form = CheckoutForm()
+#         return render(request, 'home/deposit_withrawal.html', locals())
+

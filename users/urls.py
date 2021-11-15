@@ -19,6 +19,7 @@ urlpatterns = [
     path("login", views.CustomLoginView.as_view(), name="login"),
     path("logout", auth_views.LogoutView.as_view(), name="logout"),
     path("register", views.register, name="register"),
+    path("register/<str:ref_code>/", views.register, name="register"),
     path(
         "password_change/",
         auth_views.PasswordChangeView.as_view(

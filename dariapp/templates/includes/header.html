@@ -7,7 +7,7 @@
 						<div class="content">
 							<div class="left-content">
 								<ul class="left-list">
-									<li>
+									<!-- <li>
 										<p>
 											<i class="fas fa-headset"></i>	Support
 										</p>
@@ -16,7 +16,7 @@
 										<p>
 											<i class="fas fa-envelope"></i>	info@darispin.com
 										</p>
-									</li>
+									</li> -->
 									<li>
 										<div class="language-selector">
 											<select name="language" class="language">
@@ -61,12 +61,18 @@
                                             <li>
 											<a href="{% url 'users:logout' %}" class="mybtn1" >Log Out</a>
 											</li>
-											<p>
-											Your Ref code is {{request.user.code}}										                                            <li>
-											<a href="#" >Share & Earn</a>
-											 </p>
+				
+											<li>
+                                                <a href="#" class="sign-in" >
+													<i class="fas fa-paper-plane"></i>Your Ref link is {{request.user.referal_link}} 
+												</a>							
+																																		
 											</li>
-											
+
+                                            <li>
+											<a href="#" class="mybtn2" >Copy,Share & Earn  </a>
+											</li>
+
 									</ul>
 							</div>                                                   
                             {% endif %}                            
