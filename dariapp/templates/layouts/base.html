@@ -725,14 +725,21 @@
 					<div class="header-area">
 						<h4 class="title">Share To Your Friends</h4>
 						<p class="sub-title">You get 5% of their bet,Whether they win or loose ,You win!</p>
+						Your Referal link:  {{request.user.referal_link}}
 					</div>
 					<div class="form-area">
-						Your Ref link is {{request.user.referal_link}}
+
+
+						<textarea class="input-field" id="w3review" name="w3review" >Join the play and win every minute.Click here:{{request.user.referal_link}}</textarea>
+
+						
 					</div>
+					
 
 										<div class="form-footer">
-						<p>		<a href="#" class="mybtn1" ><i class="fas fa-envelope"></i>Copy link</a>
-								<a href="#" class="mybtn1" ><i class="fas fa-paper-plane"></i>Share & Earn</a> 
+						<!-- <p>		<a href="#" class="mybtn1" ><i class="fas fa-envelope"></i>Copy link</a> -->
+							<button class="mybtn1" onclick="myFunction()">Copy,Share & Earn</button>
+								<!-- <a href="#" class="mybtn1" ><i class="fas fa-paper-plane"></i>Share & Earn</a>  -->
 
 								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
 						</p>
@@ -987,7 +994,29 @@ function getCookie(name) {
   initPayPalButton();
   </script>
 
-  {% block javascripts %}  {% endblock javascripts %}
+
+
+  {% block javascripts %} 
+  <script>
+  function myFunction() {
+	/* Get the text field */
+	var copyText = document.getElementById("w3review");
+  
+	/* Select the text field */
+	copyText.select();
+	copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  
+	 /* Copy the text inside the text field */
+	navigator.clipboard.writeText(copyText.value);
+  
+	/* Alert the copied text */
+	alert("You have copied: " + copyText.value+ ".  Share now!");
+  }
+
+  </script>
+
+ 
+  {% endblock javascripts %}
 </body>
 
 
