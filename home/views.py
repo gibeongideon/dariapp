@@ -7,12 +7,24 @@ from random import randint
 from account.models import Checkout
 from account.forms import CheckoutForm
 from .forms import SubscriberForm
+from users.models import User
+from django.contrib.auth import logout
 
 # @login_required(login_url="/user/login")
-def homepage(request):
-    # print(request.user)
-    spin_players_no = randint(900, 1300)
-    spin_players=round(spin_players_no/3*2,-2)
+def homepage(request,*args,**kwargs):
+
+    spin_players_no = randint(900, 1300)#NF
+    spin_players=round(spin_players_no/3*2,-2)#NF
+
+    refercode = kwargs.get('refer_code')
+    try:        
+        User.objects.get(code=refercode)
+        if request.user.is_authenticated:
+            logout(request)
+        request.session['ref_code']=refercode
+    except User.DoesNotExist:
+        pass
+
 
     return render(request, "home/home_page.html",{
         "spin_players": spin_players,

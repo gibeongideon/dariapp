@@ -65,15 +65,15 @@ class SignUpForm(UserCreationForm):
         ),
     )
 
-    referer_code = forms.CharField(
-        max_length=150,
-        # required=True,
-        label="",
-        # help_text='Dont have ? Enter ADMIN',
-        widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Referer Code"}
-        ),
-    )
+    # referer_code = forms.CharField(
+    #     max_length=150,
+    #     required=False,
+    #     label="",
+    #     # help_text='Dont have ? Enter ADMIN',
+    #     # widget=forms.TextInput(
+    #     #     attrs={"class": "form-control", "placeholder": "Referer Code"}
+    #     # ),
+    # )
 
     password1 = forms.CharField(
         required=True,
@@ -93,7 +93,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "referer_code", "password1", "password2")
+        fields = ("username", "email", "password1", "password2")
 
         # error_messages = {
         #     'referer_code': {'required': "Daru code required.Dont have ? Enter ADMIN"}
