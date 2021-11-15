@@ -59,10 +59,17 @@
 											</li>
 
                                             <li>
-											<a href="{% url 'users:logout' %}" class="mybtn1" >Log Out</a>
+											<a href="{% url 'users:logout' %}"  >Log Out</a>
 											</li>
-				
+  
 											<li>
+												<a href="#"   class="mybtn1" data-toggle="modal" data-target="#share">
+													<i class="fa fa-paper-plane"></i> Share & Earn
+												</a>
+																																		
+											</li>	
+
+											<!-- <li>
                                                 <a href="#" class="sign-in" >
 													<i class="fas fa-paper-plane"></i>Your Ref link is {{request.user.referal_link}} 
 												</a>							
@@ -71,7 +78,7 @@
 
                                             <li>
 											<a href="#" class="mybtn2" >Copy,Share & Earn  </a>
-											</li>
+											</li> -->
 
 									</ul>
 							</div>                                                   

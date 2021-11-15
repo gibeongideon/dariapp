@@ -727,14 +727,13 @@
 						<p class="sub-title">You get 5% of their bet,Whether they win or loose ,You win!</p>
 					</div>
 					<div class="form-area">
-						Your Ref code is {{request.user.code}}	
-
+						Your Ref link is {{request.user.referal_link}}
 					</div>
 
 										<div class="form-footer">
-						<p>got friends? 
-								{% comment %} <a href="#">Create account <i class="fas fa-angle-double-right"></i></a> {% endcomment %}
-								<a href="#" class="mybtn1"  > Share & Earn</a>
+						<p>		<a href="#" class="mybtn1" ><i class="fas fa-envelope"></i>Copy link</a>
+								<a href="#" class="mybtn1" ><i class="fas fa-paper-plane"></i>Share & Earn</a> 
+
 								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
 						</p>
 					</div>
