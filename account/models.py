@@ -843,6 +843,11 @@ class Checkout(TimeStamp):
 class AccountAnalytic(TimeStamp):
     gain = models.FloatField(default=0, blank=True, null=True)
     all_bets = models.IntegerField(default=1, blank=True, null=True)
+    t_bal = models.FloatField(default=0, blank=True, null=True)
+    t_wit = models.FloatField(default=0, blank=True, null=True)
+    t_in = models.FloatField(default=0, blank=True, null=True)
+    t_out = models.FloatField(default=0, blank=True, null=True)
+    flag= models.BooleanField(default=False, blank=True, null=True)
 
 
     @property
@@ -873,16 +878,34 @@ class AccountAnalytic(TimeStamp):
 
     @property
     def status_flag(self):
-        if self.all_in!=self.all_out:
+        if self.t_in!=self.t_out:
             return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
         return  "All system working great.NO ISSUE!"
 
+    @property
+    def current_flag(self):
+        if self.all_in!=self.t_out:
+            return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
+        return  "All system working great.NO ISSUE!"
 
     @property
     def severity(self):
-        if self.all_in>self.all_out:
-            return "YELLOW- Not good"
-        if self.all_out>self.all_in:
-            return "RED-Really Bad"  
+        if self.t_in>self.t_out:
+            return None
+        if self.t_out>self.t_in:
+            return False  
         else:
-            return  "GREEN-All good"                              
+            return  True 
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.gain=CashStore.objects.get(id=1).to_keep
+
+            self.t_bal=self.c_bal
+            self.t_wit=self.wit_amount
+            self.t_in=self.all_in
+            self.t_out=self.all_out
+            self.flag=self.severity
+
+        super().save(*args, **kwargs)                                         

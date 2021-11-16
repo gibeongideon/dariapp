@@ -246,7 +246,13 @@ admin.site.register(Checkout, CheckoutAdmin)
 
 
 class AccountAnalyticAdmin(admin.ModelAdmin):
-    list_display = ("id", "gain", "c_bal","wit_amount","all_in","all_out","status_flag","severity", "created_at", "updated_at")
+    list_display = (
+        "id",
+        "gain",
+        "t_bal",
+        "t_wit",
+        "t_in",
+        "t_out","flag","status_flag","c_bal","wit_amount","all_in","all_out","current_flag", "created_at", "updated_at")
     list_display_links = ("id",)
     # list_editable = ('',)
 
