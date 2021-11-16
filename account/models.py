@@ -2,7 +2,8 @@ from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
-import math
+from django.db.models import Sum
+from daru_wheel.models import CashStore
 
 # from django.core.validators import MinValueValidator
 # from .functions import log_record ##NO circular import
@@ -89,6 +90,11 @@ class Account(TimeStamp):
         print('RATE')
 
         return round(self.balance/rate_to_usd,2)
+
+    @property
+    def c_loss(self):
+
+        return self.cum_deposit-(self.cum_withraw+self.balance)
 
     def add_tokens(self, number):
         """Increase user tokens amount watch over not to use negative value.
@@ -832,3 +838,74 @@ class Checkout(TimeStamp):
         else:
             self.amount = abs(self.amount)
         super().save(*args, **kwargs)
+
+
+class AccountAnalytic(TimeStamp):
+    gain = models.FloatField(default=0, blank=True, null=True)
+    all_bets = models.IntegerField(default=1, blank=True, null=True)
+    t_bal = models.FloatField(default=0, blank=True, null=True)
+    t_wit = models.FloatField(default=0, blank=True, null=True)
+    t_in = models.FloatField(default=0, blank=True, null=True)
+    t_out = models.FloatField(default=0, blank=True, null=True)
+    flag= models.BooleanField(default=False, blank=True, null=True)
+
+
+    @property
+    def c_bal(self):
+        total_cbal = Account.objects.aggregate(bal_amount=Sum("balance"),abal_amount=Sum("withraw_power"))
+
+        return total_cbal.get("bal_amount")
+
+    @property
+    def wit_amount(self):
+        total = CashWithrawal.objects.filter(withrawned=True).aggregate(wit_amount=Sum("amount"))
+
+        return total.get("wit_amount") 
+               
+    @property
+    def all_in(self):
+        total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("amount"))
+
+        return total.get("dep_amount")    
+
+               
+    @property
+    def all_out(self):
+
+        all_amount=CashStore.objects.get(id=1).all_amount
+
+        return self.c_bal+self.wit_amount+all_amount
+
+    @property
+    def status_flag(self):
+        if self.t_in!=self.t_out:
+            return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
+        return  "All system working great.NO ISSUE!"
+
+    @property
+    def current_flag(self):
+        if self.all_in!=self.t_out:
+            return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
+        return  "All system working great.NO ISSUE!"
+
+    @property
+    def severity(self):
+        if self.t_in>self.t_out:
+            return None
+        if self.t_out>self.t_in:
+            return False  
+        else:
+            return  True 
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.gain=CashStore.objects.get(id=1).to_keep
+
+            self.t_bal=self.c_bal
+            self.t_wit=self.wit_amount
+            self.t_in=self.all_in
+            self.t_out=self.all_out
+            self.flag=self.severity
+
+        super().save(*args, **kwargs)                                         

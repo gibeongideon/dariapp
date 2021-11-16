@@ -11,7 +11,8 @@ from .models import (
     AccountSetting,
     CashTransfer,
     RegisterUrl,
-    Checkout
+    Checkout,
+    AccountAnalytic
 )
 
 from .models import C2BTransaction
@@ -67,6 +68,7 @@ class AccountAdmin(admin.ModelAdmin):
         "trial_balance",
         "cum_deposit",
         "cum_withraw",
+        "c_loss",
         "active",
         "created_at",
         "updated_at",
@@ -241,3 +243,18 @@ class CheckoutAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Checkout, CheckoutAdmin)
+
+
+class AccountAnalyticAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "gain",
+        "t_bal",
+        "t_wit",
+        "t_in",
+        "t_out","flag","status_flag","c_bal","wit_amount","all_in","all_out","current_flag", "created_at", "updated_at")
+    list_display_links = ("id",)
+    # list_editable = ('',)
+
+
+admin.site.register(AccountAnalytic, AccountAnalyticAdmin)

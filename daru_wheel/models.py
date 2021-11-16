@@ -329,6 +329,12 @@ class CashStore(models.Model):
         ("to_keep"), max_digits=12, decimal_places=2, default=0
     )
 
+    @property
+    def all_amount(self):
+        try:
+            return self.give_away+self.to_keep
+        except:
+            return 0
 
 class OutCome(TimeStamp):
     market = models.OneToOneField(
