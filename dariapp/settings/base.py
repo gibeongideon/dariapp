@@ -232,8 +232,6 @@ LOGGING = {
 }
 
 
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
 
 JET_SIDE_MENU_COMPACT = True
 
@@ -286,7 +284,7 @@ PAYPAL_RECEIVER_EMAIL = config(
 PAYPAL_TEST = config("PAYPAL_TEST", default=True)
 
 
-###USA/CANADA&UKssss
+###USA/CANADA&UK
 
 PAYPAL_WPP_USER = config(
     "PAYPAL_WPP_USER",
@@ -314,14 +312,6 @@ DJANGO_SETTINGS_MODULE = config(
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
 
-
-# Wagtail settings
-
-# WAGTAIL_SITE_NAME = "dariapp"
-
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-# BASE_URL = 'http://example.com'
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
