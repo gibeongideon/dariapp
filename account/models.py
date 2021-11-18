@@ -3,8 +3,7 @@ from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
 from django.db.models import Sum
-from daru_wheel.models import CashStore
-
+# from daru_wheel.models import CashStore#CIRCULAR_IPORT
 # from django.core.validators import MinValueValidator
 # from .functions import log_record ##NO circular import
 from home.models import TimeStamp
@@ -900,8 +899,7 @@ class AccountAnalytic(TimeStamp):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.gain=CashStore.objects.get(id=1).to_keep
-
+            # self.gain=CashStore.objects.get(id=1).to_keep#CIRCULARIPORT
             self.t_bal=self.c_bal
             self.t_wit=self.wit_amount
             self.t_in=self.all_in
