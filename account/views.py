@@ -11,7 +11,6 @@ class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
-
 # class TransactionLogViewSet(viewsets.ModelViewSet):
 #     queryset = TransactionLog.objects.all()
 #     serializer_class = TransactionLogSerializer
