@@ -8,7 +8,7 @@ from django.db.models import Sum
 # from .functions import log_record ##NO circular import
 from home.models import TimeStamp
 from mpesa_api.core.mpesa import Mpesa
-
+import math
 
 class AccountSetting(TimeStamp):
     curr_unit = models.FloatField(default=0, blank=True, null=True)
