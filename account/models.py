@@ -871,9 +871,9 @@ class AccountAnalytic(TimeStamp):
     @property
     def all_out(self):
 
-        all_amount=CashStore.objects.get(id=1).all_amount
+        #all_amount=CashStore.objects.get(id=1).all_amount
 
-        return self.c_bal+self.wit_amount+all_amount
+        return 777#self.c_bal+self.wit_amount+all_amount
 
     @property
     def status_flag(self):
