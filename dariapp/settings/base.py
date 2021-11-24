@@ -315,10 +315,14 @@ DJANGO_SETTINGS_MODULE = config(
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 SITE_DOMAIN = config(
     "SITE_DOMAIN",
     default="localhost:8000")
+
+
+# Creating Access Token for Sandbox
+CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
+CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default=True)

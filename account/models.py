@@ -67,6 +67,7 @@ class Account(TimeStamp):
         db_table = "d_accounts"
         ordering = ("-user_id",)
 
+    @property
     def withrawable_balance(self):
         return min(self.withraw_power, self.balance)
         # if self.withraw_powe,< self.balance:
