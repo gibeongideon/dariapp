@@ -1,4 +1,264 @@
 
+{% extends "layouts/base.html" %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+{% block mainmenu %}
+<!--Main-Menu Area Start-->
+
+		<div class="mainmenu-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">                 
+						<nav class="navbar navbar-expand-lg navbar-light">
+							<a class="navbar-brand" href="/">
+								<img src="/static/assets/images/logoz.png" alt="">
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse fixed-height" id="main_menu">
+                 <ul class="navbar-nav ml-auto">
+                 								    <li class="nav-item">
+										<a class="nav-link active" href="/">Home
+										<div class="mr-hover-effect"></div></a>
+									</li>
+
+									<li class="nav-item">
+									{% if user.is_authenticated %}
+										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
+												<div class="mr-hover-effect"></div></a>
+									{% endif %}
+									{% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Spin
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}   
+																					
+									</li>	
+									 <li class="nav-item dropdown">
+									 {% comment %} {% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}  {% endcomment %}
+									{% comment %} {% if  user.is_authenticated %} {% endcomment %}
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Account
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+										    {% comment %} <li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Deposit
+												</a>																																		
+											</li> {% endcomment %}
+															
+									
+
+											<li>											
+											
+											{% if user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#wallet">
+													<i class="fa fa-angle-double-right"></i> Wallet : {{user.user_accounts.balance}}T
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+											   <a href="#" class="dropdown-item" data-toggle="modal" data-target="#login">
+											   <i class="fa fa-angle-double-right"></i> Wallet
+											   </a>	
+											{% endif %} 											
+											
+											
+											</li>
+
+
+											<li>
+
+											{% if user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
+													<i class="fa fa-angle-double-right"></i> Withdraw: {{user.user_accounts.withrawable_balance}}T
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
+													<i class="fa fa-angle-double-right"></i> Withdraw
+												</a>
+											{% endif %} 																																		
+											</li>											
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Deposit
+												</a>
+																																		
+											</li>
+																						
+								
+										</ul>	
+			
+									</li>
+
+
+
+									 <li class="nav-item dropdown">
+									 {% comment %} {% if not user.is_authenticated %}
+									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
+									       <div class="mr-hover-effect"></div>
+									   </a>
+									{% endif %}  {% endcomment %}
+									{% comment %} {% if  user.is_authenticated %} {% endcomment %}
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											My Company
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+
+
+											<li>											
+											
+											{% if user.is_authenticated %}
+												<a href="{% url 'users:mine_users' %}" class="dropdown-item" >
+													<i class="fa fa-angle-double-right"></i> Users No : {{user.referees_no}}
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+											   <a href="#" class="dropdown-item" data-toggle="modal" data-target="#login">
+											   <i class="fa fa-angle-double-right"></i> Users
+											   </a>	
+											{% endif %} 											
+											
+											
+											</li>
+
+											<li>
+											{% if user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#referc">
+													<i class="fa fa-angle-double-right"></i> Ref.Com : {{user.user_accounts.refer_balance}}T
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+											   <a href="#" class="dropdown-item" data-toggle="modal" data-target="#login">
+											   <i class="fa fa-angle-double-right"></i> Ref.Com
+											   </a>	
+											{% endif %} 
+																			
+											</li>
+										
+											<li>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#share">
+													<i class="fa fa-angle-double-right"></i> Share
+												</a>
+																																		
+											</li>
+																						
+								
+										</ul>	
+			
+									</li>
+
+
+
+
+
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">
+											Pages
+											<div class="mr-hover-effect"></div>
+										</a>
+										<ul class="dropdown-menu" >
+											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
+											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
+											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
+											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
+											<li><a class="dropdown-item" href="/faq"> <i class="fa fa-angle-double-right"></i>FAQ</a></li>
+
+										</ul>
+									</li> 
+                  <li class="nav-item">
+											<a class="nav-link" href="/contact">Contact
+													<div class="mr-hover-effect"></div></a>
+									</li>
+
+								</ul>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Main-Menu Area Start-->
+		
+{% endblock mainmenu %}
+
+
+{% block content %}
+
+
+	<!-- Play Games Area End -->
+		
+	<!-- Recent Winners Area Start -->
+	 <section class="recent-winners">
+		<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-10">
+						<div class="section-heading">
+							<h5 class="subtitle">
+								Quick & Easy
+							</h5>
+							<h2 class="title">
+									Paypal  Deposit
+							</h2>
+							<p class="text">
+								Paypal deposit may take sometimes to reflect in your account.
+							</p>
+                            <!-- <h4>DepositYou can withdraw a total of {{ uf.withrawable_balance }} USD</h4> -->
+						</div>
+
+						<div class="section-heading">
+    
+
+
+
+						</div>
+
+
+            <div>
+
+<div id="smart-button-container">
+    <!-- <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> -->
+      <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
+    <div style="text-align: center"><label for="amount">Deposit Amount </label><input name="amountInput" type="number" id="amount" value="" ><span> USD</span></div>
+      <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
+    <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
+      <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
+    <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+  </div>
+
+
+
+            </div>
+
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12 text-xl-center">
+						<a class="mybtn2" href="#">View All Deposits</a>
+					</div>
+				</div>
+		</div>
+	</section> 
+
+{% endblock content %}
+
+
+
+<!-- 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div id="smart-button-container">
@@ -10,7 +270,7 @@
       <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
     <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
   </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=AZiZ9sfSHzd0C6UVtobX2sMRhQxnGI7jaZOapChsOzIpiJBGfwk1cvM5euJ1mo0I5k6PRn5XIXnH_5bp&currency=USD" data-sdk-integration-source="button-factory"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id={{client_id}&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
 
 function getCookie(name) {
@@ -110,7 +370,7 @@ function getCookie(name) {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
           console.log(details)
-          fetch("/paypal/payment-success/", {
+          fetch("account/paypal/payment-success/", {
               method: "POST",
               credentials: 'include',
                 headers: {
@@ -133,4 +393,4 @@ function getCookie(name) {
     }).render('#paypal-button-container');
   }
   initPayPalButton();
-  </script>
+  </script> -->

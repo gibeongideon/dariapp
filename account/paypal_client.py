@@ -1,17 +1,24 @@
 import os
 import sys
-from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment
+from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment,LiveEnvironment
 from django.conf import settings
 
-class PayPalClient:
+
+
+class DPayPalClient:
     def __init__(self):
         self.client_id = settings.PAYPAL_CLIENT_ID
         self.client_secret = settings.PAYPAL_CLIENT_SECRET
+        
         """Setting up and Returns PayPal SDK environment with PayPal Access credentials.
            For demo purpose, we are using SandboxEnvironment. In production this will be
            LiveEnvironment."""
-        self.environment = SandboxEnvironment(client_id=self.client_id, client_secret=self.client_secret)
+        if settings.DEBUG is True:
+            self.environment = SandboxEnvironment(client_id=self.client_id, client_secret=self.client_secret)
+        else:
+            self.environment = LiveEnvironment(client_id=self.client_id, client_secret=self.client_secret)
 
+        
         """ Returns PayPal HTTP client instance with environment which has access
             credentials context. This can be used invoke PayPal API's provided the
             credentials have the access to do so. """
@@ -41,6 +48,6 @@ class PayPalClient:
                 result.append(self.object_to_json(item) if  not self.is_primittive(item) \
                               else self.array_to_json_array(item) if isinstance(item, list) else item)
         return result
-
+    
     def is_primittive(self, data):
-        return isinstance(data, str) or isinstance(data, bytes) or isinstance(data, int)
+        return isinstance(data, str) or isinstance(data, unicode) or isinstance(data, int)

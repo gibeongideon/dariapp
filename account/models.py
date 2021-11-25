@@ -872,9 +872,9 @@ class AccountAnalytic(TimeStamp):
     @property
     def all_in(self):
         total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("amount"))
-        if total.get("dep_amount"):
-           return total.get("dep_amount")
-        return 0
+        # if total.get("dep_amount"):
+        #    return total.get("dep_amount")
+        return total.get("dep_amount") if total.get("dep_amount") else 0
 
                
     @property

@@ -3,11 +3,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
 import os
-from .models import Account
+from .models import Account,CashDeposit, Currency
 import json
 import random
 import string
-from paypal_client import PayPalClient
+from .paypal_client import DPayPalClient
 from paypalpayoutssdk.payouts import PayoutsPostRequest
 from paypalhttp.serializers.json_serializer import Json
 from paypalhttp.http_error import HttpError
@@ -15,12 +15,14 @@ from paypalhttp.encoder import Encoder
 from django.conf import settings
 
 # Creating an environment
-environment = SandboxEnvironment(client_id=settings.PAYPAL_CLIENT_ID, client_secret=settings.PAYPAL_CLIENT_SECRET)
+client_id = settings.PAYPAL_CLIENT_ID
+
+environment = SandboxEnvironment(client_id=client_id, client_secret=settings.PAYPAL_CLIENT_SECRET)
 client = PayPalHttpClient(environment)
 
 
 
-class CreatePayouts(PayPalClient):
+class CreatePayouts(DPayPalClient):
 
     """ Creates a payout batch with 5 payout items
     Calls the create batch api (POST - /v1/payments/payouts)
@@ -29,7 +31,7 @@ class CreatePayouts(PayPalClient):
     def __init__(self, amount, receiver):
         self.amount = amount
         self.receiver = receiver
-        PayPalClient.__init__(self)
+        DPayPalClient.__init__(self)
 
     # @staticmethod
     def build_request_body(self, include_validation_failure = False):
@@ -46,7 +48,7 @@ class CreatePayouts(PayPalClient):
                     "email_subject": "This is a test transaction from SDK"
                 },
                 "items": [{
-                    "note": "Thanks for using smalltaskers!",
+                    "note": "Thanks for using dariplay!",
                     "amount": {
                         "currency": "USD",
                         "value": amount
@@ -80,7 +82,7 @@ class CreatePayouts(PayPalClient):
 
 # Create your views here.
 def accept_payment(request):
-    return render(request, "account/paypal/accept-payment.html")
+    return render(request, "account/paypal/accept-payment.html",{"client_id":client_id})
 
 @csrf_exempt # security issue
 def payment_success(request):
@@ -89,13 +91,15 @@ def payment_success(request):
         post_data = json.loads(request.body.decode("utf-8"))
 
         try:
-            uf = Account.objects.get(user=request.user)
-        except Account.DoesNotExist:
-            Account(user=request.user, balance=0).save()
-            uf = Account.objects.get(user=request.user)
+            Account.objects.get(user=request.user)
+            currency=Currency.objects.get(name="USD")
+            CashDeposit.objects.create(user=request.user,amount=post_data["amount"],deposit_type='paypal',currency=currency)
 
-        uf.balance += float(post_data["amount"])
-        uf.save()
+        except Exception as e:
+            print(e)
+            print('paypal deposir_ISSUE!!')
+            
+            pass
 
         print(post_data)
 
