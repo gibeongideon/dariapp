@@ -839,6 +839,10 @@ class Checkout(TimeStamp):
             self.amount = abs(self.amount)
         super().save(*args, **kwargs)
 
+def cashtore():
+    from daru_wheel.models import CashStore
+    all_amount=CashStore.objects.get(id=1).all_amount
+    return all_amount
 
 class AccountAnalytic(TimeStamp):
     gain = models.FloatField(default=0, blank=True, null=True)
@@ -853,39 +857,44 @@ class AccountAnalytic(TimeStamp):
     @property
     def c_bal(self):
         total_cbal = Account.objects.aggregate(bal_amount=Sum("balance"),abal_amount=Sum("withraw_power"))
-
-        return total_cbal.get("bal_amount")
+        if total_cbal.get("bal_amount"):
+            return total_cbal.get("bal_amount")
+        return 0
 
     @property
     def wit_amount(self):
         total = CashWithrawal.objects.filter(withrawned=True).aggregate(wit_amount=Sum("amount"))
 
-        return total.get("wit_amount") 
+        if total.get("wit_amount"):
+            return total.get("wit_amount")
+        return 0
                
     @property
     def all_in(self):
         total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("amount"))
-
-        return total.get("dep_amount")    
+        if total.get("dep_amount"):
+           return total.get("dep_amount")
+        return 0
 
                
     @property
     def all_out(self):
+   
+        all_amount=float(cashtore())
+        print(self.wit_amount)
 
-        #all_amount=CashStore.objects.get(id=1).all_amount
-
-        return 777#self.c_bal+self.wit_amount+all_amount
+        return float(self.c_bal)+all_amount+float(self.wit_amount)#
 
     @property
     def status_flag(self):
         if self.t_in!=self.t_out:
-            return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
+            return 'Red Flag.Something wrong with transactions!math dont add up!'
         return  "All system working great.NO ISSUE!"
 
     @property
     def current_flag(self):
         if self.all_in!=self.t_out:
-            return 'Red Flag.Something wrong with transactions!Fix_Bug_ASAP'
+            return 'Red Flag.Something wrong with transactions!Fix_ISSUE_ASAP.Hesabu haziingiliani!REPORT to my creater'
         return  "All system working great.NO ISSUE!"
 
     @property
