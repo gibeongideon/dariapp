@@ -28,7 +28,7 @@ def account_setting():
 class Account(TimeStamp):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name="user_accounts",
         blank=True,
         null=True,
@@ -86,10 +86,12 @@ class Account(TimeStamp):
     @property
     def balance_usd(self):
         rate_to_usd=Currency.objects.get(name='USD').rate
-        print(rate_to_usd)
-        print('RATE')
-
         return round(self.balance/rate_to_usd,2)
+
+    @property
+    def withrawable_balance_usd(self):
+        rate_to_usd=Currency.objects.get(name='USD').rate
+        return round(self.withrawable_balance/rate_to_usd,2)
 
     @property
     def c_loss(self):
@@ -347,7 +349,8 @@ class CashDeposit(TimeStamp):
     """
 
     # amount = models.DecimalField(('amount'), max_digits=12, decimal_places=2, default=0)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    amount = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    tokens = models.DecimalField(max_digits=12,decimal_places=2, blank=True, null=True)
     confirmed = models.BooleanField(default=False, blank=True, null=True)
     deposited = models.BooleanField(blank=True, null=True)
     deposit_type = models.CharField(
@@ -430,6 +433,7 @@ class CashDeposit(TimeStamp):
                 try:
                     if self.confirmed and not self.deposited:
                         ctotal_balanc = current_account_bal_of(self.user_id)  # F
+                        self.tokens=self.amount_converted_to_tokens
                         new_bal = ctotal_balanc + int(self.amount_converted_to_tokens)
                         update_account_bal_of(self.user_id, new_bal)  # F
                         self.update_cum_depo()  #####
@@ -438,6 +442,8 @@ class CashDeposit(TimeStamp):
                 except Exception as e:
                     print(f"Daru:CashDeposit-Deposited Error:{e}")  # Debug
                     pass
+
+
 
                 # try:
                 #     if not self.has_record:
@@ -466,7 +472,8 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
     """
 
     # amount = models.DecimalField(('amount'), max_digits=12, decimal_places=2, default=0)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    amount = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    tokens = models.DecimalField(max_digits=12,decimal_places=2, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
 
     approved = models.BooleanField(default=False, blank=True, null=True)
@@ -483,7 +490,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         null=True,
     )
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, blank=True, null=True
+        Currency, on_delete=models.DO_NOTHING, blank=True, null=True
     )
 
     def __str__(self):
@@ -550,15 +557,30 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
         return "failed"
 
+    @property
+    def amount_converted_to_tokens(self):
+        try:
+            # currency_name =Currency.objects.get(id=self.currency_id).name
+            tokens=Currency.get_tokens_amount(self.currency.name, float(self.amount))
+        except Exception as e:#Currency.DoesNotExist:
+            print('FAIL CONVERT',e)
+            tokens= self.amount 
+
+        return tokens     
+
+
     def save(self, *args, **kwargs):
         # if self.similar_trans:
         #     return
-        """ Overrride internal model save method to update balance on deposit  """
+        """ Overrride internal model save method to update balance on withraw """
         account_is_active = self.user.active
         # wit_able_bal=current_account_withrawable_bal_of(self.user_id)
         ctotal_balanc = current_account_bal_of(self.user_id)
         #  = self.user.user_account.withrawable_balance
-        withrawable_bal = float(Account.objects.get(user_id=self.user_id).withraw_power)
+
+        withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
+            ,float(Account.objects.get(user_id=self.user_id).balance))
+        
 
         # if wit_able_bal<self.amount:
         #     return
@@ -587,8 +609,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                             self.amount + charges_fee
                         ) <= withrawable_bal:
                             try:
+                                self.tokens=self.amount_converted_to_tokens
+
                                 new_bal = (
-                                    ctotal_balanc - float(self.amount) - charges_fee
+                                    ctotal_balanc - float(self.amount_converted_to_tokens) - charges_fee
                                 )
                                 update_account_bal_of(self.user_id, new_bal)  # F
                                 self.update_cum_withraw()  ##
@@ -871,7 +895,7 @@ class AccountAnalytic(TimeStamp):
                
     @property
     def all_in(self):
-        total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("amount"))
+        total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("tokens"))
         # if total.get("dep_amount"):
         #    return total.get("dep_amount")
         return total.get("dep_amount") if total.get("dep_amount") else 0
