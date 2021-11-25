@@ -597,7 +597,10 @@
 					</div>
 					<div class="header-area">
 						<h4 class="title">M-Pesa Withdraw</h4>
-						<p class="sub-title">Enter Amount to withraw</p>
+						<p class="sub-title">
+							You can withdraw a total of {{ uf.withrawable_balance }} USD</h4>
+							
+				        </p>
 					</div>
 					<div class="form-area">
 <form action="{% url 'account:mpesa_withrawal' %}" method="post">
@@ -836,7 +839,7 @@
 						<form role="form" method="POST" action="{% url 'users:login' %}">
 						    {% csrf_token %}
 							<div class="form-group">
-									<label for="login-input-email">Username*</label>
+									<label for="login-input-email">Mobile No*</label>
 									<input type="text"  class="input-field" name="username" id="username" placeholder="Phone number you sign up with" required autofocus>
 									
 							</div>

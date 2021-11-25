@@ -50,7 +50,7 @@ class User(AbstractUser):
         if (mobile.startswith("7") or mobile.startswith("1")) and len(mobile) == 9:
             return "254" + mobile
 
-        return mobile + "-invalid_phone_number"
+        return mobile + "check_number"
 
     def save(self, *args, **kwargs):
         try:

@@ -20,7 +20,8 @@ from mpesa_api.core.models import OnlineCheckoutResponse
 
 class CashDepositWithrawalTestCase(TestCase):
     def setUp(self):
-        Currency.objects.create(name='USD',rate=20)
+        self.currency1=Currency.objects.create(name='USD',rate=20)
+        self.currency2=Currency.objects.create(name='KSH',rate=1)
 
         self.usera = User.objects.create(
             username="0710001000", email="testa@gmail.com", referer_code="ADMIN"
@@ -45,6 +46,31 @@ class CashDepositWithrawalTestCase(TestCase):
 
         self.assertEqual(2020000, bal2a)
         self.assertEqual(20000, bal2b)
+
+    def test_correct_withraw_diff_power(self):
+        """test to ensure no negative deposit done"""
+        Account.objects.filter(user_id=self.usera).update(balance=1000,withraw_power=500)
+
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 500)
+
+
+    def test_correct_wihraw_diff_currencies(self):
+        """test to ensure no negative deposit done"""
+        Account.objects.filter(user_id=self.usera).update(balance=10000,withraw_power=5000)
+
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 5000)
+        CashWithrawal.objects.create(user=self.usera,amount=2000,currency=self.currency2,approved=True)
+
+        self.assertEqual(Account.objects.get(user=self.usera).balance,8000)
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 3000)
+
+        CashWithrawal.objects.create(user=self.usera,amount=100,currency=self.currency1,approved=True)
+
+        self.assertEqual(Account.objects.get(user=self.usera).balance,6000)
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 1000)
+
+  
+
 
     def test_correct_no_negative_deposit(self):
         """test to ensure no negative deposit done"""

@@ -36,7 +36,7 @@ class UserTestCase(TestCase):
         self.assertEqual(self.userb.phone_number, "254181008768")
         self.assertEqual(self.userc.phone_number, "254181008773")
         self.assertEqual(
-            self.userd.phone_number, "2548773-invalid_phone_number"
+            self.userd.phone_number, "2548773check_number"
         )  # pone verification later
 
     def test_catch_invalid_daru_code(self):

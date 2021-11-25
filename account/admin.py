@@ -156,12 +156,13 @@ class CashDepositAdmin(admin.ModelAdmin):
         "deposit_type",
         "has_record",
         "amount",
+        "tokens",
         "currency",
         "current_bal",
         "created_at",
         "updated_at",
     )
-    list_display_links = ("amount",)
+    list_display_links = ("user",)
     search_fields = ("amount",)
     list_filter = ("user","currency", "deposit_type")
     readonly_fields = (
@@ -171,7 +172,11 @@ class CashDepositAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
+    list_editable = (
+        "deposit_type",
+        "tokens",
 
+    )
 
 admin.site.register(CashDeposit, CashDepositAdmin)
 
@@ -187,6 +192,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "withraw_status",
         "has_record",
         "amount",
+        "tokens",
         "currency",
         "user_account",
         "created_at",
@@ -203,7 +209,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    list_editable = ("approved", "cancelled")
+    list_editable = ("approved", "cancelled","tokens")
 
 
 admin.site.register(CashWithrawal, CashWithrawalAdmin)
