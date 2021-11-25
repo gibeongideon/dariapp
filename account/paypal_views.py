@@ -15,7 +15,7 @@ from paypalhttp.encoder import Encoder
 from django.conf import settings
 
 # Creating an environment
-environment = SandboxEnvironment(client_id=settings.CLIENT_ID, client_secret=settings.CLIENT_SECRET)
+environment = SandboxEnvironment(client_id=settings.PAYPAL_CLIENT_ID, client_secret=settings.PAYPAL_CLIENT_SECRET)
 client = PayPalHttpClient(environment)
 
 

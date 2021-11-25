@@ -68,14 +68,31 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Install Dependencies
+    - name: Create Vitrual_Env & Install Dependencies
       run: |
-        pwd
+        sudo -H pip3 install --upgrade pip 
+        sudo -H pip3 install virtualenv
+        sudo -H pip3 install tree ##FIXIT
+
+        mkdir -p ~/dariapp
+        cd ~/dariapp
+
+        virtualenv env
+        source env/bin/activate
+
+
         cd ~/actions-runner/deploy/dariapp/dariapp
-        
-        python -m pip install --upgrade pip    
-        python -m pip install tree
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+
+    # - name: Install Dependencies
+    #   run: |
+    #     pwd
+    #     cd ~/actions-runner/deploy/dariapp/dariapp
+        
+    #     python -m pip install --upgrade pip    
+    #     python -m pip install tree #R
+    #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Create ENV VAR
       run: |
@@ -126,7 +143,7 @@ jobs:
         python manage.py makemigrations ipn
         python manage.py makemigrations pro
 
-    ## account
+    ## All
     - name: APP-MIGRATE
       run: |
         cd ~/actions-runner/deploy/dariapp/dariapp        
@@ -214,6 +231,13 @@ jobs:
         rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/paypal/pro/migrations ~/dariapp/migrations/paypal/pro 
         cd ~/dariapp/migrations/paypal/pro
         tree 
+
+    - name: Rsync Updated APP to Workin Directory
+      run: |
+        rsync -a --delete ~/Desktop/projects/actions-runner/deploy/dariapp/dariapp ~/dariapp/src
+        cd ~/dariapp/src
+        # tree
+
 
     - name: Backup Migrations_Updated
       run: |

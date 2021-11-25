@@ -324,5 +324,5 @@ SITE_DOMAIN = config(
 
 
 # Creating Access Token for Sandbox
-CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
-CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default=True)
+PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
+PAYPAL_CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default=True)
