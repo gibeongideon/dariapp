@@ -233,11 +233,11 @@ jobs:
         cd ~/dariapp/migrations/paypal/pro
         tree 
 
-    - name: Rsync Updated APP to Workin Directory
-      run: |
-        rsync -a --delete ~/Desktop/projects/actions-runner/deploy/dariapp/dariapp ~/dariapp/src
-        cd ~/dariapp/src
-        # tree
+    # - name: Rsync Updated APP to Workin Directory
+    #   run: |
+    #     rsync -a --delete ~/Desktop/projects/actions-runner/deploy/dariapp/dariapp ~/dariapp/src
+    #     cd ~/dariapp/src
+    #     # tree
 
 
     - name: Backup Migrations_Updated
