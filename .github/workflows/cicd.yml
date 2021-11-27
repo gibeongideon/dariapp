@@ -70,14 +70,14 @@ jobs:
 
     - name: Create Vitrual_Env & Install Dependencies
       run: |
-        sudo -H pip3 install --upgrade pip 
-        sudo -H pip3 install virtualenv
-        sudo -H pip3 install tree ##FIXIT
+        # sudo -H pip3 install --upgrade pip 
+        # sudo -H pip3 install virtualenv
+        # sudo -H pip3 install tree ##FIXIT
 
         mkdir -p ~/dariapp
         cd ~/dariapp
 
-        virtualenv env
+        # virtualenv env
         source env/bin/activate
 
 
