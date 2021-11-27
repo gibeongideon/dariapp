@@ -81,6 +81,8 @@ pycparser==2.20
 pyflakes==2.3.1
 PyHamcrest==2.0.2
 PyNaCl==1.4.0
+paypal-payouts-sdk==1.0.0
+paypalhttp==1.0.0
 pyOpenSSL==20.0.0
 pyparsing==2.4.7
 pyrsistent==0.17.3
