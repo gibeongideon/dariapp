@@ -78,7 +78,7 @@ jobs:
         cd ~/dariapp
 
         # virtualenv env
-        source env/bin/activate
+        # source env/bin/activate
 
 
         cd ~/actions-runner/deploy/dariapp/dariapp
