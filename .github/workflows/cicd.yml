@@ -97,6 +97,7 @@ jobs:
     - name: Create ENV VAR
       run: |
         mkdir -p ~/dariapp
+        mkdir -p ~/dariapp/src
         touch ~/dariapp/.env
         cp ~/dariapp/.env  ~/actions-runner/deploy/dariapp/dariapp
 
