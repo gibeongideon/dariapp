@@ -18,13 +18,13 @@ try:
 except ImportError:
     pass
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": config("DB_NAME", default="darius_db"),
-#         "USER": config("DB_USER", default="daru"),
-#         "PASSWORD": config("DB_PASSWORD", default="password"),
-#         "HOST": "localhost",
-#         "PORT": "",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("DB_NAME", default="dariappdb"),
+        "USER": config("DB_USER", default="darius"),
+        "PASSWORD": config("DB_PASSWORD", default="darius54321"),
+        "HOST": "localhost",
+        "PORT": "",
+    }
+}
