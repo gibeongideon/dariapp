@@ -57,6 +57,6 @@ urlpatterns = [
     #PAYLAL
     
     path("paypal/deposit/", paypal_views.accept_payment,name="accept_payment"),
-    path("paypal/payment-success/", paypal_views.payment_success),
+    path("paypal/payment-success/", paypal_views.payment_success,name="payment_success"),
     path("paypal/withdraw/", paypal_views.paypal_payout,name="paypal_payout")
 ]

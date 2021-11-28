@@ -10,7 +10,7 @@ urlpatterns = [
     # Matches any html file    
     # The home pages
     path("", views.homepage, name="homepage"),
-    path("<str:refer_code>/", views.homepage, name="homepage"),
+    path("r/<str:refer_code>/", views.homepage, name="homepage"),
     # path('', views.index, name='index'),
     path("wallet", views.deposit_withraw, name="deposit_withraw"),
     path("affiliate", views.affiliate, name="affiliate"),
