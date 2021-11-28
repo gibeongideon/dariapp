@@ -14,6 +14,8 @@ from paypalhttp.http_error import HttpError
 from paypalhttp.encoder import Encoder
 from django.conf import settings
 
+from django.contrib.auth.decorators import login_required
+
 # Creating an environment
 client_id = settings.PAYPAL_CLIENT_ID
 
@@ -80,33 +82,46 @@ class CreatePayouts(DPayPalClient):
 
         return response
 
-# Create your views here.
+
+
+
+
+
+
+@login_required(login_url="/user/login")
 def accept_payment(request):
     return render(request, "account/paypal/accept-payment.html",{"client_id":client_id})
+
 
 @csrf_exempt # security issue
 def payment_success(request):
     if request.method == "POST":
         import json
         post_data = json.loads(request.body.decode("utf-8"))
-        print('PAYER_DEDAILS!!!!!!!!!!!!')
-        print(post_data["amount"])
-        print(post_data["email"])
+        amount=float(post_data["amount"])
+        try:
+            currency=Currency.objects.get(name="USD")
+        except Currency.DoesNotExist:
+            Currency.objects.create(name="USD",rate=100) 
+            currency=Currency.objects.get(name="USD")
 
         try:
-            Account.objects.get(user=request.user)
-            currency=Currency.objects.get(name="USD")
-            CashDeposit.objects.create(user=request.user,amount=float(post_data["amount"]),deposit_type='paypal',currency=currency,confirmed=True)
-
+            CashDeposit.objects.create(
+                user=request.user,
+                amount=amount,
+                currency_id=currency,
+                confirmed=True,#
+                deposit_type="PAYPAL`",)
         except Exception as e:
             print(e)
-            print('paypal deposir_ISSUE!!')
-            
-            pass
+            print('paypal deposir_ISSUE!!')                
 
-        print(post_data)
+        # print(post_data)#Debug
 
         return JsonResponse({"success": True})
+
+
+
 
 def paypal_payout(request):
     if request.method == "POST":

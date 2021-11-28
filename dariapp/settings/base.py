@@ -279,7 +279,7 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 
 PAYPAL_RECEIVER_EMAIL = config(
     "PAYPAL_RECEIVER_EMAIL",
-    default="darius@daruspin.com")
+    default="darius.wheel@gmail.com")
 
 PAYPAL_TEST = config("PAYPAL_TEST", default=True)
 
@@ -299,9 +299,6 @@ PAYPAL_WPP_SIGNATURE = config(
     default="AM1aGgn2bz5QbLwfJWgM8rQPCVdfAjz3hKc8w9Pa8XdIFnHt-9r143O2")
 
 
-PAYPAL_CLIENT_ID = config(
-    "PAYPAL_CLIENT_ID",
-    default="ARV38-NsL_7uctGU6Ap8FnQoPkxtbs3g3yx5i11dY46VHTk5PSKrG8kGvW0lKIhTv-Fub2Gb2VZX-gl-")
 
 
 
@@ -326,3 +323,4 @@ SITE_DOMAIN = config(
 # Creating Access Token for Sandbox
 PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
 PAYPAL_CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default=True)
+
