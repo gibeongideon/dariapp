@@ -422,7 +422,7 @@
 								<div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
 
 						</div>
-						<script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
+						<!-- <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script> -->
 					</div>							
 					{% comment %} <div class="form-footer">
 						<p>Not a member? 								
@@ -800,7 +800,7 @@
 					<div class="form-area">
 
 
-						<textarea class="input-field" id="w3review" name="w3review" >Join the play and win every minute.Click here:{{request.user.referal_link}}</textarea>
+						<textarea class="input-field" id="w3review" name="w3review" >Join the play and win every minute.Use this link: {{request.user.referal_link}}</textarea>
 
 						
 					</div>
@@ -939,7 +939,7 @@
 		<!-- SignIn Area End -->					
   {% include 'includes/scripts.html' %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+    <!-- <script>
 
  
 function getCookie(name) {
@@ -1039,7 +1039,7 @@ function getCookie(name) {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
           console.log(details)
-          fetch("account/paypal//payment-success/", {
+          fetch("{% url 'account:payment_success' %}", {
               method: "POST",
               credentials: 'include',
                 headers: {
@@ -1062,7 +1062,7 @@ function getCookie(name) {
     }).render('#paypal-button-container');
   }
   initPayPalButton();
-  </script>
+  </script> -->
 
 
 
@@ -1080,7 +1080,7 @@ function getCookie(name) {
 	navigator.clipboard.writeText(copyText.value);
   
 	/* Alert the copied text */
-	alert("You have copied: " + copyText.value+ ".  Share now!");
+	alert("You have copied.Paste to someone's social media now. Share to get Ref Commision everytime they play!");
   }
 
   </script>

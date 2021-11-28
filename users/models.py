@@ -24,11 +24,10 @@ class User(AbstractUser):
         return self.username
 
     @property
-    def referal_link(self):
-        # path = reverse("pinax_referrals:process_referral", kwargs={"code": self.code})
+    def referal_link(self):#TODO
         domain =  settings.SITE_DOMAIN
-        protocol = "http"#"https" if settings.PINAX_REFERRALS_SECURE_URLS else "http"
-        return f"{protocol}://{domain}/{self.code}"
+        protocol = "http"
+        return f"{protocol}://{domain}/r/{self.code}"
 
 
 

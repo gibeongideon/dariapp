@@ -1,5 +1,4 @@
 
-
 {% extends "layouts/base.html" %}
 
 {% block stylesheets %}{% endblock stylesheets %}
@@ -230,7 +229,7 @@
             <div>
 
 <div id="smart-button-container">
-    <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div>
+    <!-- <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> -->
       <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
     <div style="text-align: center"><label for="amount">Deposit Amount </label><input name="amountInput" type="number" id="amount" value="" ><span> USD</span></div>
       <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
@@ -238,6 +237,7 @@
       <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
     <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
   </div>
+
 
 
             </div>
@@ -254,24 +254,14 @@
 		</div>
 	</section> 
 
+{% endblock content %}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-- {% block javascripts %} -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- <div id="smart-button-container">
+<div id="smart-button-container">
     <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div>
       <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
     <div style="text-align: center"><label for="amount">Deposit Amount </label><input name="amountInput" type="number" id="amount" value="" ><span> USD</span></div>
@@ -279,8 +269,8 @@
     <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" ></div>
       <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
     <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
-  </div> -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AZiZ9sfSHzd0C6UVtobX2sMRhQxnGI7jaZOapChsOzIpiJBGfwk1cvM5euJ1mo0I5k6PRn5XIXnH_5bp&currency=USD" data-sdk-integration-source="button-factory"></script>
+  </div>
+  <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
 
 function getCookie(name) {
@@ -380,7 +370,7 @@ function getCookie(name) {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
           console.log(details)
-          fetch("/paypal/payment-success/", {
+          fetch("{% url 'account:payment_success' %}", {
               method: "POST",
               credentials: 'include',
                 headers: {
@@ -405,5 +395,5 @@ function getCookie(name) {
   initPayPalButton();
   </script>
 
-
-{% endblock content %}
+<!--    
+  {% endblock javascripts %} -->

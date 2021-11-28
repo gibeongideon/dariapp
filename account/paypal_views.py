@@ -89,6 +89,9 @@ def payment_success(request):
     if request.method == "POST":
         import json
         post_data = json.loads(request.body.decode("utf-8"))
+        print('PAYER_DEDAILS!!!!!!!!!!!!')
+        print(post_data["amount"])
+        print(post_data["email"])
 
         try:
             Account.objects.get(user=request.user)
