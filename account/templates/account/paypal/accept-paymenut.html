@@ -370,7 +370,7 @@ function getCookie(name) {
       onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
           console.log(details)
-          fetch("{% url 'account:payment_success' %}", {
+          fetch("account/payment_success", {
               method: "POST",
               credentials: 'include',
                 headers: {

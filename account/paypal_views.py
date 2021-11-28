@@ -96,7 +96,7 @@ def payment_success(request):
         try:
             Account.objects.get(user=request.user)
             currency=Currency.objects.get(name="USD")
-            CashDeposit.objects.create(user=request.user,amount=post_data["amount"],deposit_type='paypal',currency=currency)
+            CashDeposit.objects.create(user=request.user,amount=float(post_data["amount"]),deposit_type='paypal',currency=currency,confirmed=True)
 
         except Exception as e:
             print(e)
