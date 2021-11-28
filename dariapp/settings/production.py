@@ -21,7 +21,7 @@ except ImportError:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("DB_NAME", default="darius_db"),
+        "NAME": config("DB_NAME", default="dariusdb"),
         "USER": config("DB_USER", default="darius"),
         "PASSWORD": config("DB_PASSWORD", default="darius54321"),
         "HOST": "localhost",
