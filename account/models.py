@@ -384,7 +384,7 @@ class CashDeposit(TimeStamp):
     @property
     def status(self):
         if self.deposited:
-            return "Succided"
+            return "Success"
         return "Failed"
 
     # def update_tokens(self):#TODO
@@ -515,10 +515,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
             now_withrawable = float(
                 Account.objects.get(user_id=self.user_id).withraw_power
             )
-            deduct_amount = float(self.amount)
+            deduct_amount = float(self.amount_converted_to_tokens)
             total_withwawable = now_withrawable - deduct_amount
 
-            if total_withwawable > 0:
+            if total_withwawable >= 0:
                 Account.objects.filter(user=self.user).update(
                     withraw_power=total_withwawable
                 )
@@ -582,8 +582,8 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
             ,float(Account.objects.get(user_id=self.user_id).balance))
         
 
-        # if wit_able_bal<self.amount:
-        #     return
+        if withrawable_bal<=0:
+            return
         if not self.active:
             return
 
