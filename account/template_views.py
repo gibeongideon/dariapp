@@ -1,10 +1,10 @@
 # from __future__ import unicode_literals
-from django.views.generic import FormView
-from django.views.generic import TemplateView
+# from django.views.generic import FormView
+# from django.views.generic import TemplateView
 from paypal.standard.forms import PayPalPaymentsForm
-from django.conf import settings
-from .models import Checkout
-from .forms import CheckoutForm
+from django.conf import  settings
+# from .models import Checkout
+# from .forms import CheckoutForm
 from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render, redirect, reverse
@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 # from django.contrib import messages
 from django.conf import settings
-from .forms import CheckoutForm
-from paypal.pro.views import PayPalPro
+# from .forms import CheckoutForm
+# from paypal.pro.views import PayPalPro
 from .models import (
     # TransactionLog,
     RefCredit,
@@ -164,8 +164,7 @@ def cash_trans(request):
 def process_payment(request):
     amount = float(request.session['paypal_deposit_amount'])
     # print(amount)
-    host = request.get_host()
-
+    host =request.get_host()#settings.SITE_DOMAIN  # 
     try:
         currency=Currency.objects.get(name="USD")
     except Currency.DoesNotExist:
@@ -196,9 +195,8 @@ def process_payment(request):
         'item_name': 'DariPlay-Deposit',
         'invoice': f'{depo.id}',
         'currency_code': 'USD',
-        'notify_url': 'http://{}{}'.format(host,
-                                           reverse('paypal-ipn')),
-        'return_url': 'http://{}'.format(host),
+        'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
+        'return_url': 'http://{}/'.format(host),
         'cancel_return': 'http://{}/paypal/checkout'.format(host),
 
         # 'return_url': 'http://{}{}'.format(host,
@@ -208,6 +206,7 @@ def process_payment(request):
     }
 
     form = PayPalPaymentsForm(initial=paypal_dict)
+
     return render(
         request,
         'account/paypal/process_payment.html',
