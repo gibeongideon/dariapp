@@ -115,19 +115,15 @@ def paypal_payment_received(sender, **kwargs):
         # is allowed.
         try:
             my_pk = int(ipn_obj.invoice)
-            mytransaction = Checkout.objects.get(pk=my_pk)
+            mytransaction = CashDeposit.objects.get(pk=my_pk)
             assert ipn_obj.mc_gross == mytransaction.amount and ipn_obj.mc_currency == 'USD'
         except Exception:
             logger.exception('Paypal ipn_obj data not valid!')
         else:
-            mytransaction.paid = True
+            logger.exception('Confirmed Comleted Paypal Deposit Transaction!')
+            mytransaction.confirmed = True
             mytransaction.save()
-            user = mytransaction.user
-            print(user)
-            current_bal = current_account_bal_of(user.id)
-            new_bal = current_bal+(mytransaction.amount)*100  # to KS
-            update_account_bal_of(user.id, new_bal)
-            mytransaction.success = True
+       
     else:
         logger.debug('Paypal payment status not completed: %s' % ipn_obj.payment_status)
 

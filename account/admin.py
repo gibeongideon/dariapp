@@ -164,7 +164,11 @@ class CashDepositAdmin(admin.ModelAdmin):
     )
     list_display_links = ("user",)
     search_fields = ("amount",)
-    list_filter = ("user","currency", "deposit_type")
+    list_filter = (
+        "user",
+        "currency",
+        "deposit_type",
+        "deposited",)
     readonly_fields = (
         "deposited",
         "has_record",
