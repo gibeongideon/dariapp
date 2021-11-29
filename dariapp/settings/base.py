@@ -276,7 +276,6 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 #Paypal
 
 
-
 PAYPAL_RECEIVER_EMAIL = config(
     "PAYPAL_RECEIVER_EMAIL",
     default="darius.wheel@gmail.com")
@@ -300,15 +299,12 @@ PAYPAL_WPP_SIGNATURE = config(
 
 
 
-
-
 DJANGO_SETTINGS_MODULE = config(
     "DJANGO_SETTINGS_MODULE",
     default='dariapp.settings.dev')
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
-
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
