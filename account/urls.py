@@ -43,7 +43,6 @@ urlpatterns = [
     # path('paypal-checkout/', views.PaypalFormView.as_view(), name='paypal-checkout'),
     # path('paypal-return/', views.PaypalReturnView.as_view(), name='paypal-return'),
     # path('paypal-cancel/', views.PaypalCancelView.as_view(), name='paypal-cancel'),
-
     # path("paypal_pro/", views.paypal_pro, name="paypal_pro"),
     # path("paypal/", include('paypal.standard.ipn.urls')),
 
