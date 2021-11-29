@@ -128,7 +128,7 @@ def paypal_payout(request):
         create_response = CreatePayouts(str(float(request.POST['amount'])), request.user.username).create_payouts(True)
         if int(create_response.status_code) == 201:
             uf = Account.objects.get(user=request.user)
-            uf.balance = uf.balance - float(request.POST['amount'])
+            uf.balance = float(uf.balance) - float(request.POST['amount'])
             uf.save()
         return JsonResponse({"status code": create_response.status_code})
     else:
