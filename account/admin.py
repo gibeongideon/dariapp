@@ -64,6 +64,7 @@ class AccountAdmin(admin.ModelAdmin):
         "actual_balance",
         "withraw_power",
         "withrawable_balance",
+        "withrawable_balance_usd",
         "refer_balance",
         "trial_balance",
         "cum_deposit",

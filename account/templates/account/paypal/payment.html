@@ -219,10 +219,12 @@
 						</div>
 
 						<div class="section-heading">
+							{{msg}}
     
     <form method="POST">
         {% csrf_token %}
-        <input type="number" name="amount" max="{{ uf.withrawable_balance}}">
+
+		<input type="number" class="input-field" name="amount" class="form-control" id="amount"  max="{{ uf.withrawable_balance_usd}}" required>
         <button type="submit">Withdraw</button>
     </form>
 
