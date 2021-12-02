@@ -1,7 +1,7 @@
 from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =config("DEBUG", default=True, cast=bool)
+DEBUG =False#config("DEBUG", default=True, cast=bool)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'dariappdjango-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hphmxgc8p'
 

@@ -280,7 +280,7 @@ PAYPAL_RECEIVER_EMAIL = config(
     "PAYPAL_RECEIVER_EMAIL",
     default="darius.option@gmail.com")
 
-PAYPAL_TEST = config("PAYPAL_TEST", default=False)
+PAYPAL_TEST = False#config("PAYPAL_TEST", default=False)
 
 
 ###USA/CANADA&UK
