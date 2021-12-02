@@ -1,9 +1,9 @@
 from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True# config("DEBUG", default=False, cast=bool)
+DEBUG =config("DEBUG", default=True, cast=bool)
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hphmxgc8p'
+SECRET_KEY = 'dariappdjango-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hphmxgc8p'
 
 # SECURITY WARNING: define the correct hosts in production!
 # ALLOWED_HOSTS = ['*']
