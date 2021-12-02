@@ -35,6 +35,7 @@ urlpatterns = [
     # path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
     path("cash_trans/", views.cash_trans, name="cash_trans"),
     
+    
     path('paypal/checkout/', views.checkout, name='paypal-checkout'),
     path('paypal/process-payment/', views.process_payment, name='process_payment'),
     path('paypal/payment-done/', views.payment_done, name='payment_done'),
