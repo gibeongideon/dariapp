@@ -278,9 +278,9 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 
 PAYPAL_RECEIVER_EMAIL = config(
     "PAYPAL_RECEIVER_EMAIL",
-    default="darius.wheel@gmail.com")
+    default="darius.option@gmail.com")
 
-PAYPAL_TEST = config("PAYPAL_TEST", default=True)
+PAYPAL_TEST = config("PAYPAL_TEST", default=False)
 
 
 ###USA/CANADA&UK
