@@ -303,8 +303,6 @@ DJANGO_SETTINGS_MODULE = config(
     "DJANGO_SETTINGS_MODULE",
     default='dariapp.settings.dev')
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = '/media/'
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
