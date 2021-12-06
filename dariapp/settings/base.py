@@ -276,9 +276,9 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 #Paypal
 
 
-PAYPAL_RECEIVER_EMAIL = config(
-    "PAYPAL_RECEIVER_EMAIL",
-    default="darius.option@gmail.com")
+PAYPAL_RECEIVER_EMAIL ="debra.chepkirui22@gmail.com" #config(
+    # "PAYPAL#_RECEIVER_EMAIL",
+    # default="darius.option@gmail.com")
 
 PAYPAL_TEST = False#config("PAYPAL_TEST", default=False)
 
