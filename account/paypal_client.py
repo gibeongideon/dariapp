@@ -1,4 +1,4 @@
-import os
+# import os
 import sys
 from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment,LiveEnvironment
 from django.conf import settings
@@ -13,7 +13,7 @@ class DPayPalClient:
         """Setting up and Returns PayPal SDK environment with PayPal Access credentials.
            For demo purpose, we are using SandboxEnvironment. In production this will be
            LiveEnvironment."""
-        if settings.DEBUG is True:
+        if settings.DEBUG:
             self.environment = SandboxEnvironment(client_id=self.client_id, client_secret=self.client_secret)
         else:
             self.environment = LiveEnvironment(client_id=self.client_id, client_secret=self.client_secret)
