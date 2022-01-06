@@ -24,7 +24,7 @@
     <a href="https://github.com/gibeongideon/daruapp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://darispin.ga">View Demo</a>
+    <a href="https://dariplay.ga">View Demo</a>
     ·
     <a href="https://github.com/gibeongideon/daruapp/issues">Report Bug</a>
     ·
