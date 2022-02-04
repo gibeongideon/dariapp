@@ -30,6 +30,7 @@ class DuserAdmin(UserAdmin):
         "phone_number",
         "code",
         "referer_code",
+        "email"
     )
     readonly_fields = ("password",)
 

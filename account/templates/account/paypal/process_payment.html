@@ -1,4 +1,3 @@
-
 {% extends "layouts/base.html" %}
 
 {% block stylesheets %}{% endblock stylesheets %}
@@ -210,23 +209,23 @@
 								Quick & Easy
 							</h5>
 							<h2 class="title">
-									Paypal  Withrawal
+									Paypal  Instant Deposit
 							</h2>
 							<p class="text">
-								Paypal withrawals may take sometimes to reflect in your account.
+								<!-- Paypal deposits may take sometimes to reflect in your account. -->
 							</p>
-                            <h4>You can withdraw a total of {{ uf.withrawable_balance_usd }} USD</h4>
+                            <h4>Proceed & Deposit {{amount}} USD with Paypal</h4>
 						</div>
 
 						<div class="section-heading">
-							{{msg}}
     
-    <form method="POST">
-        {% csrf_token %}
 
-		<input type="number" class="input-field" name="amount" class="form-control" id="amount"  max="{{ uf.withrawable_balance_usd}}" required>
-        <button type="submit">Withdraw</button>
-    </form>
+
+
+{{ form.render }}
+
+
+
 
 						</div>
 
@@ -234,33 +233,8 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-lg-12 text-xl-center">
-						<a class="mybtn2" href="#">View All Withrawals </a>
-					</div>
-				</div>
+	
 		</div>
 	</section> 
 	<!-- Recent Winners Area End -->
 {% endblock content %}
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>You can withdraw a total of ${{ uf.withrawable_balance }}</h3>
-    <form method="POST">
-        {% csrf_token %}
-        <input type="number" name="amount" max="{{ uf.withrawable_balance}}">
-        <button type="submit">Withdraw</button>
-    </form>
-</body>
-</html> -->
-
-

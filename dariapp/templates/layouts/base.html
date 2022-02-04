@@ -297,9 +297,24 @@
 						<p class="sub-title">Choose prefered deposit means.More deposit means are added regularly.</p>
 					</div>
 					<div class="form-area">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								{% if user.is_authenticated %}
 								   <a href="/account/paypal/deposit">
+								       <button type="submit" class="mybtn1">PaypalW</button>
+									</a>
+									{% endif %}   
+							
+									 {% if not user.is_authenticated %}
+									   <a href="#" data-toggle="modal" data-target="#login">
+									        <button type="submit" class="mybtn1">PaypalW</button>
+									   </a>								 
+						
+									{% endif %} 
+
+							</div> -->
+							<div class="form-group">
+								{% if user.is_authenticated %}
+								   <a href="/account/paypal/checkout/">
 								       <button type="submit" class="mybtn1">Paypal</button>
 									</a>
 									{% endif %}   
@@ -311,23 +326,22 @@
 						
 									{% endif %} 
 
-							</div>
-
-							<div class="form-group">
+							</div>	
+							<!-- <div class="form-group">
 								{% if user.is_authenticated %}
 								   <a href="#" data-toggle="modal" data-target="#paypal">
-								       <button type="submit" class="mybtn1">Paypal</button>
+								       <button type="submit" class="mybtn1">Paypal3</button>
 									</a>
 									{% endif %}   
 							
 									 {% if not user.is_authenticated %}
 									   <a href="#" data-toggle="modal" data-target="#login">
-									        <button type="submit" class="mybtn1">Paypal2</button>
+									        <button type="submit" class="mybtn1">Paypal3</button>
 									   </a>								 
 						
 									{% endif %} 
 
-							</div>							
+							</div>							 -->
 							<div class="form-group">
 								{% if user.is_authenticated %}
 		
@@ -607,7 +621,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount">      
   </div>
 
 
@@ -793,14 +807,13 @@
 							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
-						<h4 class="title">Share To Your Friends</h4>
-						<p class="sub-title">You get 5% of their bet,Whether they win or loose ,You win!</p>
-						Your Referal link:  {{request.user.referal_link}}
+						<h4 class="title">Share With Your Friends</h4>
+						<p class="sub-title">You get 5 to 20 % of their wins $ loses.You win always!</p>
+						<!-- Your Referal link:  {{request.user.referal_link}} -->
 					</div>
 					<div class="form-area">
 
-
-						<textarea class="input-field" id="w3review" name="w3review" >Join the play and win every minute.Use this link: {{request.user.referal_link}}</textarea>
+						<textarea class="input-field"  id="shared" name="shared" >Join the play and win every minute by just spinning a wheel.It just needs your time.Use paypal or m-pesa for withrawals.Use this link: {{request.user.referal_link}}</textarea>
 
 						
 					</div>
@@ -809,7 +822,8 @@
 										<div class="form-footer">
 						<!-- <p>		<a href="#" class="mybtn1" ><i class="fas fa-envelope"></i>Copy link</a> -->
 							<button class="mybtn1" onclick="myFunction()">Copy,Share & Earn</button>
-								<!-- <a href="#" class="mybtn1" ><i class="fas fa-paper-plane"></i>Share & Earn</a>  -->
+								<a href="/user/my_users/" class="mybtn1" ><i class="fas fa-angle-double-right"></i>My Referals</a> 
+								<a href="/account/refer_credit/" class="mybtn2" ><i class="fas fa-envelope"></i>My Earnings</a>
 
 								{% comment %} <a href="{% url 'users:register' %}"  data-toggle="modal" data-target="#signin"> Join us</a> {% endcomment %}
 						</p>
@@ -917,6 +931,11 @@
 								<div class="form-group">
 										{% comment %} <label for="input-con-password">Confirm Password*</label> {% endcomment %}
 										<input type="password" class="input-field" name="password2" id="password2"   placeholder="Confirm Password" required>
+								</div>
+
+																<div class="box" align="left">
+                                <input type="checkbox" onclick="sPass2()">Show Passwords
+
 								</div>
 
 								<div class="form-group">
@@ -1070,7 +1089,7 @@ function getCookie(name) {
   <script>
   function myFunction() {
 	/* Get the text field */
-	var copyText = document.getElementById("w3review");
+	var copyText = document.getElementById("shared");
   
 	/* Select the text field */
 	copyText.select();

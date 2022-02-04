@@ -3,7 +3,7 @@
 # from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import path, include
 from . import template_views as views
-from .payp_view import views as pviews 
+# from .payp_view import views as pviews 
 from . import paypal_views
 # from .m_pesa_view import views as mviews 
 
@@ -35,28 +35,28 @@ urlpatterns = [
     # path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
     path("cash_trans/", views.cash_trans, name="cash_trans"),
     
-    path('checkout/', views.checkout, name='checkout'),
-    path('process-payment/', views.process_payment, name='process_payment'),
-    path('payment-done/', views.payment_done, name='payment_done'),
-    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
+    
+    path('paypal/checkout/', views.checkout, name='paypal-checkout'),
+    path('paypal/process-payment/', views.process_payment, name='process_payment'),
+    path('paypal/payment-done/', views.payment_done, name='payment_done'),
+    path('paypal/payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
 
     # path('paypal-checkout/', views.PaypalFormView.as_view(), name='paypal-checkout'),
     # path('paypal-return/', views.PaypalReturnView.as_view(), name='paypal-return'),
     # path('paypal-cancel/', views.PaypalCancelView.as_view(), name='paypal-cancel'),
-
     # path("paypal_pro/", views.paypal_pro, name="paypal_pro"),
     # path("paypal/", include('paypal.standard.ipn.urls')),
 
     path("deposit/", views.deposit, name='deposit'), 
     path("withraw/", views.withraw, name='withraw'),
-    path("deposit/paypal", pviews.accept_payment_view),
+    # path("deposit/paypal", pviews.accept_payment_view),
     path("deposit/m-pesa/", views.mpesa_deposit,name='mpesa_deposit'),
-    path("payment-success/", pviews.payment_success),
+    # path("payment-success/", pviews.payment_success),
     # path("withdraw/", pviews.paypal_payout_view)
 
     #PAYLAL
     
-    path("paypal/deposit/", paypal_views.accept_payment,name="accept_payment"),
-    path("payment_success", paypal_views.payment_success,name="payment_success"),
+    # path("paypal/deposit/", paypal_views.accept_payment,name="accept_payment"),
+    # path("payment_success", paypal_views.payment_success,name="payment_success"),
     path("paypal/withdraw/", paypal_views.paypal_payout,name="paypal_payout")
 ]

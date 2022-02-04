@@ -1,10 +1,10 @@
 # from __future__ import unicode_literals
-from django.views.generic import FormView
-from django.views.generic import TemplateView
+# from django.views.generic import FormView
+# from django.views.generic import TemplateView
 from paypal.standard.forms import PayPalPaymentsForm
-from django.conf import settings
-from .models import Checkout
-from .forms import CheckoutForm
+from django.conf import  settings
+# from .models import Checkout
+# from .forms import CheckoutForm
 from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render, redirect, reverse
@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 # from django.contrib import messages
 from django.conf import settings
-from .forms import CheckoutForm
-from paypal.pro.views import PayPalPro
+# from .forms import CheckoutForm
+# from paypal.pro.views import PayPalPro
 from .models import (
     # TransactionLog,
     RefCredit,
@@ -22,6 +22,7 @@ from .models import (
     AccountSetting,
     CashDeposit,
     CashTransfer,
+    Currency
 )
 from .forms import (
     CashWithrawalForm,
@@ -159,25 +160,44 @@ def cash_trans(request):
     )
 
 
-# paypal
-
+@login_required(login_url="/user/login")
 def process_payment(request):
-    print(request.body)
-    latest_id = max((obj.id for obj in Checkout.objects.filter(
-        user=request.user)))
+    amount = float(request.session['paypal_deposit_amount'])
+    # print(amount)
+    host =settings.SITE_DOMAIN  # 
+    try:
+        currency=Currency.objects.get(name="USD")
+    except Currency.DoesNotExist:
+        Currency.objects.create(name="USD",rate=100) 
+        currency=Currency.objects.get(name="USD")
 
-    amount = Checkout.objects.get(id=latest_id).amount
-    host = request.get_host()
+    try:
+        dlatest=CashDeposit.objects.filter(user=request.user).latest('id')
+        if dlatest.amount== amount:
+            depo=dlatest
+        else:
+            depo=CashDeposit.objects.create(
+                user=request.user,
+                amount=amount,
+                currency=currency,
+                deposit_type="Dj-PAYPAL",)
+    except:
+        depo=CashDeposit.objects.create(
+            user=request.user,
+            amount=amount,
+            currency=currency,
+            deposit_type="Dj-PAYPAL",)                   
+
+
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': f'{amount}',
-        'item_name': f'Dari-Topup-{latest_id}-for-{request.user.id}',
-        'invoice': f'{latest_id}',
+        'item_name': 'DariPlay-Deposit',
+        'invoice': f'{depo.id}',
         'currency_code': 'USD',
-        'notify_url': 'http://{}{}'.format(host,
-                                           reverse('paypal-ipn')),
-        'return_url': 'http://{}'.format(host),
-        'cancel_return': 'http://{}/checkout'.format(host),
+        'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
+        'return_url': 'http://{}/'.format(host),
+        'cancel_return': 'http://{}/account/paypal/checkout'.format(host),
 
         # 'return_url': 'http://{}{}'.format(host,
         #                                    reverse('payment_done')),
@@ -186,6 +206,7 @@ def process_payment(request):
     }
 
     form = PayPalPaymentsForm(initial=paypal_dict)
+
     return render(
         request,
         'account/paypal/process_payment.html',
@@ -194,17 +215,10 @@ def process_payment(request):
 
 def checkout(request):
     if request.method == 'POST':
-        form = CheckoutForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.email = request.user.email
-            form.save()
-            # cleaned_data = form.cleaned_data
-            return redirect('/account/process-payment')
+        request.session['paypal_deposit_amount']=request.POST.get("amount")
+        return redirect('/account/paypal/process-payment')
     else:
-        form = CheckoutForm()
-        return render(request, 'home/deposit_withrawal.html', locals())
+        return render(request, 'account/paypal/checkout.html')
 
 
 @csrf_exempt
@@ -227,11 +241,11 @@ def payment_canceled(request):
 #             "business": settings.PAYPAL_RECEIVER_EMAIL,
 #             "amount": 20,
 #             "currency_code": "USD",
-#             "item_name": 'Example item',
+#             "item_name": 'DariPlay Account Deposit',
 #             "invoice": 1234,
 #             "notify_url": self.request.build_absolute_uri(reverse('paypal-ipn')),
-#             # "return_url": self.request.build_absolute_uri(reverse('paypal-return')),
-#             # "cancel_return": self.request.build_absolute_uri(reverse('paypal-cancel')),
+#             "return_url": self.request.build_absolute_uri(reverse('paypal-return')),
+#             "cancel_return": self.request.build_absolute_uri(reverse('paypal-cancel')),
 #             "lc": 'EN',
 #             "no_shipping": '1',
             
