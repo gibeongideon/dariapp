@@ -7,11 +7,17 @@ from .models import Stake, WheelSpin, Selection
 import json
 
 
-@login_required(login_url="/user/login")
+# @login_required(login_url="/user/login")
 def spin(request):
-    trans_logz = Stake.objects.filter(
-        user=request.user, market=None, has_market=False
-    ).order_by("-created_at")[:2]
+
+    try:
+        trans_logz = Stake.objects.filter(
+            user=request.user,
+            market=None,
+            has_market=False
+            ).order_by("-created_at")[:2]
+    except:
+        trans_logz=[]
 
     if request.method == "POST":
         stake_form = IstakeForm(request.POST)
@@ -23,8 +29,11 @@ def spin(request):
     else:
         stake_form = IstakeForm()
         # print(stake_form.errors)
-
-    spins = len(Stake.unspinned(request.user.id))
+    try:
+        spins = len(Stake.unspinned(request.user.id))
+    except:
+        spins=0
+    
 
     context = {
         "user": request.user,
@@ -34,6 +43,7 @@ def spin(request):
     }
 
     return render(request, "daru_wheel/ispind.html", context)
+    # return render(request, "daru_wheel/ispind.html")
 
 
 # @login_required(login_url='/user/login')

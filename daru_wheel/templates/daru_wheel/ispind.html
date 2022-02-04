@@ -32,10 +32,10 @@
 							</button>
 							<div class="collapse navbar-collapse fixed-height" id="main_menu">
                  <ul class="navbar-nav ml-auto">
-                 								    <li class="nav-item">
+                 								    <!-- <li class="nav-item">
 										<a class="nav-link " href="/">Home
 										<div class="mr-hover-effect"></div></a>
-									</li>
+									</li> -->
 
 									<li class="nav-item">
 									{% if user.is_authenticated %}
@@ -171,25 +171,7 @@
 			
 									</li>
 
-
-
-
-
-									<li class="nav-item dropdown">
-										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
-											aria-expanded="false">
-											Pages
-											<div class="mr-hover-effect"></div>
-										</a>
-										<ul class="dropdown-menu" >
-											<li><a class="dropdown-item" href="/about"> <i class="fa fa-angle-double-right"></i>About</a></li>
-											<li><a class="dropdown-item" href="/affiliate"> <i class="fa fa-angle-double-right"></i>Affiliate</a></li>
-											<li><a class="dropdown-item" href="/awards"> <i class="fa fa-angle-double-right"></i>Awards</a></li>
-											<li><a class="dropdown-item" href="/how-it-work"> <i class="fa fa-angle-double-right"></i>How It Work</a></li>
-											<li><a class="dropdown-item" href="/faq"> <i class="fa fa-angle-double-right"></i>FAQ</a></li>
-
-										</ul>
-									</li> 
+					
                   <li class="nav-item">
 											<a class="nav-link" href="/contact">Contact
 													<div class="mr-hover-effect"></div></a>
@@ -236,9 +218,21 @@
           </tr>
         </table>
       </div> 
+
+	  
+	  {% if user.is_authenticated %}
+	  <button class="btn btn-fill btn-warning" id="spin_button" >SPIN</button>
+  {% endif %}
+  {% if not user.is_authenticated %}
+	 <a class="btn btn-fill btn-warning" href="#" id="spin_button" data-toggle="modal" data-target="#login">Spin
+		 <div class="mr-hover-effect"></div>
+	 </a>
+  {% endif %}   
+
+
+
       <div align="center" class="col-sm-4"> 
-        <!-- <button class="btn btn-fill btn-info" id="spin_button" >BET</button> -->
-        <button class="btn btn-fill btn-warning" id="spin_button" >SPIN</button>
+
       </div>
 
               
@@ -316,7 +310,29 @@
 
 							  
 								<div class="right">
-								    <button class="mybtn1" type="submit">Bet</button>
+
+									{% if user.is_authenticated %}
+									<button class="mybtn1" type="submit">Bet</button>
+								{% endif %}
+								{% if not user.is_authenticated %}
+								   <a href="#" class="dropdown-item" data-toggle="modal" data-target="#login">
+								   <button class="mybtn1" type="submit">Bet</button>
+								   </a>	
+								{% endif %} 
+
+
+
+
+
+
+
+
+
+
+
+
+								    
+
 								</div>
 							</form>
 							</div>
@@ -333,13 +349,7 @@
 									<h4 class="name">
 											Stake History
 									</h4>
-									{% comment %} <p class="date">
-											01.08.2019
-									</p> {% endcomment %}
-								</div>
-								{% comment %} <div class="right">
-									<p class="id">#5747e75482</p>
-								</div> {% endcomment %}
+					
 							</div>
 							<div class="bottom-area">
 		<div class="table-responsive">
