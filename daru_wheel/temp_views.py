@@ -1,22 +1,27 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import StakeForm, IstakeForm
 from .models import Stake, WheelSpin, Selection
 import json
+AnonymousUser=AnonymousUser()
 
 
 # @login_required(login_url="/user/login")
 def spin(request):
 
-    try:
+    if request.user!=AnonymousUser:
+        print('USER')
+        print(request.user) 
+        
         trans_logz = Stake.objects.filter(
             user=request.user,
             market=None,
             has_market=False
             ).order_by("-created_at")[:2]
-    except:
+    else:
         trans_logz=[]
 
     if request.method == "POST":
@@ -29,9 +34,10 @@ def spin(request):
     else:
         stake_form = IstakeForm()
         # print(stake_form.errors)
-    try:
+
+    if request.user!=AnonymousUser:
         spins = len(Stake.unspinned(request.user.id))
-    except:
+    else:
         spins=0
     
 
@@ -39,7 +45,7 @@ def spin(request):
         "user": request.user,
         "stake_form": stake_form,
         "trans_logz": trans_logz,
-        "spins": spins,
+        # "spins": spins,
     }
 
     return render(request, "daru_wheel/ispind.html", context)

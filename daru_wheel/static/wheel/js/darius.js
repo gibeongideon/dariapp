@@ -28,6 +28,7 @@
     document.querySelector('#spin_button').onclick = function(e) {
         // const pointerInputDom = document.querySelector('#spin-pointer-input');
         const ipointer = '';
+        
         spinSocket.send(JSON.stringify({
             'ipointer': ipointer
         }));

@@ -73,7 +73,7 @@
 											<li>											
 											
 											{% if user.is_authenticated %}
-											<	<a href="#" class="dropdown-item" data-toggle="modal" data-target="#wallet">
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#wallet">
 													<i class="fa fa-angle-double-right"></i> Wallet : {{user.user_accounts.balance}}T
 												</a>
 											{% endif %}
@@ -223,9 +223,11 @@
 	  {% if user.is_authenticated %}
 	  <button class="btn btn-fill btn-warning" id="spin_button" >SPIN</button>
   {% endif %}
+
   {% if not user.is_authenticated %}
-	 <a class="btn btn-fill btn-warning" href="#" id="spin_button" data-toggle="modal" data-target="#login">Spin
+	 <a class="btn btn-fill btn-warning" href="#"  data-toggle="modal" data-target="#login">Spin
 		 <div class="mr-hover-effect"></div>
+		 <div id="spin_button"></div>
 	 </a>
   {% endif %}   
 
@@ -315,8 +317,8 @@
 									<button class="mybtn1" type="submit">Bet</button>
 								{% endif %}
 								{% if not user.is_authenticated %}
-								   <a href="#" class="dropdown-item" data-toggle="modal" data-target="#login">
-								   <button class="mybtn1" type="submit">Bet</button>
+								   <a href="#" class="mybtn1" data-toggle="modal" data-target="#login">
+								    Bet
 								   </a>	
 								{% endif %} 
 
@@ -410,16 +412,26 @@
 
           
 				</div>
-				
-				{% comment %} <div class="col-lg-12 text-xl-center">
-						<a class="mybtn2" href="{% url 'daru_wheel:i_spin' %}"Refresh </a>
-					</div> {% endcomment %}
 
+				{% if user.is_authenticated %}
 				<div class="row">
 					<div class="col-lg-12 text-xl-center">
 						<a class="mybtn2" href="{% url 'daru_wheel:stakes' %}">View All Bets </a>
 					</div>
 				</div>
+
+			{% endif %}
+
+			{% if not user.is_authenticated %}
+			<div class="row">
+				<div class="col-lg-12 text-xl-center">
+					<a href="#" class="mybtn2" data-toggle="modal" data-target="#login">View All Bets </a>
+				</div>
+			</div>
+
+		{% endif %}
+
+		
 		</div>
 	</section>  
          
