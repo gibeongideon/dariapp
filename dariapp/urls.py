@@ -20,7 +20,7 @@ urlpatterns = [
 
     # path('search/', search_views.search, name='search'),
 
-    # path("", include("home.urls", namespace="home")),
+    path("home", include("home.urls", namespace="home")),
     path("user/", include("users.urls", namespace="users")),
     path("", include("daru_wheel.urls", namespace="daru_wheel")),
     path("account/", include("account.urls", namespace="account")),

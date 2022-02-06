@@ -182,7 +182,7 @@ def spin_it(request):
 def stakes(request):
     trans_logz = Stake.objects.filter(
         user=request.user, market=None, has_market=False
-    ).order_by("-created_at")#[:2]
+    ).order_by("-created_at")[:20]
 
 
     context = {
