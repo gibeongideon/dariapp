@@ -45,11 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',    
     'home',   
-
-    # 'search',
     'users',
     "account",
-    # "dashboard",
     "daru_wheel",
     "mpesa_api.core",
     "mpesa_api.util",
@@ -67,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'dariapp.urls'
