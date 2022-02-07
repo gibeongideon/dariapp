@@ -876,6 +876,7 @@ class AccountAnalytic(TimeStamp):
     t_wit = models.FloatField(default=0, blank=True, null=True)
     t_in = models.FloatField(default=0, blank=True, null=True)
     t_out = models.FloatField(default=0, blank=True, null=True)
+    r_cred = models.FloatField(default=0, blank=True, null=True)
     flag= models.BooleanField(default=False, blank=True, null=True)
 
 
@@ -901,14 +902,21 @@ class AccountAnalytic(TimeStamp):
         #    return total.get("dep_amount")
         return total.get("dep_amount") if total.get("dep_amount") else 0
 
-               
+    @property
+    def ref_amount(self):
+        total = RefCredit.objects.aggregate(ref_amount=Sum("amount"))
+
+        if total.get("ref_amount"):
+            return total.get("ref_amount")
+        return 0
+                              
     @property
     def all_out(self):
    
         all_amount=float(cashtore())
      
 
-        return float(self.c_bal)+all_amount+float(self.wit_amount)#
+        return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)
 
     @property
     def status_flag(self):
