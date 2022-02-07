@@ -539,7 +539,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         try:
             if not self.withrawned:
                 ctotal_balanc = current_account_cum_withraw_of(self.user_id)  # F
-                new_bal = ctotal_balanc + int(self.amount)
+                new_bal = ctotal_balanc + int(self.amount_converted_to_tokens)
                 update_account_cum_withraw_of(self.user_id, new_bal)  # F
 
         except Exception as e:
@@ -888,7 +888,7 @@ class AccountAnalytic(TimeStamp):
 
     @property
     def wit_amount(self):
-        total = CashWithrawal.objects.filter(withrawned=True).aggregate(wit_amount=Sum("amount"))
+        total = CashWithrawal.objects.filter(withrawned=True).aggregate(wit_amount=Sum("tokens"))
 
         if total.get("wit_amount"):
             return total.get("wit_amount")
@@ -906,7 +906,7 @@ class AccountAnalytic(TimeStamp):
     def all_out(self):
    
         all_amount=float(cashtore())
-        print(self.wit_amount)
+     
 
         return float(self.c_bal)+all_amount+float(self.wit_amount)#
 

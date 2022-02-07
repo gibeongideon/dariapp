@@ -230,7 +230,7 @@ class Stake(TimeStamp):
     amount = models.DecimalField(
         ("amount"), max_digits=12, decimal_places=2, default=50
     )
-    current_bal = models.FloatField(max_length=10, default=0)  # R
+    current_bal = models.FloatField(max_length=10, default=0,blank=True, null=True)  # R
     stake_placed = models.BooleanField(blank=True, null=True)  #
     has_record = models.BooleanField(blank=True, null=True)  #
     has_market = models.BooleanField(default=False, blank=True, null=True)
@@ -323,10 +323,10 @@ class Stake(TimeStamp):
 
 class CashStore(models.Model):
     give_away = models.DecimalField(
-        ("give_away"), max_digits=12, decimal_places=2, default=0
+        ("give_away"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
     to_keep = models.DecimalField(
-        ("to_keep"), max_digits=12, decimal_places=2, default=0
+        ("to_keep"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
 
     @property
