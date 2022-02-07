@@ -865,8 +865,9 @@ class Checkout(TimeStamp):
 
 def cashtore():
     from daru_wheel.models import CashStore
-    all_amount=CashStore.objects.get(id=1).all_amount
-    return all_amount
+    # all_amount=CashStore.objects.get(id=1).all_amount
+    store_obj,created=CashStore.objects.get_or_create(id=1)
+    return store_obj.all_amount
 
 class AccountAnalytic(TimeStamp):
     gain = models.FloatField(default=0, blank=True, null=True)
