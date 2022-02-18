@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import (
     Stake,
-    WheelSpin,
-    Analytic,
     Selection,
     OutCome,
     Selection,
@@ -10,14 +8,6 @@ from .models import (
     CashStore,
 )
 
-# class MarketAdmin(admin.ModelAdmin):
-#     list_display = ('id','name', 'this_market_selection_id_list',
-#         'this_market_selection_verbose_list',)
-#     list_display_links = ('id',)
-#     # list_editable = ('',)
-
-
-# admin.site.register(Market, MarketAdmin)
 class DaruWheelSettingAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -25,10 +15,7 @@ class DaruWheelSettingAdmin(admin.ModelAdmin):
         "min_redeem_refer_credit",
         "refer_per",
         "per_to_keep",
-        "closed_at",
-        "results_at",
         "min_bet",
-        "wheelspin_id",
         "win_algo",
         "trial_algo",
         "big_win_multiplier",
@@ -44,10 +31,7 @@ class DaruWheelSettingAdmin(admin.ModelAdmin):
         "win_algo",
         "trial_algo",
         "big_win_multiplier",
-        "closed_at",
-        "results_at",
         "min_bet",
-        "wheelspin_id",
     )
 
 
@@ -72,50 +56,10 @@ class SelectionAdmin(admin.ModelAdmin):
 admin.site.register(Selection, SelectionAdmin)
 
 
-class WheelSpinAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "id",
-        "receive_results",
-        "place_stake_is_active",
-        "market_selection_id_list",
-        "open_at",
-        "closed_at",
-        "updated_at",
-        "total_bet_amount_per_marktinstance",
-        "selection_bet_amount",
-        "offset",
-        "gain_after_relief",
-    )
-
-    list_display_links = ("id",)
-    readonly_fields = (
-        "id",
-        "updated_at",
-        "total_bet_amount_per_marktinstance",
-        "selection_bet_amount",
-        "offset",
-        "gain_after_relief",
-    )
-
-
-admin.site.register(WheelSpin, WheelSpinAdmin)
-
-
-class AnalyticAdmin(admin.ModelAdmin):
-    list_display = ("id", "gain", "gainovertime", "created_at", "updated_at")
-    list_display_links = ("id",)
-    # list_editable = ('',)
-
-
-admin.site.register(Analytic, AnalyticAdmin)
-
-
 class StakeAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",
-        "market",
         "marketselection",
         "amount",
         "bet_on_real_account",
@@ -131,7 +75,7 @@ class StakeAdmin(admin.ModelAdmin):
 
     list_display_links = ("user",)
     search_fields = ("user",)
-    list_filter = ("user", "marketselection", "market","bet_on_real_account","spinned", "created_at")
+    list_filter = ("user", "marketselection","bet_on_real_account","spinned", "created_at")
 
 
 admin.site.register(Stake, StakeAdmin)
@@ -140,13 +84,11 @@ admin.site.register(Stake, StakeAdmin)
 class OutComeAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "market",
         "stake",
         "closed",
         "give_away",
         "result",
         "pointer",
-        "determine_result_algo",
         "segment",
         "selection",
         "real_bet",
