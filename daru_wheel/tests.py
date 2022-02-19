@@ -1,5 +1,6 @@
 from django.test import TestCase
 from users.models import User
+import random
 from daru_wheel.models import (
     Stake,
     CashStore,

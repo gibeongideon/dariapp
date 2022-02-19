@@ -89,7 +89,6 @@ class OutComeAdmin(admin.ModelAdmin):
         "give_away",
         "result",
         "pointer",
-        "segment",
         "selection",
         "real_bet",
         "created_at",
@@ -98,7 +97,9 @@ class OutComeAdmin(admin.ModelAdmin):
 
     list_display_links = ("id",)
     readonly_fields = ("closed", "result", "pointer")
-
+    # list_editable = (
+    #     "result",
+    # )
 
 admin.site.register(OutCome, OutComeAdmin)
 
