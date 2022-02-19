@@ -98,7 +98,7 @@ class Stake(TimeStamp):
     current_bal = models.FloatField(max_length=10, default=0,blank=True, null=True)  # R
     stake_placed = models.BooleanField(blank=True, null=True)  #
     has_record = models.BooleanField(blank=True, null=True)  #
-    bet_on_real_account = models.BooleanField(default=False)
+    bet_on_real_account = models.BooleanField(default=False, blank=True, null=True)
     outcome_received = models.BooleanField(default=False, blank=True, null=True)
     spinned = models.BooleanField(default=False, blank=True, null=True)
 
