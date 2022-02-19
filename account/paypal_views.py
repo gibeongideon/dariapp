@@ -1,4 +1,3 @@
-# from django.http.response import JsonResponse
 from django.shortcuts import render
 # from django.views.decorators.csrf import csrf_exempt
 from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment, LiveEnvironment
@@ -9,11 +8,8 @@ import random
 import string
 from .paypal_client import DPayPalClient
 from paypalpayoutssdk.payouts import PayoutsPostRequest
-# from paypalhttp.serializers.json_serializer import Json
-# from paypalhttp.http_error import HttpError
-# from paypalhttp.encoder import Encoder
-from django.conf import settings
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 # Creating an environment
@@ -87,44 +83,6 @@ class CreatePayouts(DPayPalClient):
 
 
 
-
-
-
-
-# @login_required(login_url="/user/login")
-# def accept_payment(request):
-#     return render(request, "account/paypal/accept-payment.html",{"client_id":client_id})
-
-
-# @csrf_exempt # security issue
-# def payment_success(request):
-#     if request.method == "POST":
-#         import json
-#         post_data = json.loads(request.body.decode("utf-8"))
-#         amount=float(post_data["amount"])
-#         try:
-#             currency=Currency.objects.get(name="USD")
-#         except Currency.DoesNotExist:
-#             Currency.objects.create(name="USD",rate=100) 
-#             currency=Currency.objects.get(name="USD")
-
-#         try:
-#             CashDeposit.objects.create(
-#                 user=request.user,
-#                 amount=amount,
-#                 currency_id=currency,
-#                 confirmed=True,#
-#                 deposit_type="PAYPAL`",)
-#         except Exception as e:
-#             print(e)
-#             print('paypal deposir_ISSUE!!')                
-
-#         # print(post_data)#Debug
-
-#         return JsonResponse({"success": True})
-
-
-
 @login_required(login_url="/user/login")
 def paypal_payout(request):
     if request.method == "POST":
@@ -137,7 +95,8 @@ def paypal_payout(request):
 
         try:
             create_response = CreatePayouts(str(amount), request.user.email).create_payouts(True)
-        except Exception as e:   
+        except Exception as e:
+            print('paypal_WIT',e)   
             return render(request, "account/paypal/payment.html", {"msg": 'Failed try again.Connection issue'})
 
 
