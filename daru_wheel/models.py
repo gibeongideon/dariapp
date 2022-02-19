@@ -27,7 +27,7 @@ class DaruWheelSetting(TimeStamp):
         max_digits=6, decimal_places=2, blank=True, null=True
     )
     min_bet = models.DecimalField(
-        max_digits=5, default=45.9, decimal_places=2, blank=True, null=True
+        max_digits=5, default=49.9, decimal_places=2, blank=True, null=True
     )
     win_algo = models.IntegerField(
         default=1,
@@ -318,7 +318,6 @@ class OutCome(TimeStamp):
             return self.stake.marketselection.id
         else:
             return None
-
     @property
     def segment(self):
         stake_obj=self.stake
@@ -413,7 +412,7 @@ class OutCome(TimeStamp):
                 self.update_reference_account(user_id, ref_credit, trans_type)
                 
 
-        elif self.result == 2 or self.results==10:
+        elif self.result == 2:
             # UUB
             set_up = wheel_setting()
             current_give_away_bal = float(self.current_update_give_away)
@@ -455,16 +454,21 @@ class OutCome(TimeStamp):
            all_amount = win_amount + float(this_user_stak_obj.amount)
            self.update_user_trial_account(user_id, all_amount)             
           
-
+    @property
+    def determine_result_algo(self): 
+        if not self.real_bet:
+            return self.trial_account_result_algo()
+        else:
+            return self.real_account_result_algo()
+        
+            
     def run_account_update(self):
         stake_obj = self.stake
     
-        if stake_obj.bet_on_real_account:
-           self.results = self.real_account_result_algo()
+        if stake_obj.bet_on_real_account: 
            self.pointer = self.segment
            self.run_update_winner_losser_on_real_account()
         else:
-            self.results = self.trial_account_result_algo()
             self.pointer = self.segment
             self.run_update_winner_losser_on_trial_account()          
             
@@ -474,6 +478,7 @@ class OutCome(TimeStamp):
             mstore, _ = CashStore.objects.get_or_create(id=1)
             self.cashstore = mstore
             try:
+                self.result=self.determine_result_algo
                 self.run_account_update()
                 self.closed = True
                 super().save(*args, **kwargs)
