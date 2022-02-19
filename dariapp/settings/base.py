@@ -308,7 +308,7 @@ DATABASES['default'].update(db_from_env)
 
 SITE_DOMAIN = config(
     "SITE_DOMAIN",
-    default="localhost:8000")
+    default="www.dariplay.ga")
 
 
 # Creating Access Token for Sandbox

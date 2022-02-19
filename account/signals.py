@@ -102,7 +102,7 @@ def paypal_payment_received(sender, **kwargs):
         except Exception:
             logger.exception('Paypal ipn_obj data not valid!')
         else:
-            logger.exception('Confirmed Comleted Paypal Deposit Transaction!')
+            logger.exception('Confirmed Completed Paypal Deposit Transaction!')
             mytransaction.confirmed = True
             mytransaction.save()
        

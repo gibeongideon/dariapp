@@ -7,7 +7,8 @@ from account.models import (
     RefCredit,
     RefCreditTransfer,
     CashTransfer,
-    Currency
+    Currency,
+    AccountAnalytic
 )
 from users.models import User
 from daru_wheel.models import Stake
@@ -262,3 +263,44 @@ class RefCreditTestCase(TestCase):
         RefCreditTransfer.objects.create(user=self.userb, amount=300)
         self.assertEqual(Account.objects.get(user=self.userb).refer_balance, 2000)
         self.assertEqual(Account.objects.get(user=self.userb).balance, 1000)
+
+
+class AnalyticTestCase(TestCase):
+    def setUp(self):
+        self.currency1=Currency.objects.create(name='USD',rate=100)
+        self.currency2=Currency.objects.create(name='KSH',rate=1)
+
+        self.usera = User.objects.create(
+            username="0710001000", email="testa@gmail.com", referer_code="ADMIN"
+        )
+        self.userb = User.objects.create(
+            username="0123456787", email="testb@gmail.com", referer_code="ADMIN"
+        )
+
+    def test_user_correct_accountAnalyticdeposit_witraw(self):
+        
+        CashDeposit.objects.create(amount=10, user=self.usera, confirmed=True,currency_id=1)
+        CashDeposit.objects.create(amount=9000, user=self.usera, confirmed=True,currency_id=2)
+        CashDeposit.objects.create(amount=100, user=self.userb, confirmed=True,currency_id=1)
+        
+        Account.objects.filter(user_id=self.usera).update(withraw_power=5000)
+
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 5000)
+        CashWithrawal.objects.create(user=self.usera,amount=2000,currency=self.currency2,approved=True)
+
+        self.assertEqual(Account.objects.get(user=self.usera).balance,8000)
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 3000)
+
+        CashWithrawal.objects.create(user=self.usera,amount=1000,currency=self.currency2,approved=True)
+
+        self.assertEqual(Account.objects.get(user=self.usera).balance,7000)
+        self.assertEqual(Account.objects.get(user=self.usera).withraw_power, 2000)       
+ 
+
+
+        analyic=AccountAnalytic.objects.create()
+        self.assertEqual(analyic.status_flag,"All system working great.NO ISSUE!")   
+        
+        
+        
+        

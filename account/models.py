@@ -1,3 +1,4 @@
+from logging import exception
 from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
@@ -256,23 +257,6 @@ class RefCreditTransfer(TimeStamp):
     def __str__(self):
         return "User {0}:{1}".format(self.user, self.amount)
 
-    # def transfer_refer_credit_to_balance(self):
-    #     set_up = account_setting()
-    #     curr_refer_bal = current_account_referbal_of(self.user_id)
-    #     if (
-    #         self.amount <= curr_refer_bal
-    #         and self.amount >= set_up.min_redeem_refer_credit
-    #     ):
-
-    #         new_refer_bal = curr_refer_bal - float(self.amount)
-    #         update_account_referbal_of(self.user_id, new_refer_bal)
-
-    #         curr_bal = current_account_bal_of(self.user_id)
-    #         new_bal = curr_bal + float(self.amount)
-    #         update_account_bal_of(self.user_id, new_bal)
-    #         self.succided = True
-    #     else:
-    #         pass
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on deposit  """
@@ -300,45 +284,6 @@ class RefCreditTransfer(TimeStamp):
             return
 
         
-
-
-# class TransactionLog(TimeStamp):
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="user_transactions_logs",
-#         blank=True,
-#         null=True,
-#     )  # NOT CASCADE #CK
-#     amount = models.DecimalField(("amount"), max_digits=12, decimal_places=2, default=0)
-#     now_bal = models.DecimalField(
-#         ("now_bal"), max_digits=12, decimal_places=2, default=0
-#     )
-#     trans_type = models.CharField(max_length=100, blank=True, null=True)
-
-#     class Meta:
-#         db_table = "d_trans_logs"
-#         ordering = ("-created_at",)
-
-#     def __str__(self):
-#         return "User {0}:{1}".format(self.user, self.amount)
-
-#     @property
-#     def account_bal(self):
-#         return current_account_bal_of(
-#             self.user_id
-#         )  # F  Account.objects.get(user_id =self.user_id).balance
-
-#     def save(self, *args, **kwargs):
-#         """ Overrride internal model save method to update balance on deposit  """
-#         if not self.pk:
-#             try:
-#                 self.now_bal = self.account_bal
-#             except Exception as e:
-#                 print("TransactionLog ERROR:", e)
-#                 pass
-
-#         super().save(*args, **kwargs)
 
 
 class CashDeposit(TimeStamp):
@@ -387,21 +332,6 @@ class CashDeposit(TimeStamp):
             return "Success"
         return "Failed"
 
-    # def update_tokens(self):#TODO
-    #     try:
-    #         current_tokens = Account.objects.get(user=self.user).token_count
-    #         try:
-    #             name = Currency.objects.get(id=self.currency_id).name
-    #         except Currency.DoesNotExist:
-    #             name = Currency.objects.create(name='KS',rate=1)
-    #         tokens_to_add = Currency.get_tokens_amount(name, self.amount)
-    #         updated_token = current_tokens+tokens_to_add
-    #         Account.objects.filter(user_id=self.user).update(
-    #             token_count=updated_token)
-
-    #     except Account.DoesNotExist:
-    #         pass
-
 
     def update_cum_depo(self):
         try:
@@ -442,16 +372,6 @@ class CashDeposit(TimeStamp):
                 except Exception as e:
                     print(f"Daru:CashDeposit-Deposited Error:{e}")  # Debug
                     pass
-
-
-
-                # try:
-                #     if not self.has_record:
-                #         log_record(self.user_id, self.amount, str(self.deposit_type))
-                #         self.has_record = True
-                # except Exception as e:
-                #     print(f"Daru:CashDeposit-Log Error:{e}")  # Debug
-                #     pass
 
                 super().save(*args, **kwargs)  # dillow amount edit feature
 
@@ -619,12 +539,6 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 self.withrawned = True  # transaction done
                                 self.update_user_withrawable_balance()
 
-                                # try:
-                                #     if not self.has_record:
-                                #         log_record(
-                                #             self.user_id, self.amount, "Withrawal"
-                                #         )
-                                #         self.has_record = True
                                 self.active = False
                                 # except Exception as e:
                                 #     print("TRANSWITH:", e)
@@ -877,6 +791,8 @@ class AccountAnalytic(TimeStamp):
     t_in = models.FloatField(default=0, blank=True, null=True)
     t_out = models.FloatField(default=0, blank=True, null=True)
     r_cred = models.FloatField(default=0, blank=True, null=True)
+    diffe= models.FloatField(default=0, blank=True, null=True)
+  
     flag= models.BooleanField(default=False, blank=True, null=True)
 
 
@@ -917,6 +833,13 @@ class AccountAnalytic(TimeStamp):
      
 
         return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)
+    
+    @property
+    def diff(self):
+        try:
+            return (float(self.all_in)-float(self.all_out) )
+        except Exception as e:
+            return e   
 
     @property
     def status_flag(self):
@@ -924,11 +847,11 @@ class AccountAnalytic(TimeStamp):
             return 'Red Flag.Something wrong with transactions!math dont add up!'
         return  "All system working great.NO ISSUE!"
 
-    @property
-    def current_flag(self):
-        if self.all_in!=self.t_out:
-            return 'Red Flag.Something wrong with transactions!Fix_ISSUE_ASAP.Hesabu haziingiliani!REPORT to my creater'
-        return  "All system working great.NO ISSUE!"
+    # @property
+    # def current_flag(self):
+    #     if self.all_in!=self.t_out:
+    #         return 'Red Flag.Something wrong with transactions!Fix_ISSUE_ASAP.Hesabu haziingiliani!REPORT to my creater'
+    #     return  "All system working great.NO ISSUE!"
 
     @property
     def severity(self):
@@ -948,5 +871,6 @@ class AccountAnalytic(TimeStamp):
             self.t_in=self.all_in
             self.t_out=self.all_out
             self.flag=self.severity
+            self.diffe=self.diff
 
         super().save(*args, **kwargs)                                         

@@ -74,8 +74,8 @@ class AccountAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    list_display_links = ("user_id",)
-    search_fields = ("user_id",)
+    list_display_links = ("user_id","user")
+    search_fields = ("user_id","user")
     list_editable = ("active",)
     list_filter = ("user", "created_at", "updated_at")
 
@@ -263,7 +263,11 @@ class AccountAnalyticAdmin(admin.ModelAdmin):
         "t_bal",
         "t_wit",
         "t_in",
-        "t_out","flag","status_flag","c_bal","wit_amount","all_in","all_out","current_flag", "created_at", "updated_at")
+        "t_out",
+        "diffe",
+        "flag","status_flag","c_bal","wit_amount","all_in","all_out",
+        # "current_flag",
+        "created_at", "updated_at")
     list_display_links = ("id",)
     # list_editable = ('',)
 
