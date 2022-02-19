@@ -7,10 +7,7 @@ from django.contrib.auth import authenticate, login
 # from django.http import HttpResponseNotFound
 from django.contrib.auth import views as auth_views
 
-# from django.contrib.auth.models import User
 from .models import User
-# from django.forms.utils import ErrorList
-# from django.http import HttpResponse
 from .forms import SignUpForm
 from home.models import WebPa
 
@@ -82,7 +79,7 @@ def register(request):
 
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
-            print(referer_code)
+    
             
             User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
 
@@ -97,20 +94,3 @@ def register(request):
     else:
         form = SignUpForm()
     return render(request, "registration/signup.html", {"form": form})
-
-
-
-# def checkout(request):
-#     if request.method == 'POST':
-#         form = CheckoutForm(request.POST)
-#         if form.is_valid():
-#             form = form.save(commit=False)
-#             form.user = request.user
-#             form.email = request.user.email
-#             form.save()
-#             # cleaned_data = form.cleaned_data
-#             return redirect('/account/process-payment')
-#     else:
-#         form = CheckoutForm()
-#         return render(request, 'home/deposit_withrawal.html', locals())
-

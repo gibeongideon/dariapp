@@ -20,14 +20,6 @@ class UserRecordView(APIView):
     a POST request allows to create a new user.
     """
 
-    # permission_classes = [IsAdminUser]
-
-    # def check_if_code_exists(self):
-    #     dacodes =[]
-    #     for duser in User.objects.all():
-    #         dacodes.append(duser.my_code)
-    #     return dacodes
-
     def get(self, format=None):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
