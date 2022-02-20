@@ -1,12 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.template import loader
-from django.http import HttpResponse,HttpResponseNotFound
+from django.http import HttpResponse
 from django import template
 from random import randint
-from account.models import Checkout
 from account.forms import CheckoutForm
-from .forms import SubscriberForm
 from users.models import User
 from django.contrib.auth import logout
 
