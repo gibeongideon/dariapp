@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 from django.shortcuts import render
+from django.contrib.auth import logout
+from users.models import User
 from .forms import  IstakeForm
 from .models import Stake
 
@@ -9,8 +11,17 @@ AnonymousUser=AnonymousUser()
 
 
 # @login_required(login_url="/user/login")
-def spin(request):
-
+def spin(request,*args,**kwargs):
+    
+    refercode = kwargs.get('refer_code')
+    try:        
+        User.objects.get(code=refercode)
+        if request.user.is_authenticated:
+            logout(request)
+        request.session['ref_code']=refercode
+    except User.DoesNotExist:
+        pass
+    
     if request.user!=AnonymousUser:
         print('USER')
         print(request.user) 

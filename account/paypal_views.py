@@ -6,7 +6,7 @@ from .models import Account, CashWithrawal, Currency
 # import json
 import random
 import string
-from .paypal_client import DPayPalClient
+from .paypal_client import PayPalClient
 from paypalpayoutssdk.payouts import PayoutsPostRequest
 
 from django.conf import settings
@@ -23,7 +23,7 @@ client = PayPalHttpClient(environment)
 
 
 
-class CreatePayouts(DPayPalClient):
+class CreatePayouts(PayPalClient):
 
     """ Creates a payout batch with 5 payout items
     Calls the create batch api (POST - /v1/payments/payouts)
@@ -46,10 +46,10 @@ class CreatePayouts(DPayPalClient):
                     "email_message": "Darius Option Win Payout",
                     "note": "Enjoy your Payout!!",
                     "sender_batch_id": senderBatchId,
-                    "email_subject": "Darius Option Wins Payout.Enjoy!"
+                    "email_subject": "Darius Spin Wins Payout.Enjoy!"
                 },
                 "items": [{
-                    "note": "Thanks for using Darius Option.Refer more for more payout!",
+                    "note": "Thanks for playing Darius Wheel.Refer more for more payout!",
                     "amount": {
                         "currency": "USD",
                         "value": amount

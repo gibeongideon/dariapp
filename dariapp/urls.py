@@ -8,7 +8,7 @@ admin.site.site_header = "Darius Option"
 urlpatterns = [
     path(
     settings.SECRET_ADMIN_URL + "/admin/",admin.site.urls),
-    path("home", include("home.urls", namespace="home")),
+    # path("home/", include("home.urls", namespace="home")),
     path("user/", include("users.urls", namespace="users")),
     path("", include("daru_wheel.urls", namespace="daru_wheel")),
     path("account/", include("account.urls", namespace="account")),

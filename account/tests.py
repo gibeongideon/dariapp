@@ -300,3 +300,7 @@ class AnalyticTestCase(TestCase):
 
         analyic=AccountAnalytic.objects.create()
         self.assertEqual(analyic.status_flag,"All system working great.NO ISSUE!")   
+        
+        
+        
+        
