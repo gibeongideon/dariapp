@@ -24,10 +24,8 @@ class User(AbstractUser):
         return self.username
 
     @property
-    def referal_link(self):#TODO
-        domain =  settings.SITE_DOMAIN
-        protocol = "http"
-        return f"{protocol}://{domain}/r/{self.code}"
+    def referal_link(self):
+        return "http://{}/r/{}".format(settings.SITE_DOMAIN,self.code),
 
 
 
