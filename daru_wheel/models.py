@@ -13,9 +13,16 @@ try:
 except ImportError:
     pass    
 from django.contrib.auth import get_user_model
-from home.models import TimeStamp
 User = get_user_model()
 
+class TimeStamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    # is_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+        
 
 class DaruWheelSetting(TimeStamp):
     return_val = models.FloatField(default=0, blank=True, null=True)

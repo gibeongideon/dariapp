@@ -4,13 +4,19 @@ from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
 from django.db.models import Sum
-# from daru_wheel.models import CashStore#CIRCULAR_IPORT
-# from django.core.validators import MinValueValidator
-# from .functions import log_record ##NO circular import
-from home.models import TimeStamp
+
 from mpesa_api.core.mpesa import Mpesa
 import math
 
+class TimeStamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    # is_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+        
+        
 class AccountSetting(TimeStamp):
     curr_unit = models.FloatField(default=0, blank=True, null=True)
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)

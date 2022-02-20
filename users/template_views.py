@@ -9,19 +9,9 @@ from django.contrib.auth import views as auth_views
 
 from .models import User
 from .forms import SignUpForm
-from home.models import WebPa
 
 
-@login_required(login_url="/users/login")
-def user_page(request):
-    web_pa, _ = WebPa.objects.get_or_create(id=1)
-    share_info = web_pa.share_info
 
-    return render(
-        request,
-        "users/page-user.html",
-        {"user": request.user, "share_info": share_info},
-    )
 
 
 @login_required(login_url="/users/login")

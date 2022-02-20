@@ -1,19 +1,12 @@
-# from __future__ import unicode_literals
-# from django.views.generic import FormView
-# from django.views.generic import TemplateView
 from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import  settings
-# from .models import Checkout
-# from .forms import CheckoutForm
 from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
-# from django.contrib import messages
 from django.conf import settings
-# from .forms import CheckoutForm
-# from paypal.pro.views import PayPalPro
+
 from .models import (
     # TransactionLog,
     RefCredit,
@@ -32,7 +25,6 @@ from .forms import (
     # PayPalmentForm
 )
 
-from home.models import WebPa
 from users.models import User
 
 
@@ -51,8 +43,7 @@ def mpesa_deposit(request):
             print("YES DONE")
 
     trans_logz = CashDeposit.objects.filter(user=request.user).order_by("-id")[:10]
-    web_pa, _ = WebPa.objects.get_or_create(id=1)
-    mpesa_header_depo_msg = web_pa.mpesa_header_depo_msg
+
 
     return render(
         request,
@@ -60,7 +51,7 @@ def mpesa_deposit(request):
         {
             "form": form,
             "trans_logz": trans_logz,
-            "mpesa_header_depo_msg": mpesa_header_depo_msg,
+
         },
     )
 
