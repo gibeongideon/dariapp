@@ -21,13 +21,6 @@ def mine_users(request):
     return render(request, "users/mine_users.html", {"mine_users": mine_users})
 
 
-@login_required(login_url="/users/login")
-def notification(request):
-    context = {}
-    return render(request, "users/notification.html", context)
-
-
-##
 
 
 class CustomLoginView(auth_views.LoginView):

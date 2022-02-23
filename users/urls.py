@@ -13,8 +13,6 @@ app_name = "users"
 urlpatterns = [
     # path('', include(router.urls)),
     path("user/", UserRecordView.as_view(), name="users"),
-    # path("user_page", views.user_page, name="user_page"),
-    path("notification", views.notification, name="notification"),
     path("my_users/", views.mine_users, name="mine_users"),
     path("login", views.CustomLoginView.as_view(), name="login"),
     path("logout", auth_views.LogoutView.as_view(), name="logout"),

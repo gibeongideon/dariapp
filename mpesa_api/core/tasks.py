@@ -1,9 +1,4 @@
-from __future__ import absolute_import, unicode_literals
-
 from decimal import Decimal
-
-from celery import shared_task
-
 from mpesa_api.core.models import (
     B2CRequest,
     C2BRequest,
@@ -19,7 +14,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@shared_task(name="core.b2c_call")
 def send_b2c_request_task(amount, phone, id):
     """
     task for send a b2c request
@@ -29,9 +23,21 @@ def send_b2c_request_task(amount, phone, id):
     :return:
     """
     return send_b2c_request(amount, phone, id)
-
-
-@shared_task(name="core.handle_b2c_call_response")
+def call_online_checkout_task(
+    phone, amount, account_reference, transaction_desc, is_paybil
+):
+    """
+    Handle online checkout request
+    :param phone:
+    :param amount:
+    :param transaction_ref:
+    :param transaction_desc:
+    :return:
+    """
+    return process_online_checkout(
+        phone, amount, account_reference, transaction_desc, is_paybil
+    )
+'''
 def process_b2c_call_response_task(response, id):
     """
     process the request sent back from b2c request
@@ -51,8 +57,7 @@ def process_b2c_call_response_task(response, id):
     )
     rdb.set_trace()
 
-
-@shared_task(name="core.handle_b2c_result_response")
+'''
 def process_b2c_result_response_task(response):
     """
     Process b2c result
@@ -107,7 +112,7 @@ def process_b2c_result_response_task(response):
         logger.error(ex)
 
 
-@shared_task(name="core.handle_c2b_validation")
+
 def process_c2b_validation_task(response):
     """
     Handle c2b request
@@ -161,7 +166,7 @@ def process_c2b_validation_task(response):
     C2BRequest.objects.create(**data)
 
 
-@shared_task(name="core.handle_c2b_confirmation")
+
 def process_c2b_confirmation_task(response):
     """
     Handle c2b request
@@ -226,24 +231,8 @@ def process_c2b_confirmation_task(response):
         logger.error(ex)
 
 
-@shared_task(name="core.make_online_checkout_call")
-def call_online_checkout_task(
-    phone, amount, account_reference, transaction_desc, is_paybil
-):
-    """
-    Handle online checkout request
-    :param phone:
-    :param amount:
-    :param transaction_ref:
-    :param transaction_desc:
-    :return:
-    """
-    return process_online_checkout(
-        phone, amount, account_reference, transaction_desc, is_paybil
-    )
 
-
-@shared_task(name="core.handle_online_checkout_response")
+'''
 def handle_online_checkout_response_task(response, transaction_id):
     """
     Handle checkout response
@@ -260,7 +249,7 @@ def handle_online_checkout_response_task(response, transaction_id):
     )
 
 
-@shared_task(name="core.handle_online_checkout_callback")
+'''
 def handle_online_checkout_callback_task(response):
     """
     Process the callback response
@@ -295,7 +284,7 @@ def handle_online_checkout_callback_task(response):
               },
               {
                 "Name":"PhoneNumber",
-                "Value":254721566839
+                "Value":254712748566
               }
             ]
           }
