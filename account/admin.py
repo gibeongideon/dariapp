@@ -195,6 +195,8 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "approved",
         "withrawned",
         "withraw_status",
+        "withr_type",
+        "confirmed",
         "has_record",
         "amount",
         "tokens",
@@ -205,7 +207,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id",)
     search_fields = ("user",)
-    list_filter = ("user", "approved", "cancelled","currency", "active")
+    list_filter = ("user", "approved", "cancelled","confirmed","withr_type","currency", "active")
     readonly_fields = (
         "withrawned",
         "has_record",

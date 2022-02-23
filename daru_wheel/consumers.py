@@ -29,10 +29,6 @@ class QspinConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         ipointer = text_data_json["ipointer"]
         ipointer = self.return_pointer()
-        # print(text_data_json)
-        print("POINTER")
-        print(ipointer)
-
         if ipointer:
             self.send(text_data=json.dumps({"ipointer": ipointer,}))
 

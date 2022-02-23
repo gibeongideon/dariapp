@@ -4,13 +4,20 @@ from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
 from django.db.models import Sum
-# from daru_wheel.models import CashStore#CIRCULAR_IPORT
-# from django.core.validators import MinValueValidator
-# from .functions import log_record ##NO circular import
-from home.models import TimeStamp
+
 from mpesa_api.core.mpesa import Mpesa
 import math
+from .paypal_client import CreatePayouts
 
+class TimeStamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    # is_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+        
+        
 class AccountSetting(TimeStamp):
     curr_unit = models.FloatField(default=0, blank=True, null=True)
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
@@ -399,7 +406,9 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
     approved = models.BooleanField(default=False, blank=True, null=True)
     cancelled = models.BooleanField(default=False, blank=True, null=True)
     withrawned = models.BooleanField(blank=True, null=True)
+    confirmed = models.BooleanField(blank=True, null=True)
     has_record = models.BooleanField(blank=True, null=True)
+    withr_type = models.CharField(max_length=100,default='shop',blank=True, null=True)
     active = models.BooleanField(default=True, blank=True, null=True)
 
     user = models.ForeignKey(
@@ -473,8 +482,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         if not self.approved:
             return "pending"
         if self.approved and self.withrawned:
+            return "awaiting confirmation"
+        if self.confirmed:
             return "success"
-
+            
         return "failed"
 
     @property
@@ -494,9 +505,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         #     return
         """ Overrride internal model save method to update balance on withraw """
         account_is_active = self.user.active
-        # wit_able_bal=current_account_withrawable_bal_of(self.user_id)
         ctotal_balanc = current_account_bal_of(self.user_id)
-        #  = self.user.user_account.withrawable_balance
 
         withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
             ,float(Account.objects.get(user_id=self.user_id).balance))
@@ -511,23 +520,19 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
             self.active = False
             self.withrawned = False
 
-        if (
-            self.active and self.amount > 0
-        ):  # edit prevent # avoid data ma####FREFACCCC min witraw in settins
+        if (self.active and self.amount > 0):  # edit prevent # avoid data ma####FREFACCCC min witraw in settins
             if account_is_active:  # withraw cash ! or else no cash!
                 try:
                     set_up = account_setting()
                     if set_up.auto_approve:
                         self.approved = True
-
-                    if (
-                        not self.withrawned and self.approved and not self.cancelled
-                    ):  # stop repeated withraws and withraw only id approved by ADMIN
+                        
+                        
+                    #DEDUCT
+                    if (not self.withrawned and self.approved and not self.cancelled):  # stop repeated withraws and withraw only id approved by ADMIN
                         charges_fee = self.charges_fee  # TODO settings
 
-                        if (self.amount + charges_fee) <= ctotal_balanc and (
-                            self.amount + charges_fee
-                        ) <= withrawable_bal:
+                        if (self.amount + charges_fee) <= ctotal_balanc and (self.amount + charges_fee) <= withrawable_bal:
                             try:
                                 self.tokens=self.amount_converted_to_tokens
 
@@ -536,34 +541,50 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 )
                                 update_account_bal_of(self.user_id, new_bal)  # F
                                 self.update_cum_withraw()  ##
+                                
                                 self.withrawned = True  # transaction done
-                                self.update_user_withrawable_balance()
-
-                                self.active = False
-                                # except Exception as e:
-                                #     print("TRANSWITH:", e)
-                                #     pass
+                                self.update_user_withrawable_balance()                                           
 
                             except Exception as e:
-                                print("ACCC", e)
-
+                                print("ACCC", e)    
+                                
+                                
+                                
+                                                            
+                     #PAYOUTS          
+                    if  self.approved and not self.confirmed and not self.cancelled:
+                        if self.withr_type=='mpesa': 
+                            try:
+                                Mpesa.b2c_request(self.user.phone_number,self.amount,)
+                                self.confirmed = True  
+                                ##self.active=False     ##                              
+                            except Exception as tx:
+                                print(f"B2CashWithrawal:{tx}")
+                                pass                                    
+                        elif self.withr_type=='paypal':
+                             try:
+                                 create_response = CreatePayouts(str(self.amount), self.user.email).create_payouts(True)
+                             except Exception as e:
+                                    print('paypal_WIT',e) #debug 
+                                    pass
+                             else:
+                                  if int(create_response.status_code) == 201:
+                                      self.confirmed = True 
+                                      self.active=False     ##     
+                        elif self.withr_type=='shop' and self.withrawned:
+                             self.confirmed = True 
+                             self.active=False     ##  
+                             
                 except Exception as e:
                     print("CashWithRawal:", e)
                     return  # incase of error /No withrawing should happen
                     # pass
-                if (
-                    self.approved
-                ):  # and self.withrawned and self.has_record:#!!!!???????
-                    self.active = False
-
+   
         super().save(*args, **kwargs)
 
 
+
 # Helper functions
-
-
-# def log_record(user_id, amount, trans_type):  # F1
-#     TransactionLog.objects.create(user_id=user_id, amount=amount, trans_type=trans_type)
 
 
 def current_account_bal_of(user_id):  # F2
@@ -727,6 +748,8 @@ class CashTransfer(TimeStamp):
         super().save(*args, **kwargs)
 
 
+
+
 class C2BTransaction(TimeStamp):
     phone_number = models.BigIntegerField(blank=True, null=True)
     amount = models.DecimalField(max_digits=20, decimal_places=2)
@@ -748,7 +771,7 @@ class C2BTransaction(TimeStamp):
             return
         super().save(*args, **kwargs)
 
-
+        
 class RegisterUrl(TimeStamp):
     success = models.BooleanField(default=False, blank=True, null=True)
 

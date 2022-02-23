@@ -41,7 +41,7 @@ class B2cResult(APIView):
         :return:
         """
         data = request.data
-        process_b2c_result_response_task.apply_async(args=(data,), queue="b2c_result")
+        process_b2c_result_response_task(data)#TODO
         return Response(dict(value="ok", key="status", detail="success"))
 
 
@@ -59,7 +59,7 @@ class C2bValidation(APIView):
         :return:
         """
         data = request.data
-        process_c2b_validation_task.apply_async(args=(data,), queue="c2b_validation")
+        process_c2b_validation_task(data)#TODO
         return Response(dict(value="ok", key="status", detail="success"))
 
 
@@ -77,9 +77,7 @@ class C2bConfirmation(APIView):
         :return:
         """
         data = request.data
-        process_c2b_confirmation_task.apply_async(
-            args=(data,), queue="c2b_confirmation"
-        )
+        process_c2b_confirmation_task(data)#TODO
         return Response(dict(value="ok", key="status", detail="success"))
 
 
@@ -95,9 +93,45 @@ class OnlineCheckoutCallback(APIView):
         :param request:
         :param format:
         :return:
+        
+    {
+      "Body":{
+        "stkCallback":{
+          "MerchantRequestID":"19465-780693-1",
+          "CheckoutRequestID":"ws_CO_27072017154747416",
+          "ResultCode":0,
+          "ResultDesc":"The service request is processed successfully.",
+          "CallbackMetadata":{
+            "Item":[
+              {
+                "Name":"Amount",
+                "Value":999
+              },
+              {
+                "Name":"MpesaReceiptNumber",
+                "Value":"LGR7OWQX0R"
+              },
+              {
+                "Name":"Balance"
+              },
+              {
+                "Name":"TransactionDate",
+                "Value":20170727154800
+              },
+              {
+                "Name":"PhoneNumber",
+                "Value":254712748566
+              }
+            ]
+          }
+        }
+      }
+    }    
+        
+        
+        
         """
-        data = request.data
-        handle_online_checkout_callback_task.apply_async(
-            args=(data,), queue="online_checkout_callback"
-        )
+        response = request.data
+        handle_online_checkout_callback_task(response)#TODO//response
+        
         return Response(dict(value="ok", key="status", detail="success"))

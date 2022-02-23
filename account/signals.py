@@ -1,11 +1,9 @@
 from .models import (
     Account,
-    # CashWithrawal,
     CashDeposit,
     Checkout,
     update_account_bal_of,
     current_account_bal_of,
-    # log_record,
 )
 from .models import account_setting,Currency
 from daru_wheel.models import Stake  # DD
@@ -27,10 +25,9 @@ User = get_user_model()
 def create_user_account(sender, instance, created, **kwargs):
     if created:
         Account.objects.update_or_create(user=instance)
-        # print(f'User{instance.username} Account Created ')#Debug
 
 
-@receiver(post_save, sender=OnlineCheckoutResponse)  # TODO
+@receiver(post_save, sender=OnlineCheckoutResponse) 
 def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs):
     # if created:
     try:
@@ -41,7 +38,7 @@ def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs)
                 this_user = User.objects.create_user(
                     username=str(instance.phone), password=str(instance.phone)
                 )  # 3#??
-            currency=Currency.objects.get(name='USD')    
+            currency=Currency.objects.get(name='KSH')    
 
             CashDeposit.objects.create(
                 user=this_user,

@@ -33,6 +33,7 @@
     
     <form method="POST">
         {% csrf_token %}
+                <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="10"   max="{{ uf.withrawable_balance_usd}}" required id="id_amount"">
 
 		<input type="number" class="input-field" name="amount" class="form-control" id="amount"  max="{{ uf.withrawable_balance_usd}}" required>
         <button type="submit">Withdraw</button>
