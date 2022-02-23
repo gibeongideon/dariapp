@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 # from django.contrib.sites.models import Site
 import uuid
-# from .validators import validate_refercode
 
 
 class User(AbstractUser):

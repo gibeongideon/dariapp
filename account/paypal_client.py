@@ -4,6 +4,24 @@ from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment,LiveEnvir
 from django.conf import settings
 
 
+import os
+
+# import json
+import random
+import string
+from paypalpayoutssdk.payouts import PayoutsPostRequest
+
+
+# Creating an environment
+client_id = settings.PAYPAL_CLIENT_ID
+if settings.DEBUG:
+    environment = SandboxEnvironment(client_id=client_id, client_secret=settings.PAYPAL_CLIENT_SECRET)
+else:
+    environment = LiveEnvironment(client_id=client_id, client_secret=settings.PAYPAL_CLIENT_SECRET)
+
+client = PayPalHttpClient(environment)
+
+
 
 class PayPalClient:
     def __init__(self):
@@ -51,3 +69,68 @@ class PayPalClient:
     
     def is_primittive(self, data):
         return isinstance(data, str) or isinstance(data, bytes) or isinstance(data, int)
+
+
+
+
+
+
+
+
+class CreatePayouts(PayPalClient):
+
+    """ Creates a payout batch with 5 payout items
+    Calls the create batch api (POST - /v1/payments/payouts)
+    A maximum of 15000 payout items are supported in a single batch request"""
+
+    def __init__(self, amount, receiver):
+        self.amount = amount
+        self.receiver = receiver
+        PayPalClient.__init__(self)
+
+    # @staticmethod
+    def build_request_body(self, include_validation_failure = False):
+        senderBatchId = str(''.join(random.sample(
+            string.ascii_uppercase + string.digits, k=7)))
+        amount = self.amount # if include_validation_failure else "1.00"
+        return \
+            {
+                "sender_batch_header": {
+                    "recipient_type": "EMAIL",
+                    "email_message": "Darius Option Win Payout",
+                    "note": "Enjoy your Payout!!",
+                    "sender_batch_id": senderBatchId,
+                    "email_subject": "Darius Spin Wins Payout.Enjoy!"
+                },
+                "items": [{
+                    "note": "Thanks for playing Darius Wheel.Refer more for more payout!",
+                    "amount": {
+                        "currency": "USD",
+                        "value": amount
+                    },
+                    "receiver": self.receiver,
+                    "sender_item_id": "PayoutD"
+                }]
+            }
+
+    def create_payouts(self, debug=False):
+        request = PayoutsPostRequest()
+        request.request_body(self.build_request_body(False))
+        response = self.client.execute(request)
+
+        if debug:
+            print("Status Code: ", response.status_code)
+            print("Payout Batch ID: " +
+                  response.result.batch_header.payout_batch_id)
+            print("Payout Batch Status: " +
+                  response.result.batch_header.batch_status)
+            print("Links: ")
+            for link in response.result.links:
+                print('\t{}: {}\tCall Type: {}'.format(
+                    link.rel, link.href, link.method))
+
+            # To toggle print the whole body comment/uncomment the below line
+            #json_data = self.object_to_json(response.result)
+            #print "json_data: ", json.dumps(json_data, indent=4)
+
+        return response
