@@ -174,6 +174,9 @@ class Stake(TimeStamp):
     def save(self, *args, **kwargs):
         """ Bet could only be registered if user got enoug real or trial balance """
         if not self.pk:
+            if current_account_trialbal_of(self.user_id) < 10000:#auto_renew_trial_balance
+                update_account_trialbal_of(user_id=self.user_id,new_bal=50000+current_account_trialbal_of(self.user_id))
+
             if self.this_user_has_cash_to_bet:  # then
                 self.deduct_amount_from_this_user_account()
                 self.stake_placed = True
