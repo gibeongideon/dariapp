@@ -62,6 +62,7 @@ class StakeAdmin(admin.ModelAdmin):
         "user",
         "marketselection",
         "amount",
+        "expected_win_amount",
         "bet_on_real_account",
         "spinned",
         "stake_placed",

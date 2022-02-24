@@ -162,6 +162,15 @@ class Stake(TimeStamp):
         return self.unspinned(self.user.id)
         # pass
 
+    @property
+    def expected_win_amount(self):
+        if self.bet_status()=='pending':
+            return 'E'+str(self.marketselection.odds*float(self.amount))
+        if self.bet_status()=='win':
+            return self.marketselection.odds*float(self.amount)            
+        else:
+            return self.amount    
+
     def save(self, *args, **kwargs):
         """ Bet could only be registered if user got enoug real or trial balance """
         if not self.pk:
