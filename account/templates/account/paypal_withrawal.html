@@ -1,8 +1,6 @@
-
 {% extends "layouts/base.html" %}
 
 {% block content %}
-
 
 
 	<!-- Awards Area Start -->
@@ -13,10 +11,12 @@
 					<div class="section-heading">
 
 
-						<h2 class="title">
-							Recent Deposits
-						</h2>
-
+						<h5 class="title">
+						Paypal
+						</h5>
+						<h4 >
+              Paypal Recent Withdrawals
+              </h4>
 					</div>
 				</div>
 			</div>
@@ -30,11 +30,9 @@
                     Date
                   </th>
                   <th>
-                    Amount
+                    Amount(USD)
                   </th>
-                  <th>
-                    Type
-                  </th>
+              
                   <th class="text-center">
                     Status
                   </th>
@@ -48,13 +46,11 @@
                     {{trans.created_at}}
                   </td>
                   <td>
-                    {{trans.amount}}
+                    {{trans.amount}} $
                   </td>
-                  <td>
-                    {{trans.deposit_type}}
-                  </td>
+
                   <td class="text-center">
-                    {{trans.status}}
+                    {{trans.withraw_status}}
                   </td>
                 </tr>  
                 {% endfor %}
@@ -63,14 +59,13 @@
             </div>
 
             </div>
-							<a class="mybtn2" href="{% url 'account:mpesa_deposit' %}">  Refresh</a>
+							<a class="mybtn2" href="{% url 'account:paypal_withrawal' %}">Refresh</a>
 						</div>
 
      
 
 
 			</div>
-    
 
 
 		</div>

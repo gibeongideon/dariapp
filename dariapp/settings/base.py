@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',    
-    'home',   
+    # 'home',   
     'users',
     "account",
     "daru_wheel",
@@ -241,12 +241,12 @@ JET_SIDE_MENU_COMPACT = True
 MPESA_B2C_ACCESS_KEY = config("MPESA_B2C_ACCESS_KEY", default="")
 MPESA_B2C_CONSUMER_SECRET = config("MPESA_B2C_CONSUMER_SECRET", default="")
 
-B2C_SECURITY_TOKEN = config("B2C_SECURITY_TOKEN", default="")
-B2C_INITIATOR_NAME = config("B2C_INITIATOR_NAME", default="")
-B2C_COMMAND_ID = config("B2C_COMMAND_ID", default="")
-B2C_SHORTCODE = config("B2C_SHORTCODE", default="")
-B2C_QUEUE_TIMEOUT_URL = config("B2C_QUEUE_TIMEOUT_URL", default="")
-B2C_RESULT_URL = config("B2C_RESULT_URL", default="")
+B2C_SECURITY_TOKEN = config("B2C_SECURITY_TOKEN", default="")###B1
+B2C_INITIATOR_NAME = config("B2C_INITIATOR_NAME", default="Darius Option")###B2
+B2C_COMMAND_ID = config("B2C_COMMAND_ID", default="")###B3
+B2C_SHORTCODE = config("B2C_SHORTCODE", default="")###B4
+B2C_QUEUE_TIMEOUT_URL = config("B2C_QUEUE_TIMEOUT_URL", default="https://www.dariplay.ga/pesa/b2c/timeout")
+B2C_RESULT_URL = config("B2C_RESULT_URL", default="https://www.dariplay.ga/pesa/b2c/result")
 MPESA_URL = config("MPESA_URL", default="https://sandbox.safaricom.co.ke")
 
 # C2B (Paybill) Configs
@@ -255,17 +255,17 @@ MPESA_URL = config("MPESA_URL", default="https://sandbox.safaricom.co.ke")
 MPESA_C2B_ACCESS_KEY = config("MPESA_C2B_ACCESS_KEY", default="")
 MPESA_C2B_CONSUMER_SECRET = config("MPESA_C2B_CONSUMER_SECRET", default="")
 
-C2B_REGISTER_URL = config("C2B_REGISTER_URL", default="")
-C2B_VALIDATE_URL = config("C2B_VALIDATE_URL", default="")
-C2B_CONFIRMATION_URL = config("C2B_CONFIRMATION_URL", default="")
-C2B_SHORT_CODE = config("C2B_SHORT_CODE", default="")
+C2B_REGISTER_URL = config("C2B_REGISTER_URL", default="")#
+C2B_VALIDATE_URL = config("C2B_VALIDATE_URL", default="https://www.dariplay.ga/pesa/c2b/validate")
+C2B_CONFIRMATION_URL = config("C2B_CONFIRMATION_URL", default="https://www.dariplay.ga/pesa/c2b/confirmation")
+C2B_SHORT_CODE = config("C2B_SHORT_CODE", default="")###N1
 C2B_RESPONSE_TYPE = config("C2B_RESPONSE_TYPE", default="Completed")
 C2B_ONLINE_CHECKOUT_CALLBACK_URL = config(
-    "C2B_ONLINE_CHECKOUT_CALLBACK_URL", default=""
-)
-C2B_ONLINE_PASSKEY = config("C2B_ONLINE_PASSKEY", default="")
-C2B_ONLINE_SHORT_CODE = config("C2B_ONLINE_SHORT_CODE", default="")
-C2B_ONLINE_PARTY_B = config("C2B_ONLINE_PARTY_B", default="")
+    "C2B_ONLINE_CHECKOUT_CALLBACK_URL", default="https://www.dariplay.ga/pesa/c2b/online_checkout/callback"
+)##N3
+C2B_ONLINE_PASSKEY = config("C2B_ONLINE_PASSKEY", default="")###N2
+C2B_ONLINE_SHORT_CODE = config("C2B_ONLINE_SHORT_CODE", default="")###N1
+C2B_ONLINE_PARTY_B = config("C2B_ONLINE_PARTY_B", default="")###N1
 
 TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 

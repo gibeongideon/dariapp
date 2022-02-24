@@ -29,10 +29,10 @@ urlpatterns = [
     # ),
     # path('rest-auth/', include('rest_auth.urls')),
     # templates
-    # path("trans_log/", trans_log, name="trans_log"),
     path("refer_credit/", views.refer_credit, name="refer_credit"),
     path("mpesa_withrawal/", views.mpesa_withrawal, name="mpesa_withrawal"),
-    # path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
+    path("paypal_withrawal/", views.paypal_withrawal, name="paypal_withrawal"),
+    path("deposits/", views.mpesa_deposit, name="mpesa_deposit"),
     path("cash_trans/", views.cash_trans, name="cash_trans"),
     
     
@@ -47,8 +47,8 @@ urlpatterns = [
     # path("paypal_pro/", views.paypal_pro, name="paypal_pro"),
     # path("paypal/", include('paypal.standard.ipn.urls')),
 
-    path("deposit/", views.deposit, name='deposit'), 
-    path("withraw/", views.withraw, name='withraw'),
+   # path("deposit/", views.deposit, name='deposit'), 
+    #path("withraw/", views.withraw, name='withraw'),
     # path("deposit/paypal", pviews.accept_payment_view),
     path("deposit/m-pesa/", views.mpesa_deposit,name='mpesa_deposit'),
     # path("payment-success/", pviews.payment_success),

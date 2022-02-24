@@ -81,7 +81,13 @@ class B2CResponse(models.Model):
         db_table = "tbl_b2c_response"
         verbose_name_plural = "B2C Responses"
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+        else:
+            return
 
+            
 class C2BRequest(models.Model):
     """
     Handles C2B Requests
@@ -167,3 +173,9 @@ class OnlineCheckoutResponse(models.Model):
     class Meta:
         db_table = "tbl_online_checkout_responses"
         verbose_name_plural = "Online Checkout Responses"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+        else:
+            return

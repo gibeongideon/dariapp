@@ -16,15 +16,15 @@
     <img src="images/logo1.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Daruapp</h3>
+  <h3 align="center">daruapp</h3>
 
   <p align="center"> 
-    Fortune Wheel Spinners.Just View Demo below
+    Fortune Wheel for real cash.Just View Demo below
     <br />
     <a href="https://github.com/gibeongideon/daruapp"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://dariplay.ga">View Demo</a>
+    <a href="https://dariplay.ga">View Real Site</a>
     ·
     <a href="https://github.com/gibeongideon/daruapp/issues">Report Bug</a>
     ·
@@ -84,31 +84,10 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
+* clone
   ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/gibeongideon/daruapp.git
-   ```
-2. Install pypi packages
-   ```sh
-   sudo -H pip3 install --upgrade pip
-   ```
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+git clone https://github.com/gibeongideon/daruapp.git
+  ```
 
 
 <!-- ROADMAP -->

@@ -9,6 +9,8 @@ class CashWithrawalForm(forms.ModelForm):
         fields = (
             "user",
             "amount",
+            "withr_type",
+            "currency",
         )
 
 
