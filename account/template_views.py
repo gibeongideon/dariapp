@@ -199,13 +199,13 @@ def process_payment(request):
                 user=request.user,
                 amount=amount,
                 currency=currency,
-                deposit_type="Dj-PAYPAL",)
+                deposit_type="Paypal",)
     except:
         depo=CashDeposit.objects.create(
             user=request.user,
             amount=amount,
             currency=currency,
-            deposit_type="Dj-PAYPAL",)                   
+            deposit_type="Paypal",)                   
 
 
     paypal_dict = {

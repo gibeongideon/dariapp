@@ -32,7 +32,7 @@ urlpatterns = [
     path("refer_credit/", views.refer_credit, name="refer_credit"),
     path("mpesa_withrawal/", views.mpesa_withrawal, name="mpesa_withrawal"),
     path("paypal_withrawal/", views.paypal_withrawal, name="paypal_withrawal"),
-    path("mpesa_deposit/", views.mpesa_deposit, name="mpesa_deposit"),
+    path("deposits/", views.mpesa_deposit, name="mpesa_deposit"),
     path("cash_trans/", views.cash_trans, name="cash_trans"),
     
     
