@@ -6,27 +6,28 @@
 	<section class="breadcrumb-area bc-affiliate">
 		{% comment %} <img class="bc-img" src="/static/assets/images/breadcrumb/affiliate.png" alt=""> {% endcomment %}
 		<div class="container">
-			{% comment %} <div class="row"> {% endcomment %}
-				{% comment %} <div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12">
 					<h4 class="title">
-						Deposit
+						M-pesa Deposit
 					</h4>
-					<ul class="breadcrumb-list">
-						<li>
-							<a href="index.html">
-									<i class="fas fa-home"></i>
-									Account
-							</a>
-						</li>
-						<li>
-							<span><i class="fas fa-chevron-right"></i> </span>
-						</li>
-						<li>
-							<a href="affiliate.html">Deposit</a>
-						</li>
-					</ul>
-				</div> {% endcomment %}
-			{% comment %} </div> {% endcomment %}
+		
+			<div class="text-info"> {{mpesa_header_depo_msg}} </div>      
+
+<form action="{% url 'account:mpesa_deposit' %}" method="post">
+{% csrf_token %}
+
+<div class="col-md-4 pl-md-1">
+<div class="form-group">
+<input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
+</div>
+</div>
+
+<button class="btn btn-secondary type="submit">Submit</button>
+</form>
+		
+				</div>
+			</div> 
 		</div>
 	</section>
 	<!-- Breadcrumb Area End -->
@@ -40,27 +41,6 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-8 col-md-10">
 					<div class="section-heading">
-						<h5 class="subtitle">
-							Deposit 
-						</h5>
-
-
-
-                <div class="text-info"> {{mpesa_header_depo_msg}} </div>      
-
-<form action="{% url 'account:mpesa_deposit' %}" method="post">
-{% csrf_token %}
-
-<div class="col-md-4 pl-md-1">
-  <div class="form-group">
-    <input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount"">      
-  </div>
-</div>
-
-<button class="btn btn-secondary type="submit">Submit</button>
-</form>
-
-
 
 
 						<h2 class="title">
@@ -84,9 +64,7 @@
                   <th>
                     Amount
                   </th>
-                  <th>
-                    Currency
-                  </th>
+
                   <th class="text-center">
                     Status
                   </th>
@@ -102,9 +80,7 @@
                   <td>
                     {{trans.amount}}
                   </td>
-                  <td>
-                    {{trans.currency_id.name}}
-                  </td>
+
                   <td class="text-center">
                     {{trans.status}}
                   </td>

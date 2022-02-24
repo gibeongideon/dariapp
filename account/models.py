@@ -481,7 +481,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
             return "cancelled"
         if not self.approved:
             return "pending"
-        if self.approved and self.withrawned:
+        if self.approved and self.withrawned and not self.confirmed:
             return "awaiting confirmation"
         if self.confirmed:
             return "success"
@@ -513,9 +513,14 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
         if withrawable_bal<=0:
             return
+
+
         if not self.active:
             return
 
+        if  self.confirmed:
+            self.active=False 
+            
         if self.cancelled:
             self.active = False
             self.withrawned = False
