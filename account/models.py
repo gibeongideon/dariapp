@@ -319,7 +319,7 @@ class CashDeposit(TimeStamp):
     )
 
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, blank=True, null=True
+        Currency, on_delete=models.DO_NOTHING, blank=True, null=True
     )
 
     def __str__(self):

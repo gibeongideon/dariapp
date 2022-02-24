@@ -515,7 +515,7 @@
 					</div>
 					<div class="header-area">
 						<h4 class="title">Paypal</h4>
-						<p class="sub-title">Deposit</p>
+						<p class="sub-title">Deposit(USD)</p>
 					</div>
 					<div class="form-area">
 						
@@ -523,7 +523,7 @@
 							{% csrf_token %}
 							
 							  <div class="form-group">
-								<input type="number" name="amount" class="form-control" placeholder="amount here" required id="id_amount">      
+								<input type="number" name="amount" min="1" class="form-control" placeholder="amount in USD" required id="id_amount">      
 							  </div>
 							
 							
