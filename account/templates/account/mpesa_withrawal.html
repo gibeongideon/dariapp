@@ -1,53 +1,27 @@
-
 {% extends "layouts/base.html" %}
 
 {% block content %}
 
-    <div class="col-md-12">
-      <div class="card ">
-        <div class="card-header">
-          <h4 class="card-title">[M-Pesa Withraw]</h4>
-          <h4>You can withdraw a total of {{ uf.withrawable_balance }} KSH</h4>
-        </div>
-        <div class="card-body">
-
-<form action="{% url 'account:mpesa_withrawal' %}" method="post">
-    {% csrf_token %}
-    
-    <div class="col-md-4 pl-md-1">
-      <div class="form-group">
-        <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="100"   max="{{ uf.withrawable_balance}}" required id="id_amount">      
-      </div>
-    </div>
-
-    <button class="btn btn-secondary type="submit">Withraw</button>
-  </form>
-        </div>
-      </div>
-    </div>
+	<!-- Awards Area Start -->
+	<section class="awards-area">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="section-heading">
 
 
-  <!-- <div class="col-sm-4"> </div> -->
-  
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card ">
-        <div class="card-header">
+						<h5 class="title">
+						M-pesa
+						</h5>
+						<h4 >
+              M-pesa Recent Withdrawals
+              </h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+      <div class="table-responsive">
 
-      <a href="{% url 'account:mpesa_withrawal' %}" >
-        <button class="btn btn-secondary">
-          <i class="tim-icons icon-refresh-01"></i>                    
-          Refresh 
-        </button>
-  
-      </a>
-
-
-
-          <h4 class="card-title"> Recent Withrawals</h4>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
             <table class="table tablesorter " id="">
               <thead class=" text-primary">
                 <tr>
@@ -55,17 +29,15 @@
                     Date
                   </th>
                   <th>
-                    Amount
+                    Amount(KSH)
                   </th>
-                  <!-- <th>
-                    Approved
-                  </th> -->
+              
                   <th class="text-center">
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody  class=" text-info">
                 {% for trans in trans_logz%}
   
                 <tr>
@@ -75,29 +47,31 @@
                   <td>
                     {{trans.amount}}
                   </td>
-                  <!-- <td>
-                    {{trans.approved}}
-                  </td> -->
+
                   <td class="text-center">
                     {{trans.withraw_status}}
                   </td>
-                </tr>
-  
+                </tr>  
                 {% endfor %}
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <a href="{% url 'account:mpesa_withrawal' %}" >
-      <button class="btn btn-secondary">
-        <i class="tim-icons icon-refresh-01"></i>                    
-        Refresh 
-      </button>
+            </div>
 
-    </a> -->
-  </div>
+            </div>
+							<a class="mybtn2" href="{% url 'account:mpesa_withrawal' %}">Refresh</a>
+						</div>
+
+     
+
+
+			</div>
+
+
+		</div>
+	</section>
+	<!-- Awards Area End -->
+
+
 
 
 {% endblock content %}

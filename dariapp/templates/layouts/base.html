@@ -8,19 +8,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<meta name="forntEnd-Developer" content="Mamunur Rashid">
+	<meta name="forntEnd-Developer" content="gideon gibeon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>DariSpin|{% block title %}Home{% endblock %} 
   </title>
 
-	<link href="{% static 'assets/images/faviconz.png' %}" rel="shortcut icon" sizes="32x32"  type="image/x-icon"/>
+	<link href="{% static 'assets/images/logoz.png' %}" rel="shortcut icon" sizes="32x32"  type="image/x-icon"/>
 	<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/plugin.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" />
 
-	<link rel="apple-touch-icon" href="{% static 'assets/images/faviconz.png' %}" />
+	<link rel="apple-touch-icon" href="{% static 'assets/images/logoz.png' %}" />
 
 {% block stylesheets %}{% endblock stylesheets %}
 </head>
@@ -254,7 +254,7 @@
 					<div class="col-lg-3 col-md-6">
 						<div class="single-tools">
 							<div class="icon one">
-								<img src="assets/images/affiliate/ic7.png" alt="">
+							
 							</div>
 							<div class="content">
 								<h4 >
@@ -286,7 +286,7 @@
 				<div class="col-lg-3 col-md-6">
 						<div class="single-tools">
 							<div class="icon two">
-								<img src="static/assets/images/affiliate/ic8.png" alt="">
+						
 							</div>
 							<div class="content">
 							<h4 >
@@ -353,7 +353,7 @@
 			</div>
 
 					
-		{% comment %} </div> {% endcomment %}
+	
 							<div class="form-group">
 							    {% if user.is_authenticated %}
 								   <a href="#" data-toggle="modal" data-target="#deposit">
@@ -403,6 +403,31 @@
 									{% endif %} 
 
 							</div>
+
+
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+								   <a href="/account/deposits/" >
+								       <button type="submit" class="mybtn1">All Deposits</button>
+									</a>
+									{% endif %}   
+							
+
+
+
+							</div>	
+
+							<div class="form-group">
+							    {% if user.is_authenticated %}
+									<a href="#" data-toggle="modal" data-target="#wtrans">									
+								       <button type="submit" class="mybtn1">All Withrawals</button>
+									</a>
+									{% endif %}   
+							
+
+
+							</div>							
 
 				<div class="row">
 
@@ -457,7 +482,7 @@
 				
 							<div class="form-group">
 								{% if user.is_authenticated %}
-								   <a href="/account/paypal/checkout/">
+								<a href="#" data-toggle="modal" data-target="#dpaypal">
 								       <button type="submit" class="mybtn1">Paypal</button>
 									</a>
 									{% endif %}   
@@ -488,22 +513,6 @@
 
 
 							</div>		
-							<div class="form-group">
-								{% if user.is_authenticated %}
-								   <a href="/account/paypal/deposit">
-								       <button type="submit" class="mybtn1">Credit/Debit Card</button>
-									</a>
-									{% endif %}   
-							
-									 {% if not user.is_authenticated %}
-									   <a href="#" data-toggle="modal" data-target="#login">
-									        <button type="submit" class="mybtn1">Credit/Debit Card</button>
-									   </a>								 
-						
-									{% endif %} 
-
-							</div>
-		
 
 					</div>
 					{% comment %} <div class="form-footer">
@@ -518,9 +527,53 @@
 		</div>
 		<!-- Deposit Area End -->
 
+	
 		
+	<!-- Trans Area Start -->
+	<div class="modal fade login-modal" id="wtrans" tabindex="-1" role="dialog" aria-labelledby="wtrans" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<div class="modal-body">
+				<div class="logo-area">
+						<img class="logo" src="/static/assets/images/logoz.png" alt="">
+				</div>
+				<div class="header-area">
+					<h4 class="title">Withdrawals</h4>
+			
+				</div>
+				<div class="form-area">				
+		
+						<div class="form-group">
+							{% if user.is_authenticated %}
+	
+							   <a href="/account/paypal_withrawal/" >
+								   <button type="submit" class="mybtn1">Paypal Withdrawals</button>
+								</a>									
+								{% endif %} 			
+
+						</div>
+
+						<div class="form-group">
+							{% if user.is_authenticated %}
+	
+							   <a href="/account/mpesa_withrawal/" >
+								   <button type="submit" class="mybtn1">M-Pesa Withdrawals</button>
+								</a>									
+								{% endif %} 
+
+						</div>						
+
+				</div>
+
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- Trans Area End -->
+
 	<!-- Paypal Area Start -->
-	<div class="modal fade login-modal" id="paypal" tabindex="-1" role="dialog" aria-labelledby="paypal" aria-hidden="true">
+	<div class="modal fade login-modal" id="dpaypal" tabindex="-1" role="dialog" aria-labelledby="paypal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -529,28 +582,22 @@
 							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
-						<h4 class="title">Paypal& Credit/Debit Card</h4>
-						<p class="sub-title">Deposit</p>
+						<h4 class="title">Paypal</h4>
+						<p class="sub-title">Deposit(USD)</p>
 					</div>
 					<div class="form-area">
-					    <div id="smart-button-container">
-						    {% comment %} <div style="text-align: center"><label for="description"> </label><input type="text" name="descriptionInput" id="description" maxlength="127" value="deposit fund" disabled></div> {% endcomment %}
-							    <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a description</p>
-								<div style="text-align: center">
-									<label for="amount">Amount </label>
-										<input name="amountInput" type="number" id="amount" value="" >
-										<span> USD</span>
-								</div>
-								<p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
-								<div id="invoiceidDiv" style="text-align: center; display: none;">
-								    <label for="invoiceid"> </label>
-									<input name="invoiceid" maxlength="127" type="text" id="invoiceid" value="" >
-								</div>
-								<p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID</p>
-								<div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+						
+						<form action="{% url 'account:paypal-checkout' %}" method="post">
+							{% csrf_token %}
+							
+							  <div class="form-group">
+								<input type="number" name="amount" min="1" class="form-control" placeholder="amount in USD" required id="id_amount">      
+							  </div>
+							
+							
+							<button class="mybtn1 type="submit">Proceed To Paypal</button>
+							</form>
 
-						</div>
-						<script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD" data-sdk-integration-source="button-factory"></script>
 					</div>							
 					{% comment %} <div class="form-footer">
 						<p>Not a member? 								

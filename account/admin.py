@@ -216,7 +216,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    list_editable = ("approved", "cancelled","tokens")
+    list_editable = ("approved", "cancelled","confirmed","tokens")
 
 
 admin.site.register(CashWithrawal, CashWithrawalAdmin)
