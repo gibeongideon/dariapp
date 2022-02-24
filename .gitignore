@@ -31,8 +31,8 @@ media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
-daruapp/staticfiles/
-
+dariapp/staticfiles/
+dariapp/static/
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
 *.py[cod]

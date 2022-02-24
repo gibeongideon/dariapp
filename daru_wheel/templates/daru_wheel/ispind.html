@@ -91,7 +91,7 @@
 
 											{% if user.is_authenticated %}
 												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#withraw">
-													<i class="fa fa-angle-double-right"></i> Withdraw: {{user.user_accounts.withrawable_balance}}T
+													<i class="fa fa-angle-double-right"></i> Withdrawable: {{user.user_accounts.withrawable_balance}}T
 												</a>
 											{% endif %}
 											{% if not user.is_authenticated %}
@@ -101,12 +101,24 @@
 											{% endif %} 																																		
 											</li>											
 											<li>
+												{% if user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Trial: {{user.user_accounts.trial_balance}}T
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+												<a href="#" class="dropdown-item"  data-toggle="modal" data-target="#login">
+													<i class="fa fa-angle-double-right"></i> Trial:50,000T
+												</a>
+											{% endif %} 
+
+											</li>
+											<li>
 												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
 													<i class="fa fa-angle-double-right"></i> Deposit
 												</a>
 																																		
-											</li>
-																						
+											</li>																											
 								
 										</ul>	
 			
@@ -350,7 +362,7 @@
 											  Choice
 											</th>
 											<th>
-											  --Amount
+											  --W-L Amount
 											</th>
 											<th class="text-center">
 											  Status
@@ -371,7 +383,7 @@
 											  {{trans.marketselection}}
 											</td>
 											<td>
-											  {{trans.amount}}
+											  {{trans.expected_win_amount}}
 											</td>
 											<td class="text-center">
 											  {{trans.bet_status}}
