@@ -6,6 +6,9 @@ from django.db.models import Sum
 from mpesa_api.core.mpesa import Mpesa
 import math
 from .paypal_client import CreatePayouts
+import logging
+
+logger = logging.getLogger(__name__)
 
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -537,15 +540,15 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
                                 self.confirmed = True  
                                 ##self.active=False     ##                              
-                            except Exception as tx:
-                                print(f"B2CashWithrawal:{tx}")
+                            except Exception as e:
+                                logger.exception(f'B2CashWithrawal:{e}')
                                 pass                                    
                         elif self.withr_type=='paypal':
                              try:
                                  create_response = CreatePayouts(str(self.amount), self.user.email).create_payouts(True)
                              except Exception as e:
-                                    print('paypal_WIT',e) #debug 
-                                    pass
+                                 logger.exception(f'paypal-Payout:{e}')
+                                 pass
                              else:
                                   if int(create_response.status_code) == 201:
                                       self.confirmed = True 
@@ -724,7 +727,10 @@ class RegisterUrl(TimeStamp):
     success = models.BooleanField(default=False, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        Mpesa.c2b_register_url()
+        try:
+            Mpesa.c2b_register_url()
+        except  Exception as e:
+            logger.exception(e)
         super().save(*args, **kwargs)
 
 def cashtore():
