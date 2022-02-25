@@ -775,7 +775,7 @@ class AccountAnalytic(TimeStamp):
 
     @property
     def ref_amount(self):
-        total = RefCredit.objects.aggregate(ref_amount=Sum("amount"))
+        total = Account.objects.aggregate(ref_amount=Sum("refer_balance"))
 
         if total.get("ref_amount"):
             return total.get("ref_amount")
@@ -796,8 +796,10 @@ class AccountAnalytic(TimeStamp):
 
     @property
     def status_flag(self):
-        if self.t_in!=self.t_out:
-            return 'Red Flag.Something wrong with transactions!math dont add up!'
+        if self.t_out>self.t_in:
+            return 'Red Flag.Out>IN.Something very Bad!'
+        if self.t_in>self.t_out:
+            return 'Yellow Flag.Out<In.Something wrong!'            
         return  "All system working great.NO ISSUE!"
 
     @property
