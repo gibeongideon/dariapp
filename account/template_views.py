@@ -1,3 +1,5 @@
+from os import pathconf
+from traceback import format_tb
 from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import  settings
 from django.views.decorators.csrf import csrf_exempt
@@ -148,6 +150,15 @@ def paypal_withrawal(request):
     )
 
 
+def format_mobile_no(mobile):
+    mobile = str(mobile)
+    if (mobile.startswith("07") or mobile.startswith("01")) and len(mobile) == 10:
+        return "254" + mobile[1:]
+    if mobile.startswith("254") and len(mobile) == 12:
+        return mobile
+    if (mobile.startswith("7") or mobile.startswith("1")) and len(mobile) == 9:
+        return "254" + mobile
+    return mobile
 
 
 @login_required(login_url="/user/login")
@@ -161,7 +172,11 @@ def cash_trans(request):
         try:
             recipient = User.objects.get(username=recipient.strip())
         except Exception:
-            pass
+            try:
+                recipient=format_mobile_no(recipient)
+                recipient = User.objects.get(phone_number=recipient.strip())
+            except:
+                pass    
 
         data["recipient"] = recipient
         data["amount"] = request.POST.get("amount")
