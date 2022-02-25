@@ -38,8 +38,8 @@
 // Create new wheel object specifying the parameters at creation time.
 let theWheel = new Winwheel({
     'outerRadius'     : 212,        // S et outer radius so wheel fits inside the background.
-    'innerRadius'     : 45,   
-    'responsive'      : false, // Make wheel hollow so segments don't go all way to center.
+    'innerRadius'     : 45,   // Make wheel hollow so segments don't go all way to center.
+    'responsive'      : false, 
     'textFontSize'    : 24,         // Set default font size for the segments.
     'textOrientation' : 'vertical', // Make text vertial so goes down from the outside of wheel.
     'textAlignment'   : 'outer',    // Align text to outside of wheel.
@@ -61,7 +61,7 @@ let theWheel = new Winwheel({
 
         {'fillStyle' : '#fff200', 'text' : ''},
         {'fillStyle' : '#ee1c24', 'text' : ''},
-        {'fillStyle' : '#ffffff', 'text' :  'Big Win', 'textFontSize' : 16, 'textFillStyle' : '#00000'},// WHITE
+        {'fillStyle' : '#ffffff', 'text' : ' ×9',},// WHITE
         {'fillStyle' : '#ee1c24', 'text' : ''},
         {'fillStyle' : '#fff200', 'text' : ''},
 
@@ -80,7 +80,7 @@ let theWheel = new Winwheel({
         {'fillStyle' : '#ee1c24', 'text' : ''},
         {'fillStyle' : '#fff200', 'text' : ''},
         
-        {'fillStyle' : '#000000', 'text' : 'LOOSE TURN', 'textFontSize' : 12, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#000000', 'text' : '×0', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
 
 
     ],
