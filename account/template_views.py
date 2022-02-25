@@ -1,5 +1,3 @@
-from os import pathconf
-from traceback import format_tb
 from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import  settings
 from django.views.decorators.csrf import csrf_exempt
@@ -21,36 +19,36 @@ from .models import (
 from .forms import (
     CashWithrawalForm,
     ReferTranferForm,
-    C2BTransactionForm,
     CashTransferForm,
 )
 from users.models import User
+from mpesa_api.core.mpesa import Mpesa
+import logging
 
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/user/login")
 def mpesa_deposit(request):
-    print("mpesa_deposit_TO:", request.user)
-    form = C2BTransactionForm()
     if request.method == "POST":
-        data = {}
-        data["phone_number"] = request.user.phone_number
-        data["amount"] = request.POST.get("amount")
-        # form = C2BTransactionForm(data=request.POST)
-        form = C2BTransactionForm(data=data)
-        if form.is_valid():
-            form.save()
-            return redirect("/account/mpesa_deposit/")
-            
+        phone_number = request.user.phone_number
+        amount = request.POST.get("amount")
+        try:
+            Mpesa.stk_push(
+                phone_number,
+                amount,
+                account_reference=f"Pay Darius Option :{amount} for account {phone_number}",
+                is_paybill=True,
+            )
+        except Exception  as e:
+            logger.exception(e)
+ 
        
-
     trans_logz = CashDeposit.objects.filter(user=request.user).order_by("-id")[:10]
-
 
     return render(
         request,
         "account/mp_deposit.html",
         {
-            "form": form,
             "trans_logz": trans_logz,
 
         },
@@ -73,7 +71,7 @@ def refer_credit(request):
     min_wit = min_wit.min_redeem_refer_credit
     account_bal = float(Account.objects.get(user=request.user).balance)
     refer_bal = float(Account.objects.get(user=request.user).refer_balance)
-    refer_credit = RefCredit.objects.filter(user=request.user).order_by("-created_at")
+    refer_credit = RefCredit.objects.filter(user=request.user).order_by("-created_at")[:10]
 
     return render(
         request,

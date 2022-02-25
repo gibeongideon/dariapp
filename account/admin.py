@@ -10,29 +10,9 @@ from .models import (
     AccountSetting,
     CashTransfer,
     RegisterUrl,
-    Checkout,
+    # Checkout,
     AccountAnalytic
 )
-
-from .models import C2BTransaction
-
-
-class C2BTransactionAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "phone_number",
-        "amount",
-        "success",
-        "created_at",
-        "updated_at",
-    )
-    list_display_links = ("id",)
-    # list_editable = ('',)
-
-
-admin.site.register(C2BTransaction, C2BTransactionAdmin)
-
-
 class AccountSettingAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -238,21 +218,21 @@ admin.site.register(CashTransfer, CashTransferAdmin)
 admin.site.register(RegisterUrl)
 
 
-class CheckoutAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user",
-        "amount",
-        "paid",
-        "success",
-        "created_at",
-        "updated_at",
-    )
-    list_display_links = ("id", "user", "amount", "paid")
-    # list_editable = ("amount", "paid")
+# class CheckoutAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "user",
+#         "amount",
+#         "paid",
+#         "success",
+#         "created_at",
+#         "updated_at",
+#     )
+#     list_display_links = ("id", "user", "amount", "paid")
+#     # list_editable = ("amount", "paid")
 
 
-admin.site.register(Checkout, CheckoutAdmin)
+# admin.site.register(Checkout, CheckoutAdmin)
 
 
 class AccountAnalyticAdmin(admin.ModelAdmin):
