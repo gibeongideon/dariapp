@@ -1,9 +1,6 @@
 from .models import (
     Account,
     CashDeposit,
-    Checkout,
-    update_account_bal_of,
-    current_account_bal_of,
 )
 from .models import account_setting,Currency
 from daru_wheel.models import Stake  # DD

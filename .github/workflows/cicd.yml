@@ -241,3 +241,7 @@ jobs:
     # - name: Reload
     #   run: |
     #     sudo shutdown -r now
+
+    # - name: Reload
+    #   run: |
+    #     sudo restart
