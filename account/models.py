@@ -3,10 +3,12 @@ from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
 from django.db.models import Sum
-
 from mpesa_api.core.mpesa import Mpesa
 import math
 from .paypal_client import CreatePayouts
+import logging
+
+logger = logging.getLogger(__name__)
 
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -14,8 +16,7 @@ class TimeStamp(models.Model):
     # is_active = models.BooleanField(default=True)
 
     class Meta:
-        abstract = True
-        
+        abstract = True       
         
 class AccountSetting(TimeStamp):
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
@@ -25,11 +26,9 @@ class AccountSetting(TimeStamp):
     class Meta:
         db_table = "d_accounts_setup"
 
-
 def account_setting():
     set_up, created = AccountSetting.objects.get_or_create(id=1)  # fail save
     return set_up
-
 
 class Account(TimeStamp):
     user = models.OneToOneField(
@@ -76,9 +75,6 @@ class Account(TimeStamp):
     @property
     def withrawable_balance(self):
         return min(self.withraw_power, self.balance)
-        # if self.withraw_powe,< self.balance:
-        #     return self.withraw_power
-        # return self.balance
 
     @property
     def min_refer_to_transfer(self):
@@ -87,7 +83,6 @@ class Account(TimeStamp):
             return set_up.min_redeem_refer_credit
         except:
             return 200 #TODO    
-
 
     @property
     def balance_usd(self):
@@ -132,7 +127,6 @@ class Account(TimeStamp):
             self.token_count -= int_num
         else:
             raise NegativeTokens()
-
 
 class Currency(TimeStamp):
     """Store currencies with specified name and rate to token amount."""
@@ -232,17 +226,11 @@ class RefCredit(TimeStamp):
             if not self.closed:
                 self.update_refer_balance()
 
-            # if not self.has_record:
-            #     log_record(self.user_id, self.amount, "RC")
-            #     self.has_record = True
-
         except Exception as e:
             print("RefCredit:", e)
             pass
             # return
-
         super().save(*args, **kwargs)
-
 
 class RefCreditTransfer(TimeStamp):
     user = models.ForeignKey(
@@ -286,9 +274,7 @@ class RefCreditTransfer(TimeStamp):
                 print("ReferTransERROR:", e)
                 return
         else:
-            return
-
-        
+            return      
 
 
 class CashDeposit(TimeStamp):
@@ -383,11 +369,9 @@ class CashDeposit(TimeStamp):
             except Exception as e:
                 print("DEPOSIT ERROR", e)  # issue to on mpesa deposit error
                 return
-
             # super().save(*args, **kwargs) # allow mount edit
         else:
             return
-
 
 class CashWithrawal(TimeStamp):  # sensitive transaction
     """Represent user's money withdrawal instance.
@@ -506,12 +490,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         ctotal_balanc = current_account_bal_of(self.user_id)
 
         withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
-            ,float(Account.objects.get(user_id=self.user_id).balance))
-        
+            ,float(Account.objects.get(user_id=self.user_id).balance))        
 
         if withrawable_bal<=0:
             return
-
 
         if not self.active:
             return
@@ -528,8 +510,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                 try:
                     set_up = account_setting()
                     if set_up.auto_approve:
-                        self.approved = True
-                        
+                        self.approved = True                        
                         
                     #DEDUCT
                     if (not self.withrawned and self.approved and not self.cancelled):  # stop repeated withraws and withraw only id approved by ADMIN
@@ -549,9 +530,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 self.update_user_withrawable_balance()                                           
 
                             except Exception as e:
-                                print("ACCC", e)    
-                                
-                                
+                                print("ACCC", e)                                  
                                 
                                                             
                      #PAYOUTS          
@@ -561,15 +540,15 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
                                 self.confirmed = True  
                                 ##self.active=False     ##                              
-                            except Exception as tx:
-                                print(f"B2CashWithrawal:{tx}")
+                            except Exception as e:
+                                logger.exception(f'B2CashWithrawal:{e}')
                                 pass                                    
                         elif self.withr_type=='paypal':
                              try:
                                  create_response = CreatePayouts(str(self.amount), self.user.email).create_payouts(True)
                              except Exception as e:
-                                    print('paypal_WIT',e) #debug 
-                                    pass
+                                 logger.exception(f'paypal-Payout:{e}')
+                                 pass
                              else:
                                   if int(create_response.status_code) == 201:
                                       self.confirmed = True 
@@ -584,7 +563,6 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                     # pass
    
         super().save(*args, **kwargs)
-
 
 
 # Helper functions
@@ -663,7 +641,6 @@ def current_account_cum_depo_of(user_id):  # F2
     except Exception as e:
         return e
 
-
 def update_account_cum_depo_of(user_id, new_bal):  # F3
     try:
         if new_bal >= 0:
@@ -674,13 +651,11 @@ def update_account_cum_depo_of(user_id, new_bal):  # F3
     except Exception as e:
         return e
 
-
 def current_account_cum_withraw_of(user_id):  # F2
     try:
         return float(Account.objects.get(user_id=user_id).cum_withraw)
     except Exception as e:
         return e
-
 
 def update_account_cum_withraw_of(user_id, new_bal):  # F3
     try:
@@ -691,8 +666,6 @@ def update_account_cum_withraw_of(user_id, new_bal):  # F3
             # log_record(user_id,0,'Account Error') # REMOVE
     except Exception as e:
         return e
-
-
 class CashTransfer(TimeStamp):
     sender = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -749,58 +722,15 @@ class CashTransfer(TimeStamp):
             pass
             # return
         super().save(*args, **kwargs)
-
-
-
-
-class C2BTransaction(TimeStamp):
-    phone_number = models.BigIntegerField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=20, decimal_places=2)
-    success = models.BooleanField(default=False, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        try:
-            Mpesa.stk_push(
-                self.phone_number,
-                self.amount,
-                account_reference=f"Pay Daru Spin :{self.amount} for account {self.phone_number}",
-                is_paybill=True,
-            )
-
-            self.success = True
-
-        except Exception as tx:
-            print(f"C2BTransaction:{tx}")
-            return
-        super().save(*args, **kwargs)
-
-        
+       
 class RegisterUrl(TimeStamp):
     success = models.BooleanField(default=False, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        Mpesa.c2b_register_url()
-        super().save(*args, **kwargs)
-
-
-class Checkout(TimeStamp):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="checkouts",
-        blank=True,
-        null=True,
-    )
-    email = models.EmailField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=20, decimal_places=2)
-    paid = models.BooleanField(default=False, blank=True, null=True)
-    success = models.BooleanField(default=False, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if abs(self.amount) == 0:
-            self.amount = 1
-        else:
-            self.amount = abs(self.amount)
+        try:
+            Mpesa.c2b_register_url()
+        except  Exception as e:
+            logger.exception(e)
         super().save(*args, **kwargs)
 
 def cashtore():
@@ -820,7 +750,6 @@ class AccountAnalytic(TimeStamp):
     diffe= models.FloatField(default=0, blank=True, null=True)
   
     flag= models.BooleanField(default=False, blank=True, null=True)
-
 
     @property
     def c_bal(self):
@@ -853,10 +782,8 @@ class AccountAnalytic(TimeStamp):
         return 0
                               
     @property
-    def all_out(self):
-   
-        all_amount=float(cashtore())
-     
+    def all_out(self):   
+        all_amount=float(cashtore())   
 
         return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)
     
@@ -873,12 +800,6 @@ class AccountAnalytic(TimeStamp):
             return 'Red Flag.Something wrong with transactions!math dont add up!'
         return  "All system working great.NO ISSUE!"
 
-    # @property
-    # def current_flag(self):
-    #     if self.all_in!=self.t_out:
-    #         return 'Red Flag.Something wrong with transactions!Fix_ISSUE_ASAP.Hesabu haziingiliani!REPORT to my creater'
-    #     return  "All system working great.NO ISSUE!"
-
     @property
     def severity(self):
         if self.t_in>self.t_out:
@@ -887,7 +808,6 @@ class AccountAnalytic(TimeStamp):
             return False  
         else:
             return  True 
-
 
     def save(self, *args, **kwargs):
         if not self.pk:
