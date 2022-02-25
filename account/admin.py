@@ -5,7 +5,6 @@ from .models import (
     Currency,
     RefCredit,
     RefCreditTransfer,
-    # TransactionLog,
     CashDeposit,
     CashWithrawal,
     AccountSetting,
@@ -37,7 +36,6 @@ admin.site.register(C2BTransaction, C2BTransactionAdmin)
 class AccountSettingAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "curr_unit",
         "min_redeem_refer_credit",
         "auto_approve",
         "withraw_factor",
@@ -45,7 +43,6 @@ class AccountSettingAdmin(admin.ModelAdmin):
     list_display_links = ("id",)
     search_fields = ("id",)
     list_editable = (
-        "curr_unit",
         "min_redeem_refer_credit",
         "auto_approve",
         "withraw_factor",

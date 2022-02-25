@@ -6,8 +6,7 @@ on:
     branches: [ main ]
   # pull_request:
   #   branches: [ prod ]
-    # paths-ignore:
-    # - "migrations/**"
+
 
 
 jobs:
@@ -220,11 +219,9 @@ jobs:
 
     # - name: Rsync Updated APP to Workin Directory
     #   run: |
-    #     rsync -a --delete ~/Desktop/projects/actions-runner/deploy/dariapp/dariapp ~/dariapp/src
+    #     rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp ~/dariapp/src
     #     cd ~/dariapp/src
     #     # tree
-
-
     - name: Backup Migrations_Updated
       run: |
         cd ~/dariapp/migrations

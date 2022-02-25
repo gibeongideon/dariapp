@@ -1,4 +1,3 @@
-from logging import exception
 from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
@@ -19,7 +18,6 @@ class TimeStamp(models.Model):
         
         
 class AccountSetting(TimeStamp):
-    curr_unit = models.FloatField(default=0, blank=True, null=True)
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
     auto_approve = models.BooleanField(default=False, blank=True, null=True)
     withraw_factor = models.FloatField(default=1, blank=True, null=True)
@@ -319,7 +317,7 @@ class CashDeposit(TimeStamp):
     )
 
     currency = models.ForeignKey(
-        Currency, on_delete=models.DO_NOTHING, blank=True, null=True
+        Currency, on_delete=models.CASCADE, blank=True, null=True
     )
 
     def __str__(self):
@@ -419,7 +417,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         null=True,
     )
     currency = models.ForeignKey(
-        Currency, on_delete=models.DO_NOTHING, blank=True, null=True
+        Currency, on_delete=models.CASCADE, blank=True, null=True
     )
 
     def __str__(self):

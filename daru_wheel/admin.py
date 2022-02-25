@@ -11,8 +11,6 @@ from .models import (
 class DaruWheelSettingAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "return_val",
-        "min_redeem_refer_credit",
         "refer_per",
         "per_to_keep",
         "min_bet",
@@ -24,8 +22,6 @@ class DaruWheelSettingAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id",)
     list_editable = (
-        "return_val",
-        "min_redeem_refer_credit",
         "refer_per",
         "per_to_keep",
         "win_algo",
@@ -62,6 +58,7 @@ class StakeAdmin(admin.ModelAdmin):
         "user",
         "marketselection",
         "amount",
+        "expected_win_amount",
         "bet_on_real_account",
         "spinned",
         "stake_placed",
@@ -87,9 +84,9 @@ class OutComeAdmin(admin.ModelAdmin):
         "stake",
         "closed",
         "give_away",
-        "result",
-        "pointer",
         "selection",
+        "result",
+        "pointer",        
         "real_bet",
         "created_at",
         "updated_at",

@@ -121,13 +121,26 @@
 												</a>
 											{% endif %} 																																		
 											</li>											
+
 											<li>
+												{% if user.is_authenticated %}
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
+													<i class="fa fa-angle-double-right"></i> Trial: {{user.user_accounts.trial_balance}}T
+												</a>
+											{% endif %}
+											{% if not user.is_authenticated %}
+												<a href="#" class="dropdown-item"  data-toggle="modal" data-target="#login">
+													<i class="fa fa-angle-double-right"></i> Trial:50,000T
+												</a>
+											{% endif %} 
+
+											</li>	
+                                        
 												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
 													<i class="fa fa-angle-double-right"></i> Deposit
 												</a>
 																																		
-											</li>
-																						
+											</li>																														
 								
 										</ul>	
 			
@@ -820,7 +833,7 @@
     
     <div class="col-lg-6 col-8 d-flex align-self-center">
         <div class="form-area"> 
-            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" required id="id_amount" autofocus>                    
+            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" min="50" required id="id_amount" autofocus>                    
         </div>
     </div>  
 
@@ -863,7 +876,7 @@
 
 <div class="col-md-4 pl-md-1">
   <div class="form-group">
-    <input type="number" name="amount" class="input-field" placeholder="amount here" step="10" required id="id_amount"">    
+    <input type="number" name="amount" class="input-field" placeholder="amount here" step="10" min={{user.user_accounts.min_refer_to_transfer}} required id="id_amount"">    
 	
   </div>
 </div>

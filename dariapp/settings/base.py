@@ -16,7 +16,7 @@ from celery.schedules import crontab
 # import dj_database_url
 from decouple import config
 from decouple import Csv
-import dj_database_url
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -182,12 +182,12 @@ LOGOUT_REDIRECT_URL = "/"
 # Channel layer definitions
 # http://channels.readthedocs.io/en/latest/topics/channel_layers.html
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {"hosts": [("127.0.0.1", 6379)],},
-    }
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {"hosts": [("127.0.0.1", 6379)],},
+#     }
+# }
 
 
 ###### CELERY-specific settings
@@ -197,19 +197,9 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
+# CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
-CELERY_BEAT_SCHEDULE = {
-    "create_spin_wheel_market": {
-        "task": "daru_wheel.tasks.create_spinwheel",
-        "schedule": crontab(minute=[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]),
-    },
-    "run_count_down_timer": {
-        "task": "daru_wheel.tasks.start_count_down",
-        "schedule": crontab(minute=[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]),
-    },
-}
 
 
 # log stuff to console
@@ -303,8 +293,8 @@ DJANGO_SETTINGS_MODULE = config(
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 SITE_DOMAIN = config(
     "SITE_DOMAIN",

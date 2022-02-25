@@ -1,9 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.db.models import Sum
-from datetime import timedelta
 from random import randint
-from django.utils import timezone
 try:
     from account.models import (
     current_account_trialbal_of,current_account_bal_of,
@@ -25,8 +22,6 @@ class TimeStamp(models.Model):
         
 
 class DaruWheelSetting(TimeStamp):
-    return_val = models.FloatField(default=0, blank=True, null=True)
-    min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
     refer_per = models.FloatField(default=0, blank=True, null=True)
     per_to_keep = models.FloatField(default=5, blank=True, null=True)
 
@@ -162,9 +157,26 @@ class Stake(TimeStamp):
         return self.unspinned(self.user.id)
         # pass
 
+    @property
+    def expected_win_amount(self):
+        try:
+            exp_pay=self.marketselection.odds*float(self.amount)
+        except:
+            exp_pay= self.amount  
+
+        if self.bet_status()=='pending':
+            return 'E'+str(exp_pay)
+        if self.bet_status()=='win':
+            return exp_pay            
+        else:
+            return self.amount    
+
     def save(self, *args, **kwargs):
         """ Bet could only be registered if user got enoug real or trial balance """
         if not self.pk:
+            if current_account_trialbal_of(self.user_id) < 10000:#auto_renew_trial_balance
+                update_account_trialbal_of(user_id=self.user_id,new_bal=50000+current_account_trialbal_of(self.user_id))
+
             if self.this_user_has_cash_to_bet:  # then
                 self.deduct_amount_from_this_user_account()
                 self.stake_placed = True
