@@ -11,8 +11,9 @@
 	<meta name="forntEnd-Developer" content="gideon gibeon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>DariSpin|{% block title %}Home{% endblock %} 
-  </title>
+  <title>DariSpin|{% block title %}Home{% endblock %}</title>
+    <meta name="description" content="Spinning Wheel for real cash.Best Fortune wheel
+	,winning wheel.Deposits and withrawals through paypal ,cryptocurrency and m-pesa."/>
 
 	<link href="{% static 'assets/images/logoz.png' %}" rel="shortcut icon" sizes="32x32"  type="image/x-icon"/>
 	<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
@@ -34,7 +35,6 @@
 		</div>
 	</div>
 	<!-- preloader area end -->
-
 
 	<!-- Header Area Start  -->
 <header class="header">
@@ -604,7 +604,7 @@
 							{% csrf_token %}
 							
 							  <div class="form-group">
-								<input type="number" name="amount" min="1" class="form-control" placeholder="amount in USD" required id="id_amount">      
+								<input type="number" name="amount" min="1" max="10000" class="form-control" placeholder="amount in USD" required id="id_amount">      
 							  </div>
 							
 							
@@ -642,7 +642,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" min=50 placeholder="amount here" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" min=50 max="100000" placeholder="amount here" required id="id_amount"">      
   </div>
 
 
@@ -827,13 +827,13 @@
 
     <div class="col-lg-6 col-8 d-flex align-self-center">
         <div class="form-area"> 
-            <input type="text" name="recipient"  class="input-field" placeholder="Recipient Username/Mobile" id="id_recipient"required autofocus>       
+            <input type="text" name="recipient"  class="input-field" placeholder="Friend Username" id="id_recipient"required autofocus>       
         </div>
     </div>   
     
     <div class="col-lg-6 col-8 d-flex align-self-center">
         <div class="form-area"> 
-            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" min="50" required id="id_amount" autofocus>                    
+            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" min="50" max="{{user.user_accounts.balance}}"" required id="id_amount" autofocus>                    
         </div>
     </div>  
 
