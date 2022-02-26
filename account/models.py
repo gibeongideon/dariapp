@@ -483,8 +483,6 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
 
     def save(self, *args, **kwargs):
-        # if self.similar_trans:
-        #     return
         """ Overrride internal model save method to update balance on withraw """ 
 
         if not self.active:
@@ -536,8 +534,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                         if self.withr_type=='mpesa': 
                             try:
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
-                                self.confirmed = True  
-                                ##self.active=False     ##                              
+                                self.confirmed = True                                                                
                             except Exception as e:
                                 logger.exception(f'B2CashWithrawal:{e}')
                                 pass                                    
@@ -550,7 +547,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                              else:
                                   if int(create_response.status_code) == 201:
                                       self.confirmed = True 
-                                      self.active=False     ##     
+                                           
                         elif self.withr_type=='shop' and self.withrawned:
                              self.confirmed = True 
                              self.active=False     ##  
