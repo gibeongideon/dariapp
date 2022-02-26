@@ -10,7 +10,6 @@ from .models import (
     AccountSetting,
     CashTransfer,
     RegisterUrl,
-    # Checkout,
     AccountAnalytic
 )
 class AccountSettingAdmin(admin.ModelAdmin):
@@ -104,28 +103,10 @@ class RefCreditTransferAdmin(admin.ModelAdmin):
     search_fields = ("user_id",)
     # list_editable = ('approved',)
 
+    list_filter = ("user","succided" ,"created_at", "updated_at")
+
 
 admin.site.register(RefCreditTransfer, RefCreditTransferAdmin)
-
-
-# class TransactionLogAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "id",
-#         "user",
-#         "amount",
-#         "now_bal",
-#         "trans_type",
-#         "created_at",
-#         "updated_at",
-#     )
-#     list_display_links = ("user",)
-#     search_fields = ("user",)
-#     list_filter = ("user", "trans_type")
-
-
-# admin.site.register(TransactionLog, TransactionLogAdmin)
-
-
 class CashDepositAdmin(admin.ModelAdmin):
     list_display = (
         "user",
@@ -216,23 +197,6 @@ class CashTransferAdmin(admin.ModelAdmin):
 
 admin.site.register(CashTransfer, CashTransferAdmin)
 admin.site.register(RegisterUrl)
-
-
-# class CheckoutAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "id",
-#         "user",
-#         "amount",
-#         "paid",
-#         "success",
-#         "created_at",
-#         "updated_at",
-#     )
-#     list_display_links = ("id", "user", "amount", "paid")
-#     # list_editable = ("amount", "paid")
-
-
-# admin.site.register(Checkout, CheckoutAdmin)
 
 
 class AccountAnalyticAdmin(admin.ModelAdmin):
