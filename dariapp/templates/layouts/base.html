@@ -467,11 +467,6 @@
 
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -528,12 +523,6 @@
 							</div>		
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-								
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -604,7 +593,7 @@
 							{% csrf_token %}
 							
 							  <div class="form-group">
-								<input type="number" name="amount" min="1" max="10000" class="form-control" placeholder="amount in USD" required id="id_amount">      
+								<input type="number" name="amount" min="1" max="1000000" class="form-control" placeholder="amount in USD" required id="id_amount">      
 							  </div>
 							
 							
@@ -638,7 +627,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" min=50 max="100000" placeholder="amount here" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" min=50 max={{user.user_accounts.withrawable_balance_usd}} placeholder="amount here" required id="id_amount"">      
   </div>
 
 
@@ -647,11 +636,6 @@
 				
 					</div>
 					
-					{% comment %} <div class="form-footer">
-						<p>Not a member? 
-						<button class="mybtn1 type="submit">Submit</button>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -712,11 +696,6 @@
 											
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -780,7 +759,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-          <input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{ uf.withrawable_balance_usd}}" required id="id_amount">        
+          <input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{ user.user_accounts.withrawable_balance_usd}}" required id="id_amount">        
   </div>
 
 
