@@ -739,6 +739,14 @@ def cashtore():
     store_obj,created=CashStore.objects.get_or_create(id=1)
     return store_obj.all_amount
 
+def unspinned():
+    from daru_wheel.models import Stake
+    total = Stake.objects.filter(
+        bet_on_real_account=True,
+        spinned=False,
+        ).aggregate(amount=Sum("amount"))
+    return total.get("amount") if total.get("amount") else 0
+    
 class AccountAnalytic(TimeStamp):
     gain = models.FloatField(default=0, blank=True, null=True)
     all_bets = models.IntegerField(default=1, blank=True, null=True)
@@ -783,9 +791,10 @@ class AccountAnalytic(TimeStamp):
                               
     @property
     def all_out(self):   
-        all_amount=float(cashtore())   
+        all_amount=float(cashtore()) 
+        unspin=float(unspinned())
 
-        return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)
+        return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)+unspin
     
     @property
     def diff(self):
