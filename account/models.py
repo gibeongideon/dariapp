@@ -483,29 +483,27 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
 
     def save(self, *args, **kwargs):
-        # if self.similar_trans:
-        #     return
-        """ Overrride internal model save method to update balance on withraw """
-        account_is_active = self.user.active
-        ctotal_balanc = current_account_bal_of(self.user_id)
-
-        withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
-            ,float(Account.objects.get(user_id=self.user_id).balance))        
-
-        if withrawable_bal<=0:
-            return
+        """ Overrride internal model save method to update balance on withraw """ 
 
         if not self.active:
             return
 
-        if  self.confirmed:
-            self.active=False 
-            
-        if self.cancelled:
+        if self.cancelled and not self.withrawned:
             self.active = False
-            self.withrawned = False
+        else:
+            self.cancelled  =False
+
+        if  self.confirmed and self.approved and self.withrawned:
+            self.active=False             
+
 
         if (self.active and self.amount > 0):  # edit prevent # avoid data ma####FREFACCCC min witraw in settins
+            account_is_active = self.user.active
+            ctotal_balanc = current_account_bal_of(self.user_id)
+
+            withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
+            ,float(Account.objects.get(user_id=self.user_id).balance))  
+
             if account_is_active:  # withraw cash ! or else no cash!
                 try:
                     set_up = account_setting()
@@ -515,13 +513,11 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                     #DEDUCT
                     if (not self.withrawned and self.approved and not self.cancelled):  # stop repeated withraws and withraw only id approved by ADMIN
                         charges_fee = self.charges_fee  # TODO settings
-
-                        if (self.amount + charges_fee) <= ctotal_balanc and (self.amount + charges_fee) <= withrawable_bal:
-                            try:
-                                self.tokens=self.amount_converted_to_tokens
-
+                        self.tokens=self.amount_converted_to_tokens
+                        if (self.tokens + charges_fee) <= ctotal_balanc and (self.tokens+ charges_fee) <= withrawable_bal:
+                            try:                           
                                 new_bal = (
-                                    ctotal_balanc - float(self.amount_converted_to_tokens) - charges_fee
+                                    ctotal_balanc - float(self.tokens) - charges_fee
                                 )
                                 update_account_bal_of(self.user_id, new_bal)  # F
                                 self.update_cum_withraw()  ##
@@ -538,8 +534,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                         if self.withr_type=='mpesa': 
                             try:
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
-                                self.confirmed = True  
-                                ##self.active=False     ##                              
+                                self.confirmed = True                                                                
                             except Exception as e:
                                 logger.exception(f'B2CashWithrawal:{e}')
                                 pass                                    
@@ -552,7 +547,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                              else:
                                   if int(create_response.status_code) == 201:
                                       self.confirmed = True 
-                                      self.active=False     ##     
+                                           
                         elif self.withr_type=='shop' and self.withrawned:
                              self.confirmed = True 
                              self.active=False     ##  
@@ -561,7 +556,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                     print("CashWithRawal:", e)
                     return  # incase of error /No withrawing should happen
                     # pass
-   
+
+        if  self.confirmed and self.approved and self.withrawned:
+            self.active=False 
+
         super().save(*args, **kwargs)
 
 
@@ -739,6 +737,14 @@ def cashtore():
     store_obj,created=CashStore.objects.get_or_create(id=1)
     return store_obj.all_amount
 
+def unspinned():
+    from daru_wheel.models import Stake
+    total = Stake.objects.filter(
+        bet_on_real_account=True,
+        spinned=False,
+        ).aggregate(amount=Sum("amount"))
+    return total.get("amount") if total.get("amount") else 0
+    
 class AccountAnalytic(TimeStamp):
     gain = models.FloatField(default=0, blank=True, null=True)
     all_bets = models.IntegerField(default=1, blank=True, null=True)
@@ -783,9 +789,10 @@ class AccountAnalytic(TimeStamp):
                               
     @property
     def all_out(self):   
-        all_amount=float(cashtore())   
+        all_amount=float(cashtore()) 
+        unspin=float(unspinned())
 
-        return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)
+        return float(self.c_bal)+all_amount+float(self.wit_amount)+float(self.ref_amount)+unspin
     
     @property
     def diff(self):

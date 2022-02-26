@@ -467,11 +467,6 @@
 
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -528,12 +523,6 @@
 							</div>		
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-								
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -604,19 +593,15 @@
 							{% csrf_token %}
 							
 							  <div class="form-group">
-								<input type="number" name="amount" min="1" max="10000" class="form-control" placeholder="amount in USD" required id="id_amount">      
+								<input type="number" name="amount" min="1" max="1000000" class="form-control" placeholder="amount in USD" required id="id_amount">      
 							  </div>
 							
 							
 							<button class="mybtn1 type="submit">Proceed To Paypal</button>
 							</form>
 
-					</div>							
-					{% comment %} <div class="form-footer">
-						<p>Not a member? 								
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#signin"> Join us</a>								
-						</p>
-					</div> {% endcomment %}
+					</div>						
+
 				</div>
 			</div>
 			</div>
@@ -642,7 +627,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" min=50 max="100000" placeholder="amount here" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" min=50 max={{user.user_accounts.withrawable_balance_usd}} placeholder="amount here" required id="id_amount"">      
   </div>
 
 
@@ -651,11 +636,6 @@
 				
 					</div>
 					
-					{% comment %} <div class="form-footer">
-						<p>Not a member? 
-						<button class="mybtn1 type="submit">Submit</button>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -716,11 +696,6 @@
 											
 
 					</div>
-					{% comment %} <div class="form-footer">
-						<p>Check Wallet? 
-								<a href="#" class="mybtn1"  data-toggle="modal" data-target="#paypal">go 4 it!</a>
-						</p>
-					</div> {% endcomment %}
 				</div>
 			</div>
 			</div>
@@ -739,7 +714,7 @@
 					<div class="header-area">
 						<h4 class="title">M-Pesa Withdraw</h4>
 						<p class="sub-title">
-							You can withdraw a total of {{ uf.withrawable_balance }} KSH</h4>
+							You can withdraw a total of {{ user.user_accounts.withrawable_balance}} KSH</h4>
 							
 				        </p>
 					</div>
@@ -748,7 +723,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-          <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="100"   max="{{ uf.withrawable_balance}}" required id="id_amount">        
+          <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="100"   max="{{user.user_accounts.withrawable_balance}}" required id="id_amount">        
   </div>
 
 
@@ -775,7 +750,7 @@
 					<div class="header-area">
 						<h4 class="title">Paypal Withdraw</h4>
 						<p class="sub-title">
-							You can withdraw a total of {{ uf.withrawable_balance_usd }} USD</h4>
+							You can withdraw a total of {{ user.user_accounts.withrawable_balance_usd }} USD</h4>
 							
 				        </p>
 					</div>
@@ -784,7 +759,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-          <input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{ uf.withrawable_balance_usd}}" required id="id_amount">        
+          <input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{ user.user_accounts.withrawable_balance_usd}}" required id="id_amount">        
   </div>
 
 
@@ -833,7 +808,7 @@
     
     <div class="col-lg-6 col-8 d-flex align-self-center">
         <div class="form-area"> 
-            <input type="number" name="amount" class="input-field" placeholder="Amount Here" step="10" min="50" max="{{user.user_accounts.balance}}"" required id="id_amount" autofocus>                    
+            <input type="number" name="amount" class="input-field" placeholder="Amount" step="10" min="50" max="{{user.user_accounts.balance}}"" required id="id_amount" autofocus>                    
         </div>
     </div>  
 
