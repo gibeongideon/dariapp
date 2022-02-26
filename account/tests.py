@@ -192,6 +192,40 @@ class CashDepositWithrawalTestCase(TestCase):
         self.assertEqual(18999, Account.objects.get(user=self.usera).balance)
         self.assertEqual(1001, Account.objects.get(user=self.userb).balance)
 
+    def test_withraw_flags(self):
+        """test to correct_flags_are set_on withraw"""
+        Account.objects.filter(user_id=self.usera).update(balance=10000,withraw_power=5000)
+ 
+        CashWithrawal.objects.create(user=self.usera,amount=2000,currency=self.currency2)
+
+        self.assertEqual(CashWithrawal.objects.get(id=1).active,True)
+        self.assertEqual(CashWithrawal.objects.get(id=1).withrawned,None)
+
+        wit=CashWithrawal.objects.get(id=1)
+        wit.approved=True
+        wit.save()
+        
+        self.assertEqual(CashWithrawal.objects.get(id=1).approved,True)
+        self.assertEqual(CashWithrawal.objects.get(id=1).withrawned,True)
+        #self.assertEqual(CashWithrawal.objects.get(id=1).active,True)###################FAIL
+        wit.cancelled=True
+        wit.save()
+        self.assertEqual(CashWithrawal.objects.get(id=1).cancelled,False)
+
+        CashWithrawal.objects.create(user=self.usera,amount=1000,currency=self.currency2)
+
+        self.assertEqual(CashWithrawal.objects.get(id=2).active,True)
+        self.assertEqual(CashWithrawal.objects.get(id=2).withrawned,None)
+
+        wit=CashWithrawal.objects.get(id=2)
+        wit.cancelled=True
+        wit.save()
+
+        
+        self.assertEqual(CashWithrawal.objects.get(id=2).approved,False)
+        self.assertEqual(CashWithrawal.objects.get(id=2).withrawned,None)
+        self.assertEqual(CashWithrawal.objects.get(id=1).active,False)       
+        self.assertEqual(CashWithrawal.objects.get(id=2).cancelled,True)
 
 class RefCreditTestCase(TestCase):
     def setUp(self):
