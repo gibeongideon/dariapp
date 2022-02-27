@@ -473,14 +473,12 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
     @property
     def amount_converted_to_tokens(self):
         try:
-            # currency_name =Currency.objects.get(id=self.currency_id).name
             tokens=Currency.get_tokens_amount(self.currency.name, float(self.amount))
         except Exception as e:#Currency.DoesNotExist:
             print('FAIL CONVERT',e)
             tokens= self.amount 
 
         return tokens     
-
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on withraw """ 
@@ -514,7 +512,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                     if (not self.withrawned and self.approved and not self.cancelled):  # stop repeated withraws and withraw only id approved by ADMIN
                         charges_fee = self.charges_fee  # TODO settings
                         self.tokens=self.amount_converted_to_tokens
-                        if (self.tokens + charges_fee) <= ctotal_balanc and (self.tokens+ charges_fee) <= withrawable_bal:
+                        if (self.tokens + charges_fee) <= withrawable_bal:
                             try:                           
                                 new_bal = (
                                     ctotal_balanc - float(self.tokens) - charges_fee
@@ -530,7 +528,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                                 
                                                             
                      #PAYOUTS          
-                    if  self.approved and not self.confirmed and not self.cancelled:
+                    if  self.approved and self.withrawned and not self.confirmed and not self.cancelled:
                         if self.withr_type=='mpesa': 
                             try:
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
@@ -559,6 +557,9 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
         if  self.confirmed and self.approved and self.withrawned:
             self.active=False 
+
+        if  self.approved and not self.withrawned:
+            self.active=False            
 
         super().save(*args, **kwargs)
 
