@@ -410,6 +410,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     class Meta:
         db_table = "d_withrawals"
+        get_latest_by='id'
 
     @property
     def user_account(self):
@@ -420,6 +421,23 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
     @classmethod
     def withraw_amount(cls):
         return cls.objects.all()
+
+    # @classmethod
+    # def last_withrawal(cls,user,id):
+    #     try:
+    #         status=cls.objects.get(id=id).withraw_status
+
+    #     except Exception as e: 
+    #         status=None
+
+    #     if status=='pending':
+    #         return True
+    #     return False 
+
+    # @property
+    # def previus_withrawal_is_incomplete(self):
+    #     return self.last_withrawal(self.user,self.id-1)
+
 
     def update_user_withrawable_balance(self):
         try:
@@ -482,6 +500,10 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on withraw """ 
+
+        # if self.previus_withrawal_is_incomplete:
+        #     return
+       
 
         if not self.active:
             return

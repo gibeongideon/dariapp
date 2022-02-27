@@ -149,6 +149,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "id",
         "user",
         "active",
+        # "previus_withrawal_is_incomplete",
         "cancelled",
         "approved",
         "withrawned",
