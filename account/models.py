@@ -219,7 +219,6 @@ class RefCredit(TimeStamp):
             pass
 
     def save(self, *args, **kwargs):
-
         """ Overrride internal model save method to update balance on staking  """
         # if not self.closed:
         try:
@@ -510,6 +509,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
         if self.cancelled and not self.withrawned:
             self.active = False
+            self.approved=False
         else:
             self.cancelled  =False
 

@@ -8,7 +8,7 @@ from mpesa_api.core.models import (
 )
 from mpesa_api.util.c2butils import process_online_checkout
 from mpesa_api.util.b2cutils import send_b2c_request
-from celery.contrib import rdb
+# from celery.contrib import rdb
 import logging
 
 logger = logging.getLogger(__name__)
