@@ -20,7 +20,7 @@ class DuserAdmin(UserAdmin):
         "referal_link",
     )
 
-    list_display_links = ("id",)
+    list_display_links = ("id","username")
     search_fields = ("phone_number","username","referer_code","email")
     ordering = ("id",)
 

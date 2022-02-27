@@ -149,6 +149,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "id",
         "user",
         "active",
+        # "previus_withrawal_is_incomplete",
         "cancelled",
         "approved",
         "withrawned",
@@ -163,7 +164,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
-    list_display_links = ("id",)
+    list_display_links = ("id","amount",)
     search_fields = ("user",)
     list_filter = ("user", "approved", "cancelled","confirmed","withr_type","currency", "active")
     readonly_fields = (
