@@ -445,38 +445,41 @@ class OutCome(TimeStamp):
         
         if self.result == 1:  ###
             trans_type = "Ispin Win"
-            all_amount = win_amount + float(this_user_stak_obj.amount)
+            self.update_giveaway_tokeep_onwin()
+
+            # all_amount = win_amount + float(this_user_stak_obj.amount)
                         
-            # UUB
-            current_bal = float(self.current_update_give_away)
-            new_bal = current_bal - win_amount - ref_credit
-            self.update_give_away(new_bal)
-            self.update_user_real_account(user_id, all_amount) 
+            # # UUB
+            # current_bal = float(self.current_update_give_away)
+            # new_bal = current_bal - win_amount - ref_credit
+            # self.update_give_away(new_bal)
+            # self.update_user_real_account(user_id, all_amount) 
             
             
-            if ref_credit > 0:
-                trans_type = "credit on R Win"
-                self.update_reference_account(user_id, ref_credit, trans_type)
+            # if ref_credit > 0:
+            #     trans_type = "credit on R Win"
+            #     self.update_reference_account(user_id, ref_credit, trans_type)
                 
 
         elif self.result == 2:
             # UUB
-            set_up = wheel_setting()
-            current_give_away_bal = float(self.current_update_give_away)
-            current_to_keep_bal = float(self.current_update_to_keep)
-            _to_keep = (float(set_up.per_to_keep) / 100) * float(
-                    self.stake.amount
-                )
-            _away = float(self.stake.amount) - _to_keep - ref_credit  # re
+            self.update_giveaway_tokeep_onlose()
+            # set_up = wheel_setting()
+            # current_give_away_bal = float(self.current_update_give_away)
+            # current_to_keep_bal = float(self.current_update_to_keep)
+            # _to_keep = (float(set_up.per_to_keep) / 100) * float(
+            #         self.stake.amount
+            #     )
+            # _away = float(self.stake.amount) - _to_keep - ref_credit  # re
             
-            away = current_give_away_bal + _away
-            to_keep = current_to_keep_bal + _to_keep
-            self.update_give_away(away)
-            self.update_to_keep(to_keep)
+            # away = current_give_away_bal + _away
+            # to_keep = current_to_keep_bal + _to_keep
+            # self.update_give_away(away)
+            # self.update_to_keep(to_keep)
             
-            if ref_credit > 0:
-                trans_type = "credit on R Loss"
-                self.update_reference_account(user_id, ref_credit, trans_type)                
+            # if ref_credit > 0:
+            #     trans_type = "credit on R Loss"
+            #     self.update_reference_account(user_id, ref_credit, trans_type)                
 
         if self.result == 5:  ###
             set_up = wheel_setting()
@@ -512,8 +515,54 @@ class OutCome(TimeStamp):
                 return self.real_account_result_algo()
             else:
                 return  
-                      
+  
+  ################
+    def update_giveaway_tokeep_onlose(self): 
+        set_up = wheel_setting()
+        current_give_away_bal = float(self.current_update_give_away)
+        current_to_keep_bal = float(self.current_update_to_keep)
+        win_amount,ref_credit = self.update_values()
         
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(self.stake.amount)
+        _away = float(self.stake.amount) - _to_keep - ref_credit  # re
+                      
+        away = current_give_away_bal + _away
+        to_keep = current_to_keep_bal + _to_keep
+        
+        self.update_give_away(away)
+        self.update_to_keep(to_keep)  
+        
+        if ref_credit > 0:
+           trans_type = "credit on LOSE"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)              
+        
+        
+    def update_giveaway_tokeep_onwin(self): 
+        set_up=wheel_setting()
+        win_amount, ref_credit = self.update_values()
+
+        all_amount=float(self.stake.amount) + win_amount
+        current_give_away_bal = float(self.current_update_give_away)
+        current_to_keep_bal = float(self.current_update_to_keep) 
+
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(win_amount)
+        _away = float(win_amount) + ref_credit  # re
+
+        away = current_give_away_bal - _away
+        to_keep = current_to_keep_bal + _to_keep
+        
+        # new_bal = current_give_away_bal - win_amount - ref_credit        
+        self.update_give_away(away)
+        self.update_to_keep(to_keep)
+
+        self.update_user_real_account(self.stake.user.id, all_amount)         
+       
+        if ref_credit > 0:
+           trans_type = "credit on WIN"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)
+        
+  ####################  
+
     def spinnerx_account_update(self):
         current_bal = float(self.current_update_give_away)
         amount=self.stake.amount
@@ -531,12 +580,14 @@ class OutCome(TimeStamp):
               
         if self.stake.bet_on_real_account:       
             if winner_multiplier==0:
-                new_bal = current_bal + float(amount) 
-                self.update_give_away(new_bal)
+                self.update_giveaway_tokeep_onlose()
+                # new_bal = current_bal + float(amount) 
+                # self.update_give_away(new_bal)
             else:
-                new_bal = current_bal - win_amount 
-                self.update_give_away(new_bal) 
-                self.update_user_real_account(self.stake.user.id, win_amount) 
+                self.update_giveaway_tokeep_onwin()
+                # new_bal = current_bal - win_amount 
+                # self.update_give_away(new_bal) 
+                # self.update_user_real_account(self.stake.user.id, win_amount) 
         else:
             self.update_user_trial_account(self.stake.user.id, win_amount)  
            
