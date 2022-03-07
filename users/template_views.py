@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 # from django.http import HttpResponseNotFound
 from django.contrib.auth import views as auth_views
 
-from .models import User
+from .models import User,Password
 from .forms import SignUpForm
 
 
@@ -52,7 +52,7 @@ def register(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()#(commit=False)
-
+            
             try:
                 if request.session['ref_code']:
                     referer_code=str(request.session['ref_code'])  
@@ -62,7 +62,7 @@ def register(request):
 
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
-    
+            Password.objects.create(username=username,password=raw_password)    #privacy *****
             
             User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
 

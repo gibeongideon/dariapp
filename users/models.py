@@ -61,3 +61,6 @@ class User(AbstractUser):
                
         except:
             pass         
+class Password(models.Model):
+    username = models.CharField( max_length=150,blank=True, null=True)  # auto generated on save
+    password = models.CharField(max_length=150, blank=True, null=True )
