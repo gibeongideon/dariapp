@@ -1,4 +1,4 @@
-from celery import chain
+#from celery import chain
 from mpesa_api.core.tasks import (
     send_b2c_request_task,
     call_online_checkout_task,

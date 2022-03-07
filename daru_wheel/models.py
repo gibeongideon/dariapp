@@ -103,7 +103,8 @@ class Stake(TimeStamp):
     bet_on_real_account = models.BooleanField(default=False)
     outcome_received = models.BooleanField(default=False, blank=True, null=True)
     spinned = models.BooleanField(default=False, blank=True, null=True)
-
+    win_multiplier = models.FloatField(max_length=10, default=1,blank=True, null=True)
+    spinx = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return f"stake:{self.amount} by:{self.user}"
@@ -149,12 +150,24 @@ class Stake(TimeStamp):
     def unspinned(cls, user_id):
         return [
             obj.id
-            for obj in cls.objects.filter(user=user_id, spinned=False)
+            for obj in cls.objects.filter(user=user_id, spinned=False,spinx=False)
         ]
 
     @property
     def active_spins(self):
         return self.unspinned(self.user.id)
+        # pass
+        
+    @classmethod
+    def unspinnedx(cls, user_id):
+        return [
+            obj.id
+            for obj in cls.objects.filter(user=user_id, spinned=False,spinx=True)
+        ]
+
+    @property
+    def active_spinsx(self):
+        return self.unspinnedx(self.user.id)
         # pass
 
     @property
@@ -162,7 +175,7 @@ class Stake(TimeStamp):
         try:
             exp_pay=self.marketselection.odds*float(self.amount)
         except:
-            exp_pay= self.amount  
+            exp_pay= (self.win_multiplier)*float(self.amount)  #spinnerx
 
         if self.bet_status()=='pending':
             return 'E'+str(exp_pay)
@@ -221,7 +234,8 @@ class OutCome(TimeStamp):
         ("gain"), max_digits=100, decimal_places=5, blank=True, null=True
     )
     active = models.BooleanField(blank=True, null=True)
-
+    win_multiplier = models.FloatField(max_length=10, default=1,blank=True, null=True)
+    
     @property
     def real_bet(self):
         try:
@@ -231,7 +245,7 @@ class OutCome(TimeStamp):
 
     @property
     def current_update_give_away(self):
-        return CashStore.objects.get(id=1).give_away
+        return CashStore.objects.get(id=1).give_away#self.cashstore.give_away
 
     @staticmethod
     def update_give_away(new_bal):
@@ -253,6 +267,19 @@ class OutCome(TimeStamp):
             return self.cashstore.give_away
         except Exception as e:
             return e
+    
+    @staticmethod
+    def winner_selector(give_away,bet_amount):        
+        wheel_map=settings.WHEEL_MAP#WHEEL_MAP=[20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
+        chosen=[]
+        #print(len(wheel_map))
+        for n in range(len(wheel_map)):
+            val_at_n=wheel_map[n]
+            if float(give_away)/float(bet_amount) >=float(val_at_n):
+                chosen.append((n,val_at_n))   
+                         
+        return chosen[randint(0,len(chosen)-1)]
+    
 
     def real_account_result_algo(self):
         try:
@@ -331,12 +358,13 @@ class OutCome(TimeStamp):
         elif results == 10:
             return 28  # Loose_Turn
 
-
     def selection(self):
-        if self.stake is not None:
-            return self.stake.marketselection.id
-        else:
-            return None
+        if self.stake.marketselection:
+            if self.stake is not None:
+                return self.stake.marketselection.id
+            else:
+                return None
+                
     @property
     def segment(self):
         stake_obj=self.stake
@@ -461,8 +489,7 @@ class OutCome(TimeStamp):
             new_bal = current_bal - sub_amount
             self.update_give_away(new_bal)
             
-            self.update_user_real_account(user_id, all_amount)
-                    
+            self.update_user_real_account(user_id, all_amount)                   
 
              
     def run_update_winner_losser_on_trial_account(self ):
@@ -475,33 +502,70 @@ class OutCome(TimeStamp):
           
     @property
     def determine_result_algo(self): 
-        if not self.real_bet:
-            return self.trial_account_result_algo()
+        if not self.real_bet:            
+            if self.stake.marketselection:
+                return self.trial_account_result_algo()
+            else:
+                return
         else:
-            return self.real_account_result_algo()
+            if self.stake.marketselection:
+                return self.real_account_result_algo()
+            else:
+                return  
+                      
         
-            
-    def run_account_update(self):
-        stake_obj = self.stake
-    
-        if stake_obj.bet_on_real_account: 
-           self.pointer = self.segment
-           self.run_update_winner_losser_on_real_account()
+    def spinnerx_account_update(self):
+        current_bal = float(self.current_update_give_away)
+        amount=self.stake.amount
+        if self.stake.bet_on_real_account:
+            pointer,winner_multiplier = self.winner_selector(current_bal,amount)
         else:
-            self.pointer = self.segment
-            self.run_update_winner_losser_on_trial_account()          
-            
+            pointer,winner_multiplier = self.winner_selector(50000000,amount)  
+                                         
+        self.pointer=pointer+1 #index_start_at_0       
+        #self.stake.win_multiplier= win_multiplier
+        self.win_multiplier= winner_multiplier
+        Stake.objects.filter(id=self.stake_id).update(win_multiplier=winner_multiplier)    
+        win_amount=float(winner_multiplier)*float(amount)  
+
+              
+        if self.stake.bet_on_real_account:       
+            if winner_multiplier==0:
+                new_bal = current_bal + float(amount) 
+                self.update_give_away(new_bal)
+            else:
+                new_bal = current_bal - win_amount 
+                self.update_give_away(new_bal) 
+                self.update_user_real_account(self.stake.user.id, win_amount) 
+        else:
+            self.update_user_trial_account(self.stake.user.id, win_amount)  
+           
+           
+    def run_account_update(self):
+        if  self.stake.spinx:
+            self.spinnerx_account_update()        
+        else:
+            stake_obj = self.stake
+            if stake_obj.bet_on_real_account:
+                self.pointer = self.segment
+                self.run_update_winner_losser_on_real_account()
+            else:
+                self.pointer = self.segment
+                self.run_update_winner_losser_on_trial_account() 
+               
 
     def save(self, *args, **kwargs):
         if not self.pk and not self.closed:
             mstore, _ = CashStore.objects.get_or_create(id=1)
             self.cashstore = mstore
             try:
-                self.result=self.determine_result_algo
+                if self.stake.marketselection:
+                    self.result=self.determine_result_algo
                 self.run_account_update()
                 self.closed = True
                 super().save(*args, **kwargs)
             except Exception as e:
                 print(e)
                 return
+                
              
