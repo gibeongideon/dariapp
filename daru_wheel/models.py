@@ -407,16 +407,24 @@ class OutCome(TimeStamp):
             set_up = wheel_setting()
             amount = float(self.stake.amount)
             if self.stake.spinx:
-                odds=self.win_multiplier
+                if self.win_multiplier==0:
+                    odds=1
+                else:
+                    odds=self.win_multiplier
             else:    
                 odds = float(self.stake.marketselection.odds)   
             per_for_referer = set_up.refer_per  # Settings
             win_amount = (amount * odds)-amount
+            if win_amount==0:#spinx
+                n_amount=amount
+            else:
+                n_amount=win_amount    
             
             if per_for_referer > 100:
                 per_for_referer = 0
 
-            ref_credit = (per_for_referer / 100) * win_amount
+            ref_credit = (per_for_referer / 100) * n_amount
+  
             
             return win_amount, ref_credit
         except Exception as e:
@@ -508,10 +516,15 @@ class OutCome(TimeStamp):
         win_amount,ref_credit = self.update_values()
         
         _to_keep = (float(set_up.per_to_keep) / 100) * float(self.stake.amount)
-        _away = float(self.stake.amount) - _to_keep - ref_credit  # re
+        _away = (float(self.stake.amount)) - (_to_keep + ref_credit)  # re
+        print(_to_keep)
+        print(ref_credit)
+        print(_away)
+        print('lllllllllll')
                       
         away = current_give_away_bal + _away
         to_keep = current_to_keep_bal + _to_keep
+        print(away)
         
         self.update_give_away(away)
         self.update_to_keep(to_keep)  
