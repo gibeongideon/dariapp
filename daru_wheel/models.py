@@ -520,7 +520,7 @@ class OutCome(TimeStamp):
 
         away = current_give_away_bal + _away
         to_keep = current_to_keep_bal + _to_keep
-        print(away)
+        # print(away)
         
         self.update_give_away(away)
         self.update_to_keep(to_keep)  
