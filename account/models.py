@@ -1,3 +1,4 @@
+from locale import currency
 from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
@@ -136,6 +137,7 @@ class Currency(TimeStamp):
 
     class Meta:
         db_table = "d_currency"
+        verbose_name_plural = "Currencies"
 
     def __str__(self):
         """Simply present currency name and it's rate."""

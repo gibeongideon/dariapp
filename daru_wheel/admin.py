@@ -75,6 +75,8 @@ class StakeAdmin(admin.ModelAdmin):
     list_display_links = ("user",)
     search_fields = ("user",)
     list_filter = ("user", "marketselection","spinx","bet_on_real_account","spinned", "created_at")
+    readonly_fields = ('spinx',)
+
 
 
 admin.site.register(Stake, StakeAdmin)
