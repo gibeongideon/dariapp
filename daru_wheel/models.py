@@ -517,11 +517,7 @@ class OutCome(TimeStamp):
         
         _to_keep = (float(set_up.per_to_keep) / 100) * float(self.stake.amount)
         _away = (float(self.stake.amount)) - (_to_keep + ref_credit)  # re
-        print(_to_keep)
-        print(ref_credit)
-        print(_away)
-        print('lllllllllll')
-                      
+
         away = current_give_away_bal + _away
         to_keep = current_to_keep_bal + _to_keep
         print(away)
@@ -538,12 +534,12 @@ class OutCome(TimeStamp):
         set_up=wheel_setting()
         win_amount, ref_credit = self.update_values()
 
-        all_amount=float(self.stake.amount) + win_amount
+        all_amount=float(self.stake.amount) + float(win_amount)
         current_give_away_bal = float(self.current_update_give_away)
         current_to_keep_bal = float(self.current_update_to_keep) 
 
         _to_keep = (float(set_up.per_to_keep) / 100) * float(win_amount)
-        _away = float(win_amount) + ref_credit  # re
+        _away = float(win_amount) + ref_credit +_to_keep # re
 
         away = current_give_away_bal - _away
         to_keep = current_to_keep_bal + _to_keep
