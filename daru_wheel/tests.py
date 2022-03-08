@@ -152,6 +152,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_____________________________________________________
 
@@ -193,6 +194,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_____________________________________________
 
@@ -231,6 +233,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_______________________________________________________________
 
@@ -268,6 +271,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         # ________________
 

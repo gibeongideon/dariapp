@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 # import os
 from pathlib import Path
-from celery.schedules import crontab
+#from celery.schedules import crontab
 
 # import dj_database_url
 from decouple import config
@@ -304,4 +304,6 @@ SITE_DOMAIN = config(
 # Creating Access Token for Sandbox
 PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
 PAYPAL_CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default="")
+
+WHEEL_MAP = [20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
 

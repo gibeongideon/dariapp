@@ -60,7 +60,7 @@
 
 									<li class="nav-item">
 									{% if user.is_authenticated %}
-										<a class="nav-link active" href="{% url 'daru_wheel:spin' %}">Spin
+										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
 												<div class="mr-hover-effect"></div></a>
 									{% endif %}
 									{% if not user.is_authenticated %}
@@ -70,6 +70,12 @@
 									{% endif %}   
 																					
 									</li>	
+									<li class="nav-item">
+									<a class="nav-link" href="{% url 'daru_wheel:spinx' %}">Spinx
+									<div class="mr-hover-effect"></div>
+									</a>   
+																					
+									</li>									
 									 <li class="nav-item dropdown">
 									 {% comment %} {% if not user.is_authenticated %}
 									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
