@@ -111,10 +111,12 @@ class CashStoreAdmin(admin.ModelAdmin):
         "id",
         "give_away",
         "to_keep",
+        "created_at",
+        "updated_at",
     )
 
     list_display_links = ("id",)
-    # readonly_fields = ('closgive_away',)
+    list_filter = ("id","created_at","updated_at")
 
 
 admin.site.register(CashStore, CashStoreAdmin)

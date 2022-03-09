@@ -6,12 +6,13 @@ def filter_html_elements(content):
     return content
 
 
-class Contact(models.Model):
+class ContactUs(models.Model):
     cmail =  models.CharField(max_length=100, blank=True, null=True)
     message = models.TextField(max_length=100, blank=True, null=True)
 
     class Meta:
         db_table = "d_contact_us"
+        verbose_name_plural = "Contact Us Messages"
 
     def save(self, *args, **kwargs):
         if not self.pk:
