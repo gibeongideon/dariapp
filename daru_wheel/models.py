@@ -1,3 +1,5 @@
+from email import message
+import email
 from django.db import models
 from django.conf import settings
 from random import randint
@@ -598,3 +600,12 @@ class OutCome(TimeStamp):
             except Exception as e:
                 print(e)
                 return
+
+
+
+class Contact(models.Model):
+    cmail =  models.CharField(max_length=100, blank=True, null=True)
+    message = models.TextField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = "d_contact_us"

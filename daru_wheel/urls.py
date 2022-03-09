@@ -15,4 +15,5 @@ urlpatterns = [
     path("r/<str:refer_code>/", views.spin, name="spin"),
     path("spinx", views.spinx, name="spinx"),    
     path("stakes", views.stakes, name="stakes"),
+    path("contact", views.contact, name="contact"),
 ]
