@@ -1,3 +1,5 @@
+from email import message
+import email
 from django.db import models
 from django.conf import settings
 from random import randint
