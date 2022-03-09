@@ -270,10 +270,9 @@
 								</h4>
 									<form method="POST" id="stake-form">
 
-
 										{% csrf_token %}
 
-										{% comment %} <p class="date"> {% endcomment %}
+										<p class="date">{{form.errors}} </p>
 	
 											<div class="btn-group btn-group-toggle float-left" data-toggle="buttons" required=True name="marketselection" id="id_marketselection" >
 											  <label class="btn btn-sm btn-success btn-simple">
@@ -295,8 +294,10 @@
 										  </div >
 	  
 										  <div class="col-lg-6 col-8 d-flex align-self-center">.</div>
-										  <input class="btn btn-sm btn-warning btn-simple" type="number" min ="10" name="amount" class="input-field" placeholder="Amount to bet" required=True id="amount_id" autofocus>
-                
+
+										  <input class="btn btn-sm btn-warning btn-simple" type="number" min ="10"  max="1000000" name="amount" class="input-field" placeholder="Amount to bet" required=True id="amount_id" autofocus>
+
+
 							</div>
 
 							
@@ -374,7 +375,7 @@
 											  Status
 											</th>
 											<th>
-											 --Real
+											 --Account
 											</th>
 										  </tr>
 										</thead>
@@ -395,7 +396,7 @@
 											  {{trans.bet_status}}
 											</td>
 											<td>
-											  {{trans.bet_on_real_account}}
+											  {{trans.bet_type}}
 											</td>
 										  </tr>
 										  {%endfor%}
