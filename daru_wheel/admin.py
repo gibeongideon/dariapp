@@ -5,7 +5,7 @@ from .models import (
     OutCome,
     Selection,
     DaruWheelSetting,
-    CashStore,
+    CashStore
 )
 
 class DaruWheelSettingAdmin(admin.ModelAdmin):
@@ -118,3 +118,4 @@ class CashStoreAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CashStore, CashStoreAdmin)
+

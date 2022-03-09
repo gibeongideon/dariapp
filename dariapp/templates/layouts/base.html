@@ -543,6 +543,47 @@
 		<!-- Deposit Area End -->
 
 	
+		<div class="modal fade login-modal" id="contact" tabindex="-1" role="dialog" aria-labelledby="contact" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-body">
+					<div class="logo-area">
+							<img class="logo" src="/static/assets/images/logoz.png" alt="">
+					</div>
+					<div class="header-area">
+						<h4 class="title">Contact-Us</h4>
+						<!-- <p class="sub-title">email us on :darius.option@gmail.com</p> -->
+					</div>
+					<div class="form-area">
+
+						<form action="{% url 'home:contact' %}" method="post">
+							{% csrf_token %}
+							
+							  <div class="form-group">
+								<input type="email" name="cmail" class="form-control" placeholder="email" required id="id_cmail">      
+							  </div>
+							  <div class="form-group">
+								<input type="text" name="message" min=10 class="form-control" placeholder="message" required id="id_message">      
+							  </div>
+							
+							<button class="mybtn1" type="submit">Submit</button>
+						</form>
+						
+				
+			
+
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+
+
+
+
+
 		
 	<!-- Trans Area Start -->
 	<div class="modal fade login-modal" id="wtrans" tabindex="-1" role="dialog" aria-labelledby="wtrans" aria-hidden="true">
