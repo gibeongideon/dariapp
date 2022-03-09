@@ -196,8 +196,8 @@ def cash_trans(request):
 @login_required(login_url="/user/login")
 def process_payment(request):
     amount = float(request.session['paypal_deposit_amount'])
-    # print(amount)
-    host =settings.SITE_DOMAIN  # 
+    #host =settings.SITE_DOMAIN  # 
+    host = request.get_host()
     try:
         currency=Currency.objects.get(name="USD")
     except Currency.DoesNotExist:

@@ -52,7 +52,7 @@ class User(AbstractUser):
         try:
             if not self.pk:
                 self.code = (
-                    str(uuid.uuid4()).upper()[:3] + "D" + str(self.username[-3:]).upper()
+                    str(uuid.uuid4()).upper()[:3] + str(self.username[-4:]).upper()
                     )  # Auto generate code
                        # if self.phone_number is None:
                 self.phone_number = self.format_mobile_no(self.username)
@@ -60,7 +60,10 @@ class User(AbstractUser):
             super(User, self).save(*args, **kwargs)    
                
         except:
-            pass         
+            pass       
+              
 class Password(models.Model):
     username = models.CharField( max_length=150,blank=True, null=True)
     password = models.CharField(max_length=150, blank=True, null=True )
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
