@@ -17,6 +17,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "id",
         "min_redeem_refer_credit",
         "auto_approve",
+        "auto_approve_cash_trasfer",
         "withraw_factor",
     )
     list_display_links = ("id",)
@@ -24,6 +25,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
     list_editable = (
         "min_redeem_refer_credit",
         "auto_approve",
+        "auto_approve_cash_trasfer",
         "withraw_factor",
     )
 
@@ -188,12 +190,15 @@ class CashTransferAdmin(admin.ModelAdmin):
         "recipient",
         "amount",
         "approved",
+        "cancelled",
         "success",
         "created_at",
         "updated_at",
+        "active"
     )
     list_display_links = ("id",)
-    list_editable = ("amount", "approved")
+    list_filter = ("sender","recipient", "approved", "cancelled","active")
+    list_editable = ("amount", "approved","cancelled")
 
 
 admin.site.register(CashTransfer, CashTransferAdmin)

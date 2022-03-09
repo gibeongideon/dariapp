@@ -281,7 +281,7 @@ class OutCome(TimeStamp):
             return e
     
     @staticmethod
-    def winner_selector(give_away,bet_amount):        
+    def winner_selector(give_away,bet_amount):     
         wheel_map=settings.WHEEL_MAP#WHEEL_MAP=[20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
         chosen=[]
         #print(len(wheel_map))
@@ -520,7 +520,7 @@ class OutCome(TimeStamp):
 
         away = current_give_away_bal + _away
         to_keep = current_to_keep_bal + _to_keep
-        print(away)
+        # print(away)
         
         self.update_give_away(away)
         self.update_to_keep(to_keep)  
