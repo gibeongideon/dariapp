@@ -15,12 +15,9 @@ User = get_user_model()
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    # is_active = models.BooleanField(default=True)
-
     class Meta:
         abstract = True
         
-
 class DaruWheelSetting(TimeStamp):
     refer_per = models.FloatField(default=0, blank=True, null=True)
     per_to_keep = models.FloatField(default=5, blank=True, null=True)
@@ -53,7 +50,6 @@ def wheel_setting():
     set_up, created = DaruWheelSetting.objects.get_or_create(id=1)
     return set_up
 
-
 class Selection(TimeStamp):
     name = models.CharField(max_length=100, blank=True, null=True)
     odds = models.FloatField(max_length=10, blank=True, null=True)
@@ -75,8 +71,6 @@ class Selection(TimeStamp):
             (_mselect.id, _mselect.name, _mselect.odds)
             for _mselect in cls.objects.all()
         ]
-
-
 
 class Stake(TimeStamp):
     user = models.ForeignKey(
@@ -108,6 +102,11 @@ class Stake(TimeStamp):
 
     def __str__(self):
         return f"stake:{self.amount} by:{self.user}"
+
+    def  bet_type(self):
+        if self.bet_on_real_account:
+            return "REAL"
+        return "TRIAL"    
 
     @property
     def this_user_has_cash_to_bet(self):
@@ -423,8 +422,7 @@ class OutCome(TimeStamp):
             if per_for_referer > 100:
                 per_for_referer = 0
 
-            ref_credit = (per_for_referer / 100) * n_amount
-  
+            ref_credit = (per_for_referer / 100) * n_amount  
             
             return win_amount, ref_credit
         except Exception as e:
@@ -508,7 +506,6 @@ class OutCome(TimeStamp):
             else:
                 return  
   
-  ################
     def update_giveaway_tokeep_onlose(self): 
         set_up = wheel_setting()
         current_give_away_bal = float(self.current_update_give_away)
@@ -519,9 +516,7 @@ class OutCome(TimeStamp):
         _away = (float(self.stake.amount)) - (_to_keep + ref_credit)  # re
 
         away = current_give_away_bal + _away
-        to_keep = current_to_keep_bal + _to_keep
-        # print(away)
-        
+        to_keep = current_to_keep_bal + _to_keep        
         self.update_give_away(away)
         self.update_to_keep(to_keep)  
         
@@ -553,8 +548,7 @@ class OutCome(TimeStamp):
         if ref_credit > 0:
            trans_type = "credit on WIN"
            self.update_reference_account(self.stake.user.id, ref_credit, trans_type)
-        
-  ####################  
+
 
     def spinnerx_account_update(self):
         current_bal = float(self.current_update_give_away)
@@ -568,7 +562,6 @@ class OutCome(TimeStamp):
         self.win_multiplier= winner_multiplier
         Stake.objects.filter(id=self.stake_id).update(win_multiplier=winner_multiplier)    
         win_amount=float(winner_multiplier)*float(amount)  
-
               
         if self.stake.bet_on_real_account:       
             if winner_multiplier==0:
@@ -605,5 +598,3 @@ class OutCome(TimeStamp):
             except Exception as e:
                 print(e)
                 return
-                
-             

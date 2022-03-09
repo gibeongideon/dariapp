@@ -1,4 +1,4 @@
-from locale import currency
+# from locale import currency
 from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,

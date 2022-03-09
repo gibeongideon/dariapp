@@ -21,10 +21,10 @@ class DuserAdmin(UserAdmin):
     )
 
     list_display_links = ("id","username")
-    search_fields = ("phone_number","username","referer_code","email")
+    search_fields = ("phone_number","email","username","referer_code","email")
     ordering = ("id",)
 
-    list_filter = ("username","phone_number","referer_code", "active",)
+    list_filter = ("username","phone_number","referer_code","last_login","active",)
 
     list_editable = (
         "phone_number",
@@ -44,16 +44,18 @@ class PasswordAdmin(admin.ModelAdmin):
         "id",
         "username",
         "password",
+        "created_at",
+        "updated_at"
     )
 
-    list_display_links = ("id","username")
+    list_display_links = ("id","username","created_at","updated_at")
     search_fields = ("username","Password",)
     ordering = ("id",)
 
-    list_filter = ("username",)
+    list_filter = ("username","created_at")
 
 
-    readonly_fields = ("password",)
+    readonly_fields = ("password","username")
 
 
 admin.site.register(Password, PasswordAdmin)
