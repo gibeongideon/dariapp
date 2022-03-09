@@ -1,5 +1,5 @@
 from django import forms
-from .models import Stake,Contact
+from .models import Stake
 
 class IstakeForm(forms.ModelForm):
     class Meta:
@@ -10,7 +10,3 @@ class XstakeForm(forms.ModelForm):
     class Meta:
         model = Stake
         fields = ("user", "amount","spinx", "bet_on_real_account")        
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = Contact
-        fields = ("cmail","message")        

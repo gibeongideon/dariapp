@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from users.models import User
-from .forms import  IstakeForm,XstakeForm,ContactForm
+from .forms import  IstakeForm,XstakeForm
 from .models import Stake
 
 AnonymousUser=AnonymousUser()
@@ -111,20 +111,3 @@ def stakes(request):
         }
 
     return render(request, "daru_wheel/stakes.html", context)
-
-
-
-def contact(request): 
-    if request.method == "POST":
-        cont_form = ContactForm(request.POST)
-        if cont_form.is_valid():
-            cont_form = cont_form.save(commit=False)
-            if request.user.is_authenticated:
-                cont_form.cmail = request.user.username 
-
-            cont_form.save()
-            return redirect('/')
-    else:
-        cont_form = ContactForm()
-
-    return redirect('/')

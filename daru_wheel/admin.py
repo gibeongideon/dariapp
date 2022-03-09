@@ -5,8 +5,7 @@ from .models import (
     OutCome,
     Selection,
     DaruWheelSetting,
-    CashStore,
-    Contact
+    CashStore
 )
 
 class DaruWheelSettingAdmin(admin.ModelAdmin):
@@ -120,14 +119,3 @@ class CashStoreAdmin(admin.ModelAdmin):
 
 admin.site.register(CashStore, CashStoreAdmin)
 
-class ContactAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "cmail",
-        "message",
-    )
-
-    list_display_links = ("id",)
-
-
-admin.site.register(Contact, ContactAdmin)
