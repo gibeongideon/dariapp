@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User,Password
 
 
 class DuserAdmin(UserAdmin):
@@ -36,3 +36,24 @@ class DuserAdmin(UserAdmin):
 
 
 admin.site.register(User, DuserAdmin)
+
+
+class PasswordAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "username",
+        "password",
+    )
+
+    list_display_links = ("id","username")
+    search_fields = ("username","Password",)
+    ordering = ("id",)
+
+    list_filter = ("username",)
+
+
+    readonly_fields = ("password",)
+
+
+admin.site.register(Password, PasswordAdmin)

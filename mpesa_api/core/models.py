@@ -161,7 +161,7 @@ class OnlineCheckoutResponse(models.Model):
     checkout_request_id = models.CharField(max_length=50, default="")
     result_code = models.CharField(max_length=5, blank=True, null=True)
     result_description = models.CharField(max_length=100, blank=True, null=True)
-    mpesa_receipt_number = models.CharField(max_length=50, blank=True, null=True)
+    mpesa_receipt_number = models.CharField(max_length=50,blank=True, null=True)
     transaction_date = models.DateTimeField(blank=True, null=True)
     phone = models.BigIntegerField(blank=True, null=True)
     amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)

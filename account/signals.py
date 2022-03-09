@@ -1,3 +1,4 @@
+from unicodedata import name
 from .models import (
     Account,
     CashDeposit,
@@ -35,12 +36,17 @@ def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs)
                 this_user = User.objects.create_user(
                     username=str(instance.phone), password=str(instance.phone)
                 )  # 3#??
-            currency=Currency.objects.get(name='KSH')    
+                
+            try:
+                currency=Currency.objects.get(name='KSH')  
+            except Currency.DoesNotExist: 
+                Currency.objects.create(name="KSH",rate=1) 
+                currency=Currency.objects.get(name='KSH')
 
             CashDeposit.objects.create(
                 user=this_user,
                 amount=instance.amount,
-                deposit_type="M-pesa Deposit",
+                deposit_type="M-pesa",
                 currency=currency,
                 confirmed=True,
             )

@@ -13,5 +13,6 @@ urlpatterns = [
     path("stake", include(router.urls)),
     path("", views.spin, name="spin"),
     path("r/<str:refer_code>/", views.spin, name="spin"),
+    path("spinx", views.spinx, name="spinx"),    
     path("stakes", views.stakes, name="stakes"),
 ]

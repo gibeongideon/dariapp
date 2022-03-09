@@ -103,7 +103,8 @@ class Stake(TimeStamp):
     bet_on_real_account = models.BooleanField(default=False)
     outcome_received = models.BooleanField(default=False, blank=True, null=True)
     spinned = models.BooleanField(default=False, blank=True, null=True)
-
+    win_multiplier = models.FloatField(max_length=10, default=1,blank=True, null=True)
+    spinx = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return f"stake:{self.amount} by:{self.user}"
@@ -139,6 +140,11 @@ class Stake(TimeStamp):
             update_account_bal_of(self.user_id, new_bal)  # F3
 
     def bet_status(self):
+        if self.spinx:
+            if self.spinned:
+                return "spinned"
+            else:
+                return "pending"    
         try:
             return OutCome.objects.get(stake_id=self.id).win_status 
         except Exception as e:
@@ -149,20 +155,39 @@ class Stake(TimeStamp):
     def unspinned(cls, user_id):
         return [
             obj.id
-            for obj in cls.objects.filter(user=user_id, spinned=False)
+            for obj in cls.objects.filter(user=user_id, spinned=False,spinx=False)
         ]
 
     @property
     def active_spins(self):
         return self.unspinned(self.user.id)
         # pass
+        
+    @classmethod
+    def unspinnedx(cls, user_id):
+        return [
+            obj.id
+            for obj in cls.objects.filter(user=user_id, spinned=False,spinx=True)
+        ]
+
+    @property
+    def active_spinsx(self):
+        return self.unspinnedx(self.user.id)
+        # pass
 
     @property
     def expected_win_amount(self):
+  
+        if self.spinx:
+            if self.spinned:
+                return "W="+str(self.win_multiplier*float(self.amount)) + ' (X'+ str(self.win_multiplier)+")"
+            else:
+                return  "B="+str(self.amount)    
+
         try:
             exp_pay=self.marketselection.odds*float(self.amount)
         except:
-            exp_pay= self.amount  
+            exp_pay= (self.win_multiplier)*float(self.amount)  #spinnerx
 
         if self.bet_status()=='pending':
             return 'E'+str(exp_pay)
@@ -221,7 +246,8 @@ class OutCome(TimeStamp):
         ("gain"), max_digits=100, decimal_places=5, blank=True, null=True
     )
     active = models.BooleanField(blank=True, null=True)
-
+    win_multiplier = models.FloatField(max_length=10, default=1,blank=True, null=True)
+    
     @property
     def real_bet(self):
         try:
@@ -231,7 +257,7 @@ class OutCome(TimeStamp):
 
     @property
     def current_update_give_away(self):
-        return CashStore.objects.get(id=1).give_away
+        return CashStore.objects.get(id=1).give_away#self.cashstore.give_away
 
     @staticmethod
     def update_give_away(new_bal):
@@ -253,6 +279,19 @@ class OutCome(TimeStamp):
             return self.cashstore.give_away
         except Exception as e:
             return e
+    
+    @staticmethod
+    def winner_selector(give_away,bet_amount):     
+        wheel_map=settings.WHEEL_MAP#WHEEL_MAP=[20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
+        chosen=[]
+        #print(len(wheel_map))
+        for n in range(len(wheel_map)):
+            val_at_n=wheel_map[n]
+            if float(give_away)/float(bet_amount) >=float(val_at_n):
+                chosen.append((n,val_at_n))   
+                         
+        return chosen[randint(0,len(chosen)-1)]
+    
 
     def real_account_result_algo(self):
         try:
@@ -331,12 +370,13 @@ class OutCome(TimeStamp):
         elif results == 10:
             return 28  # Loose_Turn
 
-
     def selection(self):
-        if self.stake is not None:
-            return self.stake.marketselection.id
-        else:
-            return None
+        if self.stake.marketselection:
+            if self.stake is not None:
+                return self.stake.marketselection.id
+            else:
+                return None
+                
     @property
     def segment(self):
         stake_obj=self.stake
@@ -365,16 +405,26 @@ class OutCome(TimeStamp):
     def update_values(self):
         try:
             set_up = wheel_setting()
-            stake_obj=self.stake
-            amount = float(stake_obj.amount)
-            odds = float(stake_obj.marketselection.odds)
+            amount = float(self.stake.amount)
+            if self.stake.spinx:
+                if self.win_multiplier==0:
+                    odds=1
+                else:
+                    odds=self.win_multiplier
+            else:    
+                odds = float(self.stake.marketselection.odds)   
             per_for_referer = set_up.refer_per  # Settings
             win_amount = (amount * odds)-amount
+            if win_amount==0:#spinx
+                n_amount=amount
+            else:
+                n_amount=win_amount    
             
-            if per_for_referer > 100:  # Enforce 0<=p<=100 TODO
+            if per_for_referer > 100:
                 per_for_referer = 0
 
-            ref_credit = (per_for_referer / 100) * win_amount
+            ref_credit = (per_for_referer / 100) * n_amount
+  
             
             return win_amount, ref_credit
         except Exception as e:
@@ -417,38 +467,11 @@ class OutCome(TimeStamp):
         
         if self.result == 1:  ###
             trans_type = "Ispin Win"
-            all_amount = win_amount + float(this_user_stak_obj.amount)
-                        
-            # UUB
-            current_bal = float(self.current_update_give_away)
-            new_bal = current_bal - win_amount - ref_credit
-            self.update_give_away(new_bal)
-            self.update_user_real_account(user_id, all_amount) 
-            
-            
-            if ref_credit > 0:
-                trans_type = "credit on R Win"
-                self.update_reference_account(user_id, ref_credit, trans_type)
-                
+            self.update_giveaway_tokeep_onwin()
 
         elif self.result == 2:
             # UUB
-            set_up = wheel_setting()
-            current_give_away_bal = float(self.current_update_give_away)
-            current_to_keep_bal = float(self.current_update_to_keep)
-            _to_keep = (float(set_up.per_to_keep) / 100) * float(
-                    self.stake.amount
-                )
-            _away = float(self.stake.amount) - _to_keep - ref_credit  # re
-            
-            away = current_give_away_bal + _away
-            to_keep = current_to_keep_bal + _to_keep
-            self.update_give_away(away)
-            self.update_to_keep(to_keep)
-            
-            if ref_credit > 0:
-                trans_type = "credit on R Loss"
-                self.update_reference_account(user_id, ref_credit, trans_type)                
+            self.update_giveaway_tokeep_onlose()         
 
         if self.result == 5:  ###
             set_up = wheel_setting()
@@ -461,8 +484,7 @@ class OutCome(TimeStamp):
             new_bal = current_bal - sub_amount
             self.update_give_away(new_bal)
             
-            self.update_user_real_account(user_id, all_amount)
-                    
+            self.update_user_real_account(user_id, all_amount)                   
 
              
     def run_update_winner_losser_on_trial_account(self ):
@@ -475,33 +497,113 @@ class OutCome(TimeStamp):
           
     @property
     def determine_result_algo(self): 
-        if not self.real_bet:
-            return self.trial_account_result_algo()
+        if not self.real_bet:            
+            if self.stake.marketselection:
+                return self.trial_account_result_algo()
+            else:
+                return
         else:
-            return self.real_account_result_algo()
+            if self.stake.marketselection:
+                return self.real_account_result_algo()
+            else:
+                return  
+  
+  ################
+    def update_giveaway_tokeep_onlose(self): 
+        set_up = wheel_setting()
+        current_give_away_bal = float(self.current_update_give_away)
+        current_to_keep_bal = float(self.current_update_to_keep)
+        win_amount,ref_credit = self.update_values()
         
-            
-    def run_account_update(self):
-        stake_obj = self.stake
-    
-        if stake_obj.bet_on_real_account: 
-           self.pointer = self.segment
-           self.run_update_winner_losser_on_real_account()
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(self.stake.amount)
+        _away = (float(self.stake.amount)) - (_to_keep + ref_credit)  # re
+
+        away = current_give_away_bal + _away
+        to_keep = current_to_keep_bal + _to_keep
+        # print(away)
+        
+        self.update_give_away(away)
+        self.update_to_keep(to_keep)  
+        
+        if ref_credit > 0:
+           trans_type = "credit on LOSE"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)              
+        
+        
+    def update_giveaway_tokeep_onwin(self): 
+        set_up=wheel_setting()
+        win_amount, ref_credit = self.update_values()
+
+        all_amount=float(self.stake.amount) + float(win_amount)
+        current_give_away_bal = float(self.current_update_give_away)
+        current_to_keep_bal = float(self.current_update_to_keep) 
+
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(win_amount)
+        _away = float(win_amount) + ref_credit +_to_keep # re
+
+        away = current_give_away_bal - _away
+        to_keep = current_to_keep_bal + _to_keep
+        
+        # new_bal = current_give_away_bal - win_amount - ref_credit        
+        self.update_give_away(away)
+        self.update_to_keep(to_keep)
+
+        self.update_user_real_account(self.stake.user.id, all_amount)         
+       
+        if ref_credit > 0:
+           trans_type = "credit on WIN"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)
+        
+  ####################  
+
+    def spinnerx_account_update(self):
+        current_bal = float(self.current_update_give_away)
+        amount=self.stake.amount
+        if self.stake.bet_on_real_account:
+            pointer,winner_multiplier = self.winner_selector(current_bal,amount)
         else:
-            self.pointer = self.segment
-            self.run_update_winner_losser_on_trial_account()          
-            
+            pointer,winner_multiplier = self.winner_selector(50000000,amount)  
+                               
+        self.pointer=pointer+1 #index_start_at_0       
+        self.win_multiplier= winner_multiplier
+        Stake.objects.filter(id=self.stake_id).update(win_multiplier=winner_multiplier)    
+        win_amount=float(winner_multiplier)*float(amount)  
+
+              
+        if self.stake.bet_on_real_account:       
+            if winner_multiplier==0:
+                self.update_giveaway_tokeep_onlose()
+            else:
+                self.update_giveaway_tokeep_onwin()
+        else:
+            self.update_user_trial_account(self.stake.user.id, win_amount)  
+           
+           
+    def run_account_update(self):
+        if  self.stake.spinx:
+            self.spinnerx_account_update()        
+        else:
+            stake_obj = self.stake
+            if stake_obj.bet_on_real_account:
+                self.pointer = self.segment
+                self.run_update_winner_losser_on_real_account()
+            else:
+                self.pointer = self.segment
+                self.run_update_winner_losser_on_trial_account() 
+               
 
     def save(self, *args, **kwargs):
         if not self.pk and not self.closed:
             mstore, _ = CashStore.objects.get_or_create(id=1)
             self.cashstore = mstore
             try:
-                self.result=self.determine_result_algo
+                if self.stake.marketselection:
+                    self.result=self.determine_result_algo
                 self.run_account_update()
                 self.closed = True
                 super().save(*args, **kwargs)
             except Exception as e:
                 print(e)
                 return
+                
              

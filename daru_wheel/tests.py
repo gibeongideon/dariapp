@@ -152,6 +152,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_____________________________________________________
 
@@ -193,6 +194,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_____________________________________________
 
@@ -213,10 +215,12 @@ class StakeTestCase(TestCase):
         self.assertNotEqual(out_come1.result, None)
 
         if out_come1.result == 1:
-
             # self.assertEqual(OutCome.objects.count(), 7)
             self.assertEqual(current_account_bal_of(self.user), cur_bal + 1000)  # ISSUE
-            self.assertEqual(CashStore.objects.get(id=1).give_away, stor_bal - 1000)
+            self.assertEqual(CashStore.objects.get(id=1).give_away, stor_bal - 1000-50)#@50)
+            self.assertEqual(CashStore.objects.get(id=1).to_keep, to_keep +50)#@50
+            
+
         elif out_come1.result == 2:
             _to_keep = set_up.per_to_keep / 100 * 1000
             _away1 = 1000 - _to_keep
@@ -231,6 +235,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         #     #_______________________________________________________________
 
@@ -253,8 +258,9 @@ class StakeTestCase(TestCase):
             # self.assertEqual(OutCome.objects.count(), 7)
             self.assertEqual(current_account_bal_of(self.user), cur_bal + 100)  # ISSUE
             self.assertEqual(
-                CashStore.objects.get(id=1).give_away, stor_bal - 100
+                CashStore.objects.get(id=1).give_away, stor_bal - 100-5
             )  #!!!!!!!!!!!!
+            self.assertEqual(CashStore.objects.get(id=1).to_keep, to_keep +5)#@5
 
         elif out_come1.result == 2:
             _to_keep = set_up.per_to_keep / 100 * 100
@@ -268,6 +274,7 @@ class StakeTestCase(TestCase):
 
         cur_bal = current_account_bal_of(self.user)
         stor_bal = float(CashStore.objects.get(id=1).give_away)
+        to_keep = float(CashStore.objects.get(id=1).to_keep)
 
         # ________________
 
@@ -283,7 +290,8 @@ class StakeTestCase(TestCase):
         if out_come1.result == 1:
 
             self.assertEqual(current_account_bal_of(self.user), cur_bal + 1100)  # ISSUE
-            self.assertEqual(CashStore.objects.get(id=1).give_away, stor_bal - 1100)
+            self.assertEqual(CashStore.objects.get(id=1).give_away, stor_bal - 1100-55)#@@55
+            self.assertEqual(CashStore.objects.get(id=1).to_keep, to_keep +55)#@50
         elif out_come1.result == 2:
             _to_keep = set_up.per_to_keep / 100 * 1100
             _away1 = 1100 - _to_keep

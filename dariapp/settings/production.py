@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hphmxgc8p
 # ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['0.0.0.0', '.herokuapp.com', '127.0.0.1'] 
 ALLOWED_HOSTS = ['159.223.9.47', 'www.dariplay.ga', '127.0.0.1','dariplay.ga'] 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 try:

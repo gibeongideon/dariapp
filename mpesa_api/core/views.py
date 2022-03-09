@@ -116,7 +116,7 @@ class OnlineCheckoutCallback(APIView):
               },
               {
                 "Name":"TransactionDate",
-                "Value":20170727154800
+                "Value":20220727154800
               },
               {
                 "Name":"PhoneNumber",
@@ -132,6 +132,6 @@ class OnlineCheckoutCallback(APIView):
         
         """
         response = request.data
-        handle_online_checkout_callback_task(response)#TODO//response
+        handle_online_checkout_callback_task(response)
         
         return Response(dict(value="ok", key="status", detail="success"))

@@ -1,3 +1,4 @@
+from locale import currency
 from django.db import models
 from django.conf import settings
 from .exceptions import NegativeTokens  # , NotEnoughTokens # LockException,
@@ -21,6 +22,7 @@ class TimeStamp(models.Model):
 class AccountSetting(TimeStamp):
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
     auto_approve = models.BooleanField(default=False, blank=True, null=True)
+    auto_approve_cash_trasfer = models.BooleanField(default=False, blank=True, null=True)
     withraw_factor = models.FloatField(default=1, blank=True, null=True)
 
     class Meta:
@@ -136,6 +138,7 @@ class Currency(TimeStamp):
 
     class Meta:
         db_table = "d_currency"
+        verbose_name_plural = "Currencies"
 
     def __str__(self):
         """Simply present currency name and it's rate."""
@@ -219,7 +222,6 @@ class RefCredit(TimeStamp):
             pass
 
     def save(self, *args, **kwargs):
-
         """ Overrride internal model save method to update balance on staking  """
         # if not self.closed:
         try:
@@ -510,6 +512,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
         if self.cancelled and not self.withrawned:
             self.active = False
+            self.approved=False
         else:
             self.cancelled  =False
 
@@ -705,7 +708,9 @@ class CashTransfer(TimeStamp):
     # pin = models.IntegerField(max_digits=6, blank=True, null=True)
     amount = models.DecimalField(max_digits=20, decimal_places=2)
     approved = models.BooleanField(default=False, blank=True, null=True)
+    cancelled = models.BooleanField(default=False, blank=True, null=True)
     success = models.BooleanField(blank=True, null=True)
+    active = models.BooleanField(default=True, blank=True, null=True)
 
     def tranfer_cash_to_other_user(self):
         sender_bal = current_account_bal_of(self.sender)
@@ -722,28 +727,38 @@ class CashTransfer(TimeStamp):
             new_bal_to = recipient_bal + float(self.amount)
             update_account_bal_of(self.recipient, new_bal_to)
             self.success = True
+            self.active=False
         else:
             self.success = False
 
     def status(self):
-        if self.success is True:
+        if self.success:
             return "succided"
-        if self.approved is False:
+        if not self.approved and not self.cancelled:
             return "pending"
         else:
             return "failed"
 
     def save(self, *args, **kwargs):
-        try:
-            if self.approved and not self.success:
-                self.tranfer_cash_to_other_user()
+        if self.active:
+            if not self.cancelled:
+                set_up = account_setting()
+                if set_up.auto_approve_cash_trasfer:
+                    self.approved = True 
 
-        except Exception as tx:
-            print(f"TransferCash:{tx}")
-            pass
-            # return
-        super().save(*args, **kwargs)
-       
+                if self.approved and not self.success:
+                    self.tranfer_cash_to_other_user()
+
+                super().save(*args, **kwargs)    
+
+            else:
+                self.active=False 
+                self.success=False
+                super().save(*args, **kwargs)
+                
+        else:
+            return        
+
 class RegisterUrl(TimeStamp):
     success = models.BooleanField(default=False, blank=True, null=True)
 

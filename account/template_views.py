@@ -185,8 +185,9 @@ def cash_trans(request):
         if form.errors:
             pass
             # return redirect('/')#sError For TODO
-    trans_logz = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
-
+    trans_logz0 = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
+    trans_logz1 = CashTransfer.objects.filter(recipient=request.user).order_by("-id")[:10]
+    trans_logz=list(trans_logz0)+list(trans_logz1)
     return render(
         request, "account/cash_trans.html", {"form": form, "trans_logz": trans_logz}
     )

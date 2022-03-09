@@ -58,8 +58,10 @@ class StakeAdmin(admin.ModelAdmin):
         "user",
         "marketselection",
         "amount",
+        "win_multiplier",
         "expected_win_amount",
         "bet_on_real_account",
+        "spinx",
         "spinned",
         "stake_placed",
         "has_record",
@@ -72,7 +74,9 @@ class StakeAdmin(admin.ModelAdmin):
 
     list_display_links = ("user",)
     search_fields = ("user",)
-    list_filter = ("user", "marketselection","bet_on_real_account","spinned", "created_at")
+    list_filter = ("user", "marketselection","spinx","bet_on_real_account","spinned", "created_at")
+    readonly_fields = ('spinx',)
+
 
 
 admin.site.register(Stake, StakeAdmin)
@@ -86,7 +90,8 @@ class OutComeAdmin(admin.ModelAdmin):
         "give_away",
         "selection",
         "result",
-        "pointer",        
+        "pointer",
+        "win_multiplier",        
         "real_bet",
         "created_at",
         "updated_at",
