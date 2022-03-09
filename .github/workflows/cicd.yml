@@ -41,6 +41,7 @@ jobs:
         
         python manage.py collectstatic
         # python manage.py makemigrations users
+        # python manage.py makemigrations home
         # python manage.py makemigrations account
         # python manage.py makemigrations daru_wheel
         # python manage.py makemigrations core
@@ -105,6 +106,7 @@ jobs:
         mkdir -p ~/dariapp/migrations/account/migrations
         mkdir -p ~/dariapp/migrations/daru_wheel/migrations
         mkdir -p ~/dariapp/migrations/users/migrations
+        mkdir -p ~/dariapp/migrations/home/migrations
         mkdir -p ~/dariapp/migrations/mpesa_api/core/migrations
         mkdir -p ~/dariapp/migrations/paypal/standard/ipn/migrations
         mkdir -p ~/dariapp/migrations/paypal/pro/migrations
@@ -118,6 +120,7 @@ jobs:
         rsync -a --delete ~/dariapp/migrations/account/migrations ~/actions-runner/deploy/dariapp/dariapp/account
         rsync -a --delete ~/dariapp/migrations/daru_wheel/migrations ~/actions-runner/deploy/dariapp/dariapp/daru_wheel
         rsync -a --delete ~/dariapp/migrations/users/migrations ~/actions-runner/deploy/dariapp/dariapp/users
+        rsync -a --delete ~/dariapp/migrations/home/migrations ~/actions-runner/deploy/dariapp/dariapp/home
         rsync -a --delete ~/dariapp/migrations/mpesa_api/core/migrations ~/actions-runner/deploy/dariapp/dariapp/mpesa_api/core
         rsync -a --delete ~/dariapp/migrations/paypal/standard/ipn/migrations ~/actions-runner/deploy/dariapp/dariapp/paypal/standard/ipn
         rsync -a --delete ~/dariapp/migrations/paypal/pro/migrations ~/actions-runner/deploy/dariapp/dariapp/paypal/pro
@@ -133,6 +136,7 @@ jobs:
         cd ~/actions-runner/deploy/dariapp/dariapp 
         python manage.py makemigrations
         python manage.py makemigrations users
+        python manage.py makemigrations home
         python manage.py makemigrations account
         python manage.py makemigrations daru_wheel
         python manage.py makemigrations core
@@ -180,6 +184,17 @@ jobs:
         rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/users/migrations ~/dariapp/migrations/users
         cd ~/dariapp/migrations/users
         tree    
+    ## home
+    - name: MIGRATE-home
+      run: |
+        cd ~/actions-runner/deploy/dariapp/dariapp        
+        python manage.py migrate home
+
+    - name: Rsync Workin Directory to Backup Migrations-home
+      run: |
+        rsync -a --delete ~/actions-runner/deploy/dariapp/dariapp/home/migrations ~/dariapp/migrations/home
+        cd ~/dariapp/migrations/home
+        tree  
 
     ## core
     - name: MIGRATE-core
