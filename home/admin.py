@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib import admin
-from .models import Contact
+from .models import ContactUs
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = (
@@ -12,4 +12,4 @@ class ContactAdmin(admin.ModelAdmin):
     list_display_links = ("id",)
 
 
-admin.site.register(Contact, ContactAdmin)
+admin.site.register(ContactUs, ContactAdmin)

@@ -212,7 +212,7 @@ class Stake(TimeStamp):
             super().save(*args, **kwargs)  # create a db record
 
 
-class CashStore(models.Model):
+class CashStore(TimeStamp):
     give_away = models.DecimalField(
         ("give_away"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
@@ -262,6 +262,8 @@ class OutCome(TimeStamp):
 
     @staticmethod
     def update_give_away(new_bal):
+        # idd=CashStore.objects.last().id
+        # CashStore.objects.filter(id=idd).update(give_away=new_bal)
         CashStore.objects.filter(id=1).update(give_away=new_bal)
 
     @property
@@ -270,6 +272,8 @@ class OutCome(TimeStamp):
 
     @staticmethod
     def update_to_keep(new_bal):
+        idd=CashStore.objects.last().id
+        CashStore.objects.filter(id=idd).update(to_keep=new_bal)
         CashStore.objects.filter(id=1).update(to_keep=new_bal)
 
     def user_cum_depo(self):
@@ -283,7 +287,7 @@ class OutCome(TimeStamp):
     
     @staticmethod
     def winner_selector(give_away,bet_amount):     
-        wheel_map=settings.WHEEL_MAP#WHEEL_MAP=[20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
+        wheel_map=settings.WHEEL_MAP  #WHEEL_MAP=[20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
         chosen=[]
         #print(len(wheel_map))
         for n in range(len(wheel_map)):
@@ -572,8 +576,7 @@ class OutCome(TimeStamp):
                 self.update_giveaway_tokeep_onwin()
         else:
             self.update_user_trial_account(self.stake.user.id, win_amount)  
-           
-           
+                      
     def run_account_update(self):
         if  self.stake.spinx:
             self.spinnerx_account_update()        

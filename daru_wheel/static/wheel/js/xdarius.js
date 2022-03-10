@@ -48,7 +48,7 @@ let theWheel = new Winwheel({
     [                               // font size and test colour overridden on backrupt segments.
 
         {'fillStyle' : '#fff200', 'text' : '20'},
-        {'fillStyle' : '#ee1c24', 'text' : '10'},
+        {'fillStyle' : '#ee1c24', 'text' : '6'},
         {'fillStyle' : '#bfea88', 'text' : '5'},
         {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#abcde0', 'text' : '100'},
@@ -73,7 +73,7 @@ let theWheel = new Winwheel({
 
         {'fillStyle' : '#fff200', 'text' : '15', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},                  
-        {'fillStyle' : '#fff200', 'text' : '3'},
+        {'fillStyle' : '#fff200', 'text' : '4'},
         {'fillStyle' : '#ee1c24', 'text' : '2'},
         {'fillStyle' : '#fff200', 'text' : '1'},
 
