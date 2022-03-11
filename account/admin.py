@@ -80,6 +80,7 @@ admin.site.register(Currency, CurrencyAdmin)
 
 class RefCreditAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "user_id",
         "user",
         "amount",
@@ -100,7 +101,7 @@ admin.site.register(RefCredit, RefCreditAdmin)
 
 
 class RefCreditTransferAdmin(admin.ModelAdmin):
-    list_display = ("user_id", "user", "amount", "succided", "created_at", "updated_at")
+    list_display = ("id","user_id", "user", "amount", "succided", "created_at", "updated_at")
     list_display_links = ("user_id",)
     search_fields = ("user_id",)
     # list_editable = ('approved',)
@@ -168,7 +169,7 @@ class CashWithrawalAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id","amount",)
     search_fields = ("user",)
-    list_filter = ("user", "approved", "cancelled","confirmed","withr_type","currency", "active")
+    list_filter = ("user", "approved", "cancelled","confirmed","withr_type","currency", "active","created_at","updated_at",)
     readonly_fields = (
         "withrawned",
         "has_record",
