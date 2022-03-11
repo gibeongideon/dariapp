@@ -262,7 +262,7 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 #Paypal
 
 
-
+PAYPAL_BUY_BUTTON_IMAGE="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
 PAYPAL_RECEIVER_EMAIL ="elihu.kipyegon@gmail.com" #config(
     # "PAYPAL#_RECEIVER_EMAIL",
     # default="darius.option@gmail.com")
