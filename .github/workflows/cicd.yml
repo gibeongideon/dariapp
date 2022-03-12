@@ -260,6 +260,4 @@ jobs:
     # - name: Reload
     #   run: |
     #     sudo restart
-    - name: Nginx restart
-      run: |
-        sudo service nginx restart
+
