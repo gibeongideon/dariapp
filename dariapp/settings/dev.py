@@ -7,8 +7,7 @@ SECRET_KEY = 'dariappdjango-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hp
 
 # SECURITY WARNING: define the correct hosts in production!
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['159.223.9.47', 'www.dariplay.ga', '127.0.0.1'] 
-
+ALLOWED_HOSTS = ['159.223.9.47', 'www.dariplay.ga', '127.0.0.1','localhost'] 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 

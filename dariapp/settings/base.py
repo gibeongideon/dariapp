@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 SECRET_ADMIN_URL = config("SECRET_ADMIN_URL", default="dadmin")
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default="dadmin")
+SECRET_KEY = config("SECRET_KEY", default="dadsboy")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
@@ -263,11 +263,11 @@ TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 
 
 PAYPAL_BUY_BUTTON_IMAGE="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
-PAYPAL_RECEIVER_EMAIL ="elihu.kipyegon@gmail.com" #config(
-    # "PAYPAL#_RECEIVER_EMAIL",
-    # default="darius.option@gmail.com")
+PAYPAL_RECEIVER_EMAIL =config(
+     "PAYPAL_RECEIVER_EMAIL",
+     default="darius.option@gmail.com")
 
-PAYPAL_TEST = False#config("PAYPAL_TEST", default=False)
+PAYPAL_TEST = config("PAYPAL_TEST", default=True, cast=bool)
 
 
 ###USA/CANADA&UK

@@ -105,6 +105,12 @@ class Stake(TimeStamp):
     def __str__(self):
         return f"stake:{self.amount} by:{self.user}"
 
+    @property
+    def  min_stake(self):
+        set_up=wheel_setting()
+
+        return set_up.min_bet
+
     def  bet_type(self):
         if self.bet_on_real_account:
             return "REAL"

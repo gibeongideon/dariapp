@@ -61,7 +61,7 @@ let theWheel = new Winwheel({
 
         {'fillStyle' : '#fff200', 'text' : ''},
         {'fillStyle' : '#ee1c24', 'text' : ''},
-        {'fillStyle' : '#ffffff', 'text' : ' ×9',},// WHITE
+        {'fillStyle' : '#ffffff', 'text' : ' ×10',},// WHITE
         {'fillStyle' : '#ee1c24', 'text' : ''},
         {'fillStyle' : '#fff200', 'text' : ''},
 
