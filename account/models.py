@@ -426,12 +426,12 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     @classmethod
     def last_withrawals(cls,user):
-        status=all([obj.approved for obj in cls.objects.filter(user=user)])                 
+        status=any([obj.active for obj in cls.objects.filter(user=user)])                 
  
         return status 
 
     @property
-    def previus_withrawals_is_complete(self):
+    def previus_withrawals_is_incomplete(self):
         return self.last_withrawals(self.user)
 
      
@@ -496,7 +496,8 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on withraw """ 
-        if not self.previus_withrawals_is_complete:
+        print(self.previus_withrawals_is_incomplete)
+        if not self.pk and  self.previus_withrawals_is_incomplete:
             return
        
         if not self.active:
