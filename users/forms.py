@@ -8,17 +8,7 @@ User = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
-    """Prepares help texts, class and placeholder attributes.
 
-    Define methods to increase and decrese token_count amount,
-    betting and check if bet is possible.
-    """
-
-    # error_messages = {
-    #     'invalid_code': _(
-    #         "invalid code.The code doent exist"
-    #     ),
-    # }
 
     username = forms.CharField(
         max_length=50,
@@ -95,14 +85,10 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
-        # error_messages = {
-        #     'referer_code': {'required': "Daru code required.Dont have ? Enter ADMIN"}
-        #     }
 
-    # def cleaned_daru_code(self):
-    #     user =User.objects.get(username=self.username)
-    #     if self.daru_code not in User.codes():
-    #         raise ValidationError(
-    #             self.error_messages['invalid_code'],
-    #             code='invalid_code',
-    #         )
+
+
+# class ProfileForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ("phone_number", "email")        

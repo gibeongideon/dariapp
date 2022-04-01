@@ -77,3 +77,21 @@ def register(request):
     else:
         form = SignUpForm()
     return render(request, "registration/signup.html", {"form": form})
+
+
+
+def profile(request):
+    if request.method == "POST":
+        user=User.objects.get(username=request.user.username)
+        user.phone_number=request.POST.get("phone_number")
+        user.email=request.POST.get("email")
+        user.update_count=user.update_count-1
+        if user.update_count>0:
+            user.save()
+
+        return redirect("/")
+  
+     
+    else:
+        render(request, "registration/profile.html")
+    return render(request, "registration/profile.html")

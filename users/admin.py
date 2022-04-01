@@ -18,6 +18,7 @@ class DuserAdmin(UserAdmin):
         "active",
         "referees_no",
         "referal_link",
+        "update_count"
     )
 
     list_display_links = ("id","username")

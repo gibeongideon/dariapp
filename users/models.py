@@ -18,6 +18,7 @@ class User(AbstractUser):
     )
     phone_number = models.CharField(max_length=150, blank=True, null=True)
     active = models.BooleanField(default=True, blank=True, null=True)
+    update_count= models.IntegerField(default=5, blank=True, null=True)
 
     def __str__(self):
         return self.username
