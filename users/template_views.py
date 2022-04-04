@@ -11,10 +11,18 @@ from .models import User,Password
 from .forms import SignUpForm
 
 
+def format_mobile_no(mobile):
+    mobile = str(mobile)
+    if (mobile.startswith("07") or mobile.startswith("01")) and len(mobile) == 10:
+        return "254" + mobile[1:]
+    if mobile.startswith("254") and len(mobile) == 12:
+        return mobile
+    if (mobile.startswith("7") or mobile.startswith("1")) and len(mobile) == 9:
+        return "254" + mobile
+    return mobile
 
 
-
-@login_required(login_url="/users/login")
+@login_required(login_url="/user/login")
 def mine_users(request):
     mine_users = User.objects.filter(referer_code=request.user.code)
 
@@ -79,19 +87,24 @@ def register(request):
     return render(request, "registration/signup.html", {"form": form})
 
 
-
+@login_required(login_url="/user/login")
 def profile(request):
     if request.method == "POST":
         user=User.objects.get(username=request.user.username)
-        user.phone_number=request.POST.get("phone_number")
+        user.phone_number=format_mobile_no(request.POST.get("phone_number"))
         user.email=request.POST.get("email")
         user.update_count=user.update_count-1
-        if user.update_count>0:
+        if user.update_count>=0:
             user.save()
 
-        return redirect("/")
+        return redirect("/user/profile")
   
-     
-    else:
-        render(request, "registration/profile.html")
-    return render(request, "registration/profile.html")
+    mssg=f"You have {request.user.update_count} slots remaining to update your profile"
+    if request.user.update_count==0:
+        mssg=f"You can no longer update your profile.Your current details is final"
+    if request.user.update_count==1:
+        mssg="You got 1 final shot to make your profile right.Do it carefully"
+    context={"mssg":mssg }
+    return render(request, "registration/profile.html",context)
+    
+    

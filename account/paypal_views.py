@@ -8,12 +8,7 @@ import random
 import string
 from .paypal_client import PayPalClient,CreatePayouts
 from paypalpayoutssdk.payouts import PayoutsPostRequest
-
-
 from django.contrib.auth.decorators import login_required
-
-
-
 
 
 @login_required(login_url="/user/login")

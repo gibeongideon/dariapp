@@ -35,7 +35,7 @@ def account_setting():
 class Account(TimeStamp):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name="user_accounts",
         blank=True,
         null=True,
@@ -426,8 +426,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     @classmethod
     def last_withrawals(cls,user):
-        status=any([obj.active for obj in cls.objects.filter(user=user)])                 
- 
+        status=any([obj.active for obj in cls.objects.filter(user=user)])           
         return status 
 
     @property
@@ -496,7 +495,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
     def save(self, *args, **kwargs):
         """ Overrride internal model save method to update balance on withraw """ 
-        print(self.previus_withrawals_is_incomplete)
+    
         if not self.pk and  self.previus_withrawals_is_incomplete:
             return
        
@@ -726,11 +725,11 @@ class CashTransfer(TimeStamp):
 
     def status(self):
         if self.success:
-            return "succided"
+            return "success"
         if not self.approved and not self.cancelled:
             return "pending"
         else:
-            return "failed"
+            return "cancelled"
 
     def save(self, *args, **kwargs):
         if self.active:

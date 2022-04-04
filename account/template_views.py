@@ -192,6 +192,18 @@ def cash_trans(request):
         request, "account/cash_trans.html", {"form": form, "trans_logz": trans_logz}
     )
 
+@login_required(login_url="/user/login")
+def stop_cash_trans(request):
+
+    if request.method == "POST":
+        pk= request.POST.get("pk")
+        if not CashTransfer.objects.get(id=pk).cancelled==True:
+            CashTransfer.objects.filter(pk=pk).update(cancelled=True,active=False,success=False)
+            return redirect("/account/cash_trans/")
+        return redirect("/account/cash_trans/") 
+            
+
+
 
 @login_required(login_url="/user/login")
 def process_payment(request):

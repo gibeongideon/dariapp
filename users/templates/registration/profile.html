@@ -46,6 +46,7 @@
 						</div> 
 
                         <h4 class="title">Update Your Profile Details</h4>
+                        <h5 class="btn btn-fill btn-warning">{{mssg}}</h5>
  
 							<form role="form" method="POST" action="{% url 'users:profile' %}">
 							    {% csrf_token %}
@@ -71,8 +72,7 @@
 									<button type="submit" class="mybtn1">Update</button>
 								</div>
 							</form>
-						{% comment %} </div> {% endcomment %}
-
+				
 		<!-- SignIn Area End -->
 
 

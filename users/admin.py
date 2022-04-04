@@ -22,17 +22,18 @@ class DuserAdmin(UserAdmin):
     )
 
     list_display_links = ("id","username")
-    search_fields = ("phone_number","email","username","referer_code","email")
+    search_fields = ("phone_number","email","username","referer_code","email","update_count")
     ordering = ("id",)
 
-    list_filter = ("username","phone_number","referer_code","last_login","active",)
+    list_filter = ("username","phone_number","referer_code","last_login","active","update_count")
 
     list_editable = (
         "phone_number",
         "code",
         "referer_code",
         "email",
-        "active"
+        "active",
+        "update_count",
     )
     readonly_fields = ("password",)
 
