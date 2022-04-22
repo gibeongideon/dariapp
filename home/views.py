@@ -14,3 +14,5 @@ def contact_us(request):
 
 
     return redirect('/')
+
+    

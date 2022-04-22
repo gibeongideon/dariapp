@@ -19,6 +19,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "auto_approve",
         "auto_approve_cash_trasfer",
         "withraw_factor",
+        "created_at"
     )
     list_display_links = ("id",)
     search_fields = ("id",)
@@ -27,6 +28,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "auto_approve",
         "auto_approve_cash_trasfer",
         "withraw_factor",
+        "created_at"
     )
 
 
@@ -54,7 +56,16 @@ class AccountAdmin(admin.ModelAdmin):
     )
     list_display_links = ("user_id","user")
     search_fields = ("user_id","user")
-    list_editable = ("active",)
+    list_editable = (
+        "balance",
+        "actual_balance",
+        "withraw_power",
+        "refer_balance",
+        "trial_balance",
+        "cum_deposit",
+        "cum_withraw",
+        "created_at",
+    )
     list_filter = ("user", "created_at", "updated_at")
 
 

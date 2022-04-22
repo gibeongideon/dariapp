@@ -1,13 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from users.models import User
 from .forms import  IstakeForm,XstakeForm
 from .models import Stake
-
-AnonymousUser=AnonymousUser()
+from home.models import UserStat
+from  datetime import date
 
 
 # @login_required(login_url="/user/login")
@@ -22,8 +21,7 @@ def spin(request,*args,**kwargs):
     except User.DoesNotExist:
         pass
     
-    if request.user!=AnonymousUser: 
-        
+    if not request.user.is_anonymous:         
         trans_logz = Stake.objects.filter(
             user=request.user,
             spinx=False
@@ -40,12 +38,35 @@ def spin(request,*args,**kwargs):
             stake.save()
     else:
         stake_form = IstakeForm()
-        
-    if request.user!=AnonymousUser:
-        spins = len(Stake.unspinned(request.user.id))
-    else:
-        spins=0    
+    
+    print(date.today())
+    print("NOWWW")    
+    
+    try:
+       UserStat.objects.get(id=1)
+    except:
+       UserStat.objects.create(id=1)
+    #print(UserStat.objects.last())
+    #user_sta=UserStat.objects.last()
+    #print(user_sta.homepage_hits_login)
+    #if date.today() !=UserStat.objects.last():
+     #  pass
+       
+    userstat=UserStat.objects.last()
 
+    if not request.user.is_anonymous:
+        spins = len(Stake.unspinned(request.user.id))                         
+        
+        homepage_hits_login=userstat.homepage_hits_login+1
+        userstat.homepage_hits_login=homepage_hits_login
+        userstat.save()
+    else:
+        spins=0  
+        
+        homepage_hits_anonymous=userstat.homepage_hits_anonymous+1
+        userstat.homepage_hits_anonymous=homepage_hits_anonymous
+        userstat.save()
+    
     context = {
         "user": request.user,
         "stake_form": stake_form,
@@ -66,7 +87,7 @@ def spinx(request,*args,**kwargs):
     except User.DoesNotExist:
         pass
     
-    if request.user!=AnonymousUser:    
+    if not request.user.is_anonymous:    
         trans_logz = Stake.objects.filter(
             user=request.user,
             spinx=True
@@ -84,12 +105,26 @@ def spinx(request,*args,**kwargs):
             #return redirect('/')
     else:
         stake_form = XstakeForm()
+    try:
+       UserStat.objects.get(id=1)
+    except:
+       UserStat.objects.create(id=1)
+       
+    userstat=UserStat.objects.last()
+    if not request.user.is_anonymous:
+        spins = len(Stake.unspinnedx(request.user.id))                         
         
-    if request.user!=AnonymousUser:
-        spins = len(Stake.unspinnedx(request.user.id))
-    else:
-        spins=0    
+        spinx_hits=userstat.spinx_hits+1
+        userstat.spinx_hits=spinx_hits
+        userstat.save()
 
+    else:
+        spins=0  
+        
+        spinx_hits_anonymous=userstat.spinx_hits_anonymous+1
+        userstat.spinx_hits_anonymous=spinx_hits_anonymous
+        userstat.save()
+    
     context = {
         "user": request.user,
         "stake_form": stake_form,

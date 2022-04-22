@@ -36,8 +36,8 @@ def mpesa_deposit(request):
             Mpesa.stk_push(
                 phone_number,
                 amount,
-                account_reference=f"Pay Darius Option :{amount} for account {phone_number}",
-                is_paybill=True,
+                account_reference=f"Pay Darius Option KSH {amount} for account of {request.user} using mobile no {phone_number}",
+                is_paybill=False,
             )
         except Exception  as e:
             logger.exception(e)
@@ -194,10 +194,10 @@ def cash_trans(request):
 
 @login_required(login_url="/user/login")
 def stop_cash_trans(request):
-
     if request.method == "POST":
         pk= request.POST.get("pk")
-        if not CashTransfer.objects.get(id=pk).cancelled==True:
+        ct=CashTransfer.objects.get(id=pk)
+        if not ct.cancelled==True and not ct.success==True:
             CashTransfer.objects.filter(pk=pk).update(cancelled=True,active=False,success=False)
             return redirect("/account/cash_trans/")
         return redirect("/account/cash_trans/") 
@@ -237,7 +237,7 @@ def process_payment(request):
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': f'{amount}',
-        'item_name': 'DariPlay-Deposit',
+        'item_name': 'Dariplay-Deposit',
         'invoice': f'{depo.id}',
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),

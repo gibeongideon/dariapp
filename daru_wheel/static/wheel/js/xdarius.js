@@ -1,4 +1,4 @@
-7    // Correctly decide between ws:// and wss://
+    // Correctly decide between ws:// and wss://
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     var ws_path = ws_scheme + '://' + window.location.host + "/ispinx_wheel/";
     console.log("Connecting to " + ws_path);
@@ -37,7 +37,7 @@
 
 // Create new wheel object specifying the parameters at creation time.
 let theWheel = new Winwheel({
-    'outerRadius'     : 212,        // S et outer radius so wheel fits inside the background.
+    'outerRadius'     : 212,        // Set outer radius so wheel fits inside the background.
     'innerRadius'     : 45,   // Make wheel hollow so segments don't go all way to center.
     'responsive'      : false, 
     'textFontSize'    : 24,         // Set default font size for the segments.
@@ -47,40 +47,40 @@ let theWheel = new Winwheel({
     'segments'        :             // Define segments including colour and text.
     [                               // font size and test colour overridden on backrupt segments.
 
-        {'fillStyle' : '#fff200', 'text' : '20'},
-        {'fillStyle' : '#ee1c24', 'text' : '6'},
-        {'fillStyle' : '#bfea88', 'text' : '5'},
-        {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#abcde0', 'text' : '100'},
+        {'fillStyle' : '#fff200', 'text' : '20','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
+        {'fillStyle' : '#ee1c24', 'text' : '6', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
+        {'fillStyle' : '#bfea88', 'text' : '5', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#ffffff', 'text' : ''},
+        {'fillStyle' : '#abcde0', 'text' : '100', 'textFontSize' : 28, 'textFillStyle' : '#db9863'},
 
-        {'fillStyle' : '#fedcba', 'text' : '50'},
-        {'fillStyle' : '#fff200', 'text' : '20'},
-        {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#fff200', 'text' : '3'},
-        {'fillStyle' : '#ee1c24', 'text' : '2'},
+        {'fillStyle' : '#fedcba', 'text' : '50', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#fff200', 'text' : '20','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
+        {'fillStyle' : '#ffffff', 'text' : ''},
+        {'fillStyle' : '#fff200', 'text' : '3', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#ee1c24', 'text' : '2', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
 
-        {'fillStyle' : '#fff200', 'text' : '1'},
-        {'fillStyle' : '#abffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#bbee44', 'text' : '500',},// WHITE
-        {'fillStyle' : '#abffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#fff200', 'text' : '20'},
+        {'fillStyle' : '#fff200', 'text' : '1','textFontSize' : 28, 'textFillStyle' : '#4bb890'},
+        {'fillStyle' : '#abffff', 'text' : ''},
+        {'fillStyle' : '#bbee44', 'text' : '500', 'textFontSize' : 28, 'textFillStyle' : '#4bb890'},
+        {'fillStyle' : '#abffff', 'text' :  ''},
+        {'fillStyle' : '#fff200', 'text' : '20', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
 
-        {'fillStyle' : '#ee1c24', 'text' : '10'},
-        {'fillStyle' : '#bfea88', 'text' : '5'},
-        {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#cc9933', 'text' : '200'},
+        {'fillStyle' : '#ee1c24', 'text' : '10', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#bfea88', 'text' : '5', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
+        {'fillStyle' : '#ffffff', 'text' : ''},
+        {'fillStyle' : '#cc9933', 'text' : '200', 'textFontSize' : 28, 'textFillStyle' : '#abede0'},
         {'fillStyle' : '#ee1c24', 'text' : '25'},
 
-        {'fillStyle' : '#fff200', 'text' : '15', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#ffffff', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},                  
-        {'fillStyle' : '#fff200', 'text' : '4'},
-        {'fillStyle' : '#ee1c24', 'text' : '2'},
-        {'fillStyle' : '#fff200', 'text' : '1'},
+        {'fillStyle' : '#fff200', 'text' : '30', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#ffffff', 'text' : ''},                  
+        {'fillStyle' : '#fff200', 'text' : '4', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#ee1c24', 'text' : '2', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
+        {'fillStyle' : '#fff200', 'text' : '1', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
 
-        {'fillStyle' : '#abff90', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#adee00', 'text' : '1000', 'textFontSize' : 24, 'textFillStyle' : '#4cb890'},
+        {'fillStyle' : '#abff90', 'text' : ''},
+        {'fillStyle' : '#adee00', 'text' : '1000', 'textFontSize' : 28, 'textFillStyle' : '#ee1c24'},
         
-        {'fillStyle' : '#abff90', 'text' : '', 'textFontSize' : 24, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#abff90', 'text' : ''},
     ],
     'animation' :           // Specify the animation to use.
     {

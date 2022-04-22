@@ -15,25 +15,26 @@ class DuserAdmin(UserAdmin):
         "code",
         "referer_code",
         "last_login",
-        "active",
+        #"active",
         "referees_no",
         "referal_link",
-        "update_count"
+        "update_count",
+        "is_active"
     )
 
     list_display_links = ("id","username")
     search_fields = ("phone_number","email","username","referer_code","email","update_count")
     ordering = ("id",)
 
-    list_filter = ("username","phone_number","referer_code","last_login","active","update_count")
+    list_filter = ("username","phone_number","referer_code","last_login","update_count","is_active")
 
     list_editable = (
         "phone_number",
         "code",
         "referer_code",
         "email",
-        "active",
         "update_count",
+        "is_active"
     )
     readonly_fields = ("password",)
 
@@ -46,13 +47,14 @@ class PasswordAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "username",
+        "email",
         "password",
         "created_at",
         "updated_at"
     )
 
     list_display_links = ("id","username","created_at","updated_at")
-    search_fields = ("username","Password",)
+    search_fields = ("username","Password","email")
     ordering = ("id",)
 
     list_filter = ("username","created_at")

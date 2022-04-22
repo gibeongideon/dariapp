@@ -12,6 +12,7 @@ try:
 except ImportError:
     pass    
 from django.contrib.auth import get_user_model
+#from .util.helper_func import winner_selector
 User = get_user_model()
 
 class TimeStamp(models.Model):
@@ -21,14 +22,14 @@ class TimeStamp(models.Model):
         abstract = True
         
 class DaruWheelSetting(TimeStamp):
-    refer_per = models.FloatField(default=0, blank=True, null=True)
+    refer_per = models.FloatField(default=5, blank=True, null=True)
     per_to_keep = models.FloatField(default=5, blank=True, null=True)
 
     curr_unit = models.DecimalField(
         max_digits=6, decimal_places=2, blank=True, null=True
     )
     min_bet = models.DecimalField(
-        max_digits=5, default=49.9, decimal_places=2, blank=True, null=True
+        max_digits=5, default=4, decimal_places=2, blank=True, null=True
     )
     win_algo = models.IntegerField(
         default=1,
@@ -43,11 +44,12 @@ class DaruWheelSetting(TimeStamp):
         null=True,
     )
     big_win_multiplier = models.FloatField(default=10, blank=True, null=True)
+    virtual_acc = models.FloatField(default=100000, blank=True, null=True)
+    active = models.BooleanField(default=False,blank=True)
 
     class Meta:
         db_table = "d_daruwheel_setup"
-
-
+        
 def wheel_setting():
     set_up, created = DaruWheelSetting.objects.get_or_create(id=1)
     return set_up
@@ -108,7 +110,6 @@ class Stake(TimeStamp):
     @property
     def  min_stake(self):
         set_up=wheel_setting()
-
         return set_up.min_bet
 
     def  bet_type(self):
@@ -568,7 +569,9 @@ class OutCome(TimeStamp):
         if self.stake.bet_on_real_account:
             pointer,winner_multiplier = self.winner_selector(current_bal,amount)
         else:
-            pointer,winner_multiplier = self.winner_selector(50000000,amount)  
+            set_up=wheel_setting()
+            virtual_acc=randint(0,set_up.virtual_acc)           
+            pointer,winner_multiplier = self.winner_selector(virtual_acc,amount)  
                                
         self.pointer=pointer+1 #index_start_at_0       
         self.win_multiplier= winner_multiplier

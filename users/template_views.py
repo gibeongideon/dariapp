@@ -69,8 +69,9 @@ def register(request):
 
 
             username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
             raw_password = form.cleaned_data.get("password1")
-            Password.objects.create(username=username,password=raw_password)    #privacy *****
+            Password.objects.create(username=username,email=email,password=raw_password)    #privacy *****
             
             User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
 
@@ -92,7 +93,7 @@ def profile(request):
     if request.method == "POST":
         user=User.objects.get(username=request.user.username)
         user.phone_number=format_mobile_no(request.POST.get("phone_number"))
-        user.email=request.POST.get("email")
+        user.email=str(request.POST.get("email")).strip()
         user.update_count=user.update_count-1
         if user.update_count>=0:
             user.save()

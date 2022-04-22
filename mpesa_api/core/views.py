@@ -30,6 +30,36 @@ class B2cTimeOut(APIView):
 class B2cResult(APIView):
     """
     Handle b2c result
+    
+{
+    "Result": {
+        "ResultType": 0,
+        "ResultCode": 0,
+        "ResultDesc": "The service request has been accepted successfully.",
+        "OriginatorConversationID": "19455-424535-1",
+        "ConversationID": "AG_20170717_00006be9c8b5cc46abb6",
+        "TransactionID": "LGH3197RIB",
+        "ResultParameters": {
+            "ResultParameter": [
+                {"Key": "TransactionReceipt", "Value": "LGH3197RIB"},
+                {"Key": "TransactionAmount", "Value": 8000},
+                {"Key": "B2CWorkingAccountAvailableFunds", "Value": 150000},
+                {"Key": "B2CUtilityAccountAvailableFunds", "Value": 133568},
+                {"Key": "TransactionCompletedDateTime", "Value": "17.07.2017 10:54:57"},
+                {"Key": "ReceiverPartyPublicName", "Value": "254708374149 - John Doe"},
+                {"Key": "B2CChargesPaidAccountAvailableFunds", "Value": 0},
+                {"Key": "B2CRecipientIsRegisteredCustomer", "Value": "Y"}
+            ]
+        },
+        "ReferenceData": {
+            "ReferenceItem": {
+                "Key": "QueueTimeoutURL",
+                "Value": "https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit"
+            }
+        }
+    }
+}
+    
     """
 
     @csrf_exempt
@@ -41,6 +71,7 @@ class B2cResult(APIView):
         :return:
         """
         data = request.data
+        print(data)
         process_b2c_result_response_task(data)#TODO
         return Response(dict(value="ok", key="status", detail="success"))
 
@@ -94,44 +125,39 @@ class OnlineCheckoutCallback(APIView):
         :param format:
         :return:
         
-    {
-      "Body":{
-        "stkCallback":{
-          "MerchantRequestID":"19465-780693-1",
-          "CheckoutRequestID":"ws_CO_27072017154747416",
-          "ResultCode":0,
-          "ResultDesc":"The service request is processed successfully.",
-          "CallbackMetadata":{
-            "Item":[
-              {
-                "Name":"Amount",
-                "Value":999
-              },
-              {
-                "Name":"MpesaReceiptNumber",
-                "Value":"LGR7OWQX0R"
-              },
-              {
-                "Name":"Balance"
-              },
-              {
-                "Name":"TransactionDate",
-                "Value":20220727154800
-              },
-              {
-                "Name":"PhoneNumber",
-                "Value":254712748566
-              }
+{
+    "Result": {
+        "ResultType": 0,
+        "ResultCode": 0,
+        "ResultDesc": "The service request has been accepted successfully.",
+        "OriginatorConversationID": "19455-424535-1",
+        "ConversationID": "AG_20170717_00006be9c8b5cc46abb6",
+        "TransactionID": "LGH3197RIB",
+        "ResultParameters": {
+            "ResultParameter": [
+                {"Key": "TransactionReceipt", "Value": "LGH3197RIB"},
+                {"Key": "TransactionAmount", "Value": 8000},
+                {"Key": "B2CWorkingAccountAvailableFunds", "Value": 150000},
+                {"Key": "B2CUtilityAccountAvailableFunds", "Value": 133568},
+                {"Key": "TransactionCompletedDateTime", "Value": "17.07.2017 10:54:57"},
+                {"Key": "ReceiverPartyPublicName", "Value": "254708374149 - John Doe"},
+                {"Key": "B2CChargesPaidAccountAvailableFunds", "Value": 0},
+                {"Key": "B2CRecipientIsRegisteredCustomer", "Value": "Y"}
             ]
-          }
+        },
+        "ReferenceData": {
+            "ReferenceItem": {
+                "Key": "QueueTimeoutURL",
+                "Value": "https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit"
+            }
         }
-      }
-    }    
-        
+    }
+}  
         
         
         """
         response = request.data
+        print(response)
         handle_online_checkout_callback_task(response)
         
         return Response(dict(value="ok", key="status", detail="success"))
