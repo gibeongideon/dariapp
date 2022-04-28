@@ -1,3 +1,2 @@
-
-web: gunicorn dariapp.wsgi
+web: gunicorn dariapp.wsgi --log-file -
 
