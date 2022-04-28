@@ -7,12 +7,13 @@ from django.db.models import Sum
 from mpesa_api.core.mpesa import Mpesa
 import math
 from .paypal_client import CreatePayouts
+from datetime import datetime 
 import logging
 
 logger = logging.getLogger(__name__)
 
 class TimeStamp(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    created_at = models.DateTimeField(default=datetime.now(), blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     # is_active = models.BooleanField(default=True)
 
@@ -425,9 +426,8 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
         return cls.objects.all()
 
     @classmethod
-    def last_withrawals(cls,user):
-        status=any([obj.active for obj in cls.objects.filter(user=user)])           
-        return status 
+    def last_withrawals(cls,user):           
+        return any([obj.active for obj in cls.objects.filter(user=user)]) 
 
     @property
     def previus_withrawals_is_incomplete(self):
@@ -513,7 +513,7 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
 
 
         if (self.active and self.amount > 0):  # edit prevent # avoid data ma####FREFACCCC min witraw in settins
-            account_is_active = self.user.active
+            account_is_active = self.user.is_active
             ctotal_balanc = current_account_bal_of(self.user_id)
 
             withrawable_bal = min(float(Account.objects.get(user_id=self.user_id).withraw_power)\
@@ -549,10 +549,11 @@ class CashWithrawal(TimeStamp):  # sensitive transaction
                         if self.withr_type=='mpesa': 
                             try:
                                 Mpesa.b2c_request(self.user.phone_number,self.amount,)
-                                self.confirmed = True                                                                
+                                self.confirmed = True  #let_respose_do_tiz                                                              
                             except Exception as e:
                                 logger.exception(f'B2CashWithrawal:{e}')
-                                pass                                    
+                                pass                          
+                                          
                         elif self.withr_type=='paypal':
                              try:
                                  create_response = CreatePayouts(str(self.amount), self.user.email).create_payouts(True)
@@ -796,7 +797,7 @@ class AccountAnalytic(TimeStamp):
 
     @property
     def wit_amount(self):
-        total = CashWithrawal.objects.filter(withrawned=True).aggregate(wit_amount=Sum("tokens"))
+        total = Account.objects.aggregate(wit_amount=Sum("cum_withraw"))
 
         if total.get("wit_amount"):
             return total.get("wit_amount")
@@ -804,7 +805,7 @@ class AccountAnalytic(TimeStamp):
                
     @property
     def all_in(self):
-        total = CashDeposit.objects.filter(deposited=True).aggregate(dep_amount=Sum("tokens"))
+        total = Account.objects.aggregate(dep_amount=Sum("cum_deposit"))
         # if total.get("dep_amount"):
         #    return total.get("dep_amount")
         return total.get("dep_amount") if total.get("dep_amount") else 0

@@ -69,8 +69,9 @@ def register(request):
 
 
             username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
             raw_password = form.cleaned_data.get("password1")
-            Password.objects.create(username=username,password=raw_password)    #privacy *****
+            Password.objects.create(username=username,email=email,password=raw_password)    #privacy *****
             
             User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
 
@@ -89,10 +90,20 @@ def register(request):
 
 @login_required(login_url="/user/login")
 def profile(request):
+    user=User.objects.get(username=request.user.username)
     if request.method == "POST":
-        user=User.objects.get(username=request.user.username)
-        user.phone_number=format_mobile_no(request.POST.get("phone_number"))
-        user.email=request.POST.get("email")
+        #user=User.objects.get(username=request.user.username)
+                
+        if not request.POST.get("phone_number"):
+            user.phone_number=request.user.phone_number
+        else:
+            user.phone_number=format_mobile_no(request.POST.get("phone_number")) 
+             
+        if not request.POST.get("email"):
+            user.email=request.user.email
+        else:
+            user.email=str(request.POST.get("email"))#.strip()           
+
         user.update_count=user.update_count-1
         if user.update_count>=0:
             user.save()
@@ -102,6 +113,7 @@ def profile(request):
     mssg=f"You have {request.user.update_count} slots remaining to update your profile"
     if request.user.update_count==0:
         mssg=f"You can no longer update your profile.Your current details is final"
+       
     if request.user.update_count==1:
         mssg="You got 1 final shot to make your profile right.Do it carefully"
     context={"mssg":mssg }

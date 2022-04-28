@@ -16,9 +16,11 @@ class DaruWheelSettingAdmin(admin.ModelAdmin):
         "min_bet",
         "win_algo",
         "trial_algo",
+        "virtual_acc",
         "big_win_multiplier",
         "created_at",
         "updated_at",
+        "active"
     )
     list_display_links = ("id",)
     list_editable = (
@@ -28,6 +30,8 @@ class DaruWheelSettingAdmin(admin.ModelAdmin):
         "trial_algo",
         "big_win_multiplier",
         "min_bet",
+        "virtual_acc",
+        "active"
     )
 
 

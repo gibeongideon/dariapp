@@ -12,8 +12,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>DariSpin|{% block title %}Home{% endblock %}</title>
-    <meta name="description" content="Spinning Wheel for real cash.Best Fortune wheel
-	,winning wheel.Deposits and withrawals through paypal ,cryptocurrency and m-pesa."/>
+    <meta name="description" content="Spinning Wheel/Fortune Wheel for real cash.Best Fortune wheel
+	,winning wheel.Deposits and withrawals through paypal,cryptocurrency & M-pesa.Win up to X 1000 your Bet."/>
 
 	<link href="{% static 'assets/images/logoz.png' %}" rel="shortcut icon" sizes="32x32"  type="image/x-icon"/>
 	<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
@@ -82,20 +82,14 @@
 									       <div class="mr-hover-effect"></div>
 									   </a>
 									{% endif %}  {% endcomment %}
-									{% comment %} {% if  user.is_authenticated %} {% endcomment %}
+								
 										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false">
 											Account
 											<div class="mr-hover-effect"></div>
 										</a>
 										<ul class="dropdown-menu" >
-										    {% comment %} <li>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deposit">
-													<i class="fa fa-angle-double-right"></i> Deposit
-												</a>																																		
-											</li> {% endcomment %}
-															
-									
+																			
 
 											<li>											
 											
@@ -155,12 +149,7 @@
 
 
 									 <li class="nav-item dropdown">
-									 {% comment %} {% if not user.is_authenticated %}
-									   <a class="nav-link" href="#" data-toggle="modal" data-target="#login">Account
-									       <div class="mr-hover-effect"></div>
-									   </a>
-									{% endif %}  {% endcomment %}
-									{% comment %} {% if  user.is_authenticated %} {% endcomment %}
+	
 										<a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false">
 											My Company
@@ -255,9 +244,7 @@
 		    <div class="row justify-content-center">
 				<div class="col-lg-8 col-md-10">
 					<div class="section-heading">
-								{% comment %} <div class="logo-area">
-							<img class="logo" src="/static/assets/images/logoz.png" alt="">
-					</div> {% endcomment %}
+
 						<h5 class="subtitle">
 								Account Information
 						</h5>
@@ -638,8 +625,8 @@
 							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
-						<h4 class="title">Paypal</h4>
-						<p class="sub-title">Deposit(USD)</p>
+						<h4 class="title">Paypal Deposit(USD)</h4>
+						<p class="sub-title">You can deposit from any paypal account</p>
 					</div>
 					<div class="form-area">
 						
@@ -672,8 +659,13 @@
 							<img class="logo" src="/static/assets/images/logoz.png" alt="">
 					</div>
 					<div class="header-area">
-						<h4 class="title">M-Pesa Deposit</h4>
-						<p class="sub-title">Enter Amount to Deposit and Submit</p>
+					<h4 class="title">M-Pesa Deposit</h4>
+						
+						<p class="sub-title">Once you submit, you get a prompt to enter m-pesa pin to complete deposit on</p>					
+						<h4 class="title">{{user.phone_number}}</h4>
+						<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Phone No.</a>
+						
+							
 					</div>
 					<div class="form-area">
 
@@ -681,7 +673,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" min=50 max="70000" placeholder="amount here" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" min=50 max="70000" placeholder="amount to deposit" required id="id_amount"">      
   </div>
 
 
@@ -768,10 +760,13 @@
 					<div class="header-area">
 						<h4 class="title">M-Pesa Withdraw</h4>
 						<p class="sub-title">
-							You can withdraw a total of {{ user.user_accounts.withrawable_balance}} KSH</h4>
+							You can withdraw a total of {{user.user_accounts.withrawable_balance}} KSH to {{user.phone_number}}</h4>
 							
 				        </p>
+				        
+								<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Phone No.</a>
 					</div>
+					
 					<div class="form-area">
 <form action="{% url 'account:mpesa_withrawal' %}" method="post">
 {% csrf_token %}
@@ -804,21 +799,21 @@
 					<div class="header-area">
 						<h4 class="title">Paypal Withdraw</h4>
 						<p class="sub-title">
-							You can withdraw a total of {{ user.user_accounts.withrawable_balance_usd }} USD</h4>
+							You can withdraw a total of {{ user.user_accounts.withrawable_balance_usd }} USD to {{user.email}}</h4>
 							
 				        </p>
+				        
+								<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Email</a>
 					</div>
 					<div class="form-area">
-<form action="{% url 'account:paypal_withrawal' %}" method="post">
-{% csrf_token %}
-
-  <div class="form-group">
-          <input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{ user.user_accounts.withrawable_balance_usd}}" required id="id_amount">        
-  </div>
-
-
-<button class="mybtn1 type="submit">Submit</button>
-</form>
+					<form action="{% url 'account:paypal_withrawal' %}" method="post">
+					{% csrf_token %}
+					<div class="form-group">
+					<input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{user.user_accounts.withrawable_balance_usd}}" required id="id_amount">        
+					</div>
+					<button class="mybtn1 type="submit">Submit</button>
+					
+					</form>
 
 					</div>
 					
@@ -1044,8 +1039,8 @@
 							<form role="form" method="POST" action="{% url 'users:register' %}">
 							    {% csrf_token %}
 								<div class="form-group">
-										{% comment %} <label for="input-name">Mobile No*</label> {% endcomment %}
-										<input type="text" class="input-field" name="username" id="username"  placeholder="Your Mobile Number" required>
+										{% comment %} <label for="input-name">Mobile No. or Username*</label> {% endcomment %}
+										<input type="text" class="input-field" name="username" id="username"  placeholder="Mobile No. (e.g 071000200)" required>
 								</div>
 								<div class="form-group">
 										{% comment %} <label for="input-email">Email*</label> {% endcomment %}

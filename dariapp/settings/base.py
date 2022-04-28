@@ -227,7 +227,7 @@ JET_SIDE_MENU_COMPACT = True
 # B2C (Bulk Payment) Configs
 # see https://developer.safaricom.co.ke/test_credentials
 # https://developer.safaricom.co.ke/b2c/apis/post/paymentrequest
-
+SECRET_MPESA_URL= config("SECRET_MPESA_URL", default=SECRET_ADMIN_URL)
 MPESA_B2C_ACCESS_KEY = config("MPESA_B2C_ACCESS_KEY", default="")
 MPESA_B2C_CONSUMER_SECRET = config("MPESA_B2C_CONSUMER_SECRET", default="")
 
@@ -306,5 +306,5 @@ PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
 PAYPAL_CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default="")
 
 
-WHEEL_MAP = [20,6,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,4,2,1,0,1000,0]
+WHEEL_MAP = [20,6,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,30,0,4,2,1,0,1000,0]
 

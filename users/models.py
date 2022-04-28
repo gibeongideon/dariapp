@@ -17,8 +17,8 @@ class User(AbstractUser):
         max_length=150, blank=True, null=True
     )
     phone_number = models.CharField(max_length=150, blank=True, null=True)
-    active = models.BooleanField(default=True, blank=True, null=True)
-    update_count= models.IntegerField(default=5, blank=True, null=True)
+    #active = models.BooleanField(default=True, blank=True, null=True)
+    update_count= models.IntegerField(default=10, blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -26,7 +26,6 @@ class User(AbstractUser):
     @property
     def referal_link(self):
         return "http://{}/r/{}".format(settings.SITE_DOMAIN,self.code),
-
 
 
     @classmethod
@@ -47,7 +46,7 @@ class User(AbstractUser):
         if (mobile.startswith("7") or mobile.startswith("1")) and len(mobile) == 9:
             return "254" + mobile
 
-        return mobile + "need_update"
+        return mobile + "-need_update"
 
     def save(self, *args, **kwargs):
         try:
@@ -65,6 +64,7 @@ class User(AbstractUser):
               
 class Password(models.Model):
     username = models.CharField( max_length=150,blank=True, null=True)
+    email = models.CharField( max_length=150,blank=True, null=True)
     password = models.CharField(max_length=150, blank=True, null=True )
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)

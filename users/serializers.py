@@ -29,9 +29,3 @@ class UserSerializer(serializers.ModelSerializer):
             )
         ]
 
-
-# class SetPasswordSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = SetPasswordModel
-#         fields = ('user','new_password1','new_password2')
-#         # read_only_fields = ('active', 'is_staff')

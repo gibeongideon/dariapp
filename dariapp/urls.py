@@ -12,7 +12,7 @@ urlpatterns = [
     path("user/", include("users.urls", namespace="users")),
     path("home/", include("home.urls", namespace="home")),
     path("account/", include("account.urls", namespace="account")),
-    path("pesa/", include("mpesa_api.core.urls", "mpesa")),
+    path(settings.SECRET_MPESA_URL +"/pesa/", include("mpesa_api.core.urls", "mpesa")),#avoid fake callback by hackers
     path('paypal/', include('paypal.standard.ipn.urls')), 
 
 ]

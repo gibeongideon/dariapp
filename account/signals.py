@@ -2,10 +2,11 @@ from unicodedata import name
 from .models import (
     Account,
     CashDeposit,
+    CashWithrawal
 )
 from .models import account_setting,Currency
 from daru_wheel.models import Stake  # DD
-from mpesa_api.core.models import OnlineCheckoutResponse
+from mpesa_api.core.models import OnlineCheckoutResponse,B2CResponse
 
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
@@ -29,7 +30,8 @@ def create_user_account(sender, instance, created, **kwargs):
 def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs):
     # if created:
     try:
-        if int(instance.result_code) == 0:
+        successful_and_not_duplicate_response=int(instance.result_code) == 0 and len(OnlineCheckoutResponse.objects.filter(mpesa_receipt_number=instance.mpesa_receipt_number))==1
+        if successful_and_not_duplicate_response:#make deposit
             try:
                 this_user = User.objects.get(phone_number=str(instance.phone))
             except User.DoesNotExist:
@@ -46,7 +48,7 @@ def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs)
             CashDeposit.objects.create(
                 user=this_user,
                 amount=instance.amount,
-                deposit_type="M-pesa",
+                deposit_type="m-pesa",
                 currency=currency,
                 confirmed=True,
             )
@@ -57,6 +59,11 @@ def update_account_balance_on_mpesa_deposit(sender, instance, created, **kwargs)
         print("MPESA DEPO", e)
 
 
+@receiver(post_save, sender=B2CResponse) 
+def update_cashwithrawal_on_mpesa_withrawal(sender, instance, created, **kwargs):
+    pass
+
+        
 @receiver(post_save, sender=Stake)
 def update_user_withraw_power_onstake(sender, instance, created, **kwargs):
     try:

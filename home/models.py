@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 
 def filter_html_elements(content):
     #TODO
@@ -19,4 +19,48 @@ class ContactUs(models.Model):
             self.message=filter_html_elements(self.message)#avoid XSS attack 
             super().save(*args, **kwargs)
         else:
-            return    
+            super().save(*args, **kwargs)    
+
+class UserStat(models.Model):
+    homepage_hits_login =  models.IntegerField(default=0, blank=True, null=True)
+    homepage_hits_anonymous = models.IntegerField(default=0, blank=True, null=True)
+    spinx_hits = models.IntegerField(default=0, blank=True, null=True)
+    spinx_hits_anonymous = models.IntegerField(default=0, blank=True, null=True)
+    #s_date=models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    
+    created_at = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    class Meta:
+        db_table = "d_user_stat"
+        get_latest_by ="id"
+        
+    def __str__(self):
+        return "User Stats-"+str(self.id)
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+        
+    

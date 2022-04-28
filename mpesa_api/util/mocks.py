@@ -29,21 +29,18 @@ B2C_SUCCESSFUL_RESULT = {
                 {"Key": "TransactionAmount", "Value": 8000},
                 {"Key": "B2CWorkingAccountAvailableFunds", "Value": 150000},
                 {"Key": "B2CUtilityAccountAvailableFunds", "Value": 133568},
-                {
-                    "Key": "TransactionCompletedDateTime",
-                    "Value": "17.07.2017 10:54:57",
-                },
-                {"Key": "ReceiverPartyPublicName", "Value": "254708374149 - John Doe",},
+                {"Key": "TransactionCompletedDateTime", "Value": "17.07.2017 10:54:57"},
+                {"Key": "ReceiverPartyPublicName", "Value": "254708374149 - John Doe"},
                 {"Key": "B2CChargesPaidAccountAvailableFunds", "Value": 0},
-                {"Key": "B2CRecipientIsRegisteredCustomer", "Value": "Y"},
+                {"Key": "B2CRecipientIsRegisteredCustomer", "Value": "Y"}
             ]
         },
         "ReferenceData": {
             "ReferenceItem": {
                 "Key": "QueueTimeoutURL",
-                "Value": "https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit",
+                "Value": "https://internalsandbox.safaricom.co.ke/mpesa/b2cresults/v1/submit"
             }
-        },
+        }
     }
 }
 
@@ -61,25 +58,42 @@ ONLINE_REQUEST_RESPONSE = {
     "ResponseDescription": "Success. Request accepted for processing",
 }
 
-ONLINE_SUCCESS_RESPONSE = {
-    "Body": {
-        "stkCallback": {
-            "MerchantRequestID": "19465-780693-1",
-            "CheckoutRequestID": "ws_CO_27072017154747416",
-            "ResultCode": 0,
-            "ResultDesc": "The service request is processed successfully.",
-            "CallbackMetadata": {
-                "Item": [
-                    {"Name": "Amount", "Value": 1},
-                    {"Name": "MpesaReceiptNumber", "Value": "LGR7OWQX0R"},
-                    {"Name": "Balance"},
-                    {"Name": "TransactionDate", "Value": 20170727154800},
-                    {"Name": "PhoneNumber", "Value": 254721566839},
-                ]
-            },
+ONLINE_SUCCESS_RESPONSE =     {
+      "Body":{
+        "stkCallback":{
+          "MerchantRequestID":"19465-780693-1",
+          "CheckoutRequestID":"ws_CO_27072017154747416",
+          "ResultCode":0,
+          "ResultDesc":"The service request is processed successfully.",
+          "CallbackMetadata":{
+            "Item":[
+              {
+                "Name":"Amount",
+                "Value":999
+              },
+              {
+                "Name":"MpesaReceiptNumber",
+                "Value":"LGR7OWQX0R"
+              },
+              {
+                "Name":"Balance"
+              },
+              {
+                "Name":"TransactionDate",
+                "Value":20220727154800
+              },
+              {
+                "Name":"PhoneNumber",
+                "Value":254712748566
+              }
+            ]
+          }
         }
+      }
     }
-}
+
+    
+    
 
 PAYBILL_RESPONSE = {
     "TransactionType": "Pay Bill",
