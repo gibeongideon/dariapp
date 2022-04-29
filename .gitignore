@@ -253,14 +253,7 @@ venv.bak/
 .mp3
 .mp4
 
-# Ignore Migrations (Disabled on production only)
 
-*/migrations/*.py
-*/migrations/*.pyc
-*/*/migrations/*.py
-*/*/migrations/*.pyc
-*/*/*/migrations/*.py
-*/*/*/migrations/*.pyc
 
 logfile
 
