@@ -238,17 +238,7 @@
   
 				<div class="row">
 				
-				
-				
-				
-				
-					
-				
-				
-				
-				
-				
-				          					<div class="col-lg-4">
+					<div class="col-lg-4">
 						<div class="single-winer">
 							<div class="top-area">
 								<div class="left">
@@ -261,7 +251,7 @@
 										{% csrf_token %}	
 	  
 										  <div class="col-lg-6 col-8 d-flex align-self-center">.</div>
-										  <input class="btn btn-sm btn-warning btn-simple" type="number" min =5  max ="10000000" name="amount" class="input-field" placeholder="Amount to bet" required=True id="chat-message-input" autofocus>
+										  <input class="btn btn-sm btn-warning btn-simple" type="number" min =5  max ="10000000" name="amount" class="input-field" placeholder="Amount to bet" required=True id="bet-input" autofocus>
                 
 							</div>
 
@@ -275,7 +265,7 @@
 								<div class="left">
 									<label class="btn btn-sm btn-simple btn-simple">
 										
-										<input class="btn-group btn-group-toggle" type="checkbox" name="bet_on_real_account" id="id_bet_on_real_accountw"> 
+										<input class="btn-group btn-group-toggle" type="checkbox" name="bet_on_real_account" id="real_cash-input"> 
 										 <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Real Money</span>
 										<span class="d-block d-sm-none">
 										  <i class="tim-icons icon-gift-2"> Real Money</i>
@@ -286,10 +276,10 @@
 
 									{% if user.is_authenticated %}
 									
-									<input class="mybtn1"  id="chat-message-submit" type="button" value="Bet">
+									<input class="mybtn1"  id="bet-submit" type="button" value="Bet">
 								{% endif %}
 								{% if not user.is_authenticated %}
-								   <a href="#" class="mybtn1" id="chat-message-submit"  data-toggle="modal" data-target="#login">
+								   <a href="#" class="mybtn1" id="bet-submit"  data-toggle="modal" data-target="#login">
 									Bet
 								   </a>	
 								{% endif %} 
