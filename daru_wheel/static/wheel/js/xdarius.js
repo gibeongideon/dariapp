@@ -32,32 +32,37 @@
         console.error('spin socket closed unexpectedly');
     };
 
-    document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-submit').onclick = function (e) {
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const message = messageInputDom.value;        
+    document.querySelector('#bet-input').focus();
+    document.querySelector('#real_cash-input').focus();
+    document.querySelector('#bet-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#bet-input');
+        const real_cashInputDom = document.querySelector('#real_cash-input');
+        const message = messageInputDom.value;
+        const real_cash = real_cashInputDom.value;
         const ipointer = 'None';
         //wheelSpinning = false;
-
     
         spinSocket.send(JSON.stringify({
                 'message': message,
-                'ipointer': ipointer
+                'ipointer': ipointer,
+                'real_cash': real_cash
             }));
             
        messageInputDom.value = '';
+       //real_cashInputDom.value = 'off';
     };
        
-
 
     document.querySelector('#spin_button').onclick = function(e) {
         // const pointerInputDom = document.querySelector('#spin-pointer-input');
         const ipointer = '';
         const message = 'None';
+        const real_cash = 'None';
         if (wheelSpinning == false) {
           spinSocket.send(JSON.stringify({
             'ipointer': ipointer,
-            'message': message
+            'message': message,
+            'real_cash': real_cash
         }));
         
         
@@ -76,7 +81,7 @@ let theWheel = new Winwheel({
     'textAlignment'   : 'outer',    // Align text to outside of wheel.
     'numSegments'     : 28,         // Specify number of segments.
     'segments'        :             // Define segments including colour and text.
-    [                               // font size and test colour overridden on backrupt segments.
+    [                               
 
         {'fillStyle' : '#fff200', 'text' : '20','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
         {'fillStyle' : '#ee1c24', 'text' : '6', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
@@ -149,8 +154,7 @@ function alertPrize()
     // Stop and rewind the sound if it already happens to be playing.
 
     wheelSpinning = false;
-    
-    
+       
     
     ssg='You WON '+winPrice;
     alert(ssg)

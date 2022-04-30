@@ -6,7 +6,6 @@ from . import api_view
 router = DefaultRouter()
 router.register(r"stake", api_view.StakeViewSet, basename="Stake")
 
-
 app_name = "daru_wheel"
 
 urlpatterns = [

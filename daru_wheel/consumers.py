@@ -44,16 +44,12 @@ class XspinConsumer(WebsocketConsumer):
     def update_stake_as_spinned(self, stakeid):
         Stake.objects.filter(user=self.user, id=stakeid).update(spinned=True)
         
-    def place_bet(self,amount):        
-        print("BET_PLACED!!!!!")
+    def place_bet(self,amount):
         amount=int(amount)
-        Stake.objects.create(user=self.user,spinx=True,amount=amount,bet_on_real_account=True)
-      
+        Stake.objects.create(user=self.user,spinx=True,amount=amount,bet_on_real_account=True)      
         #trans_logz = list(Stake.objects.filter(user=self.user).order_by("-created_at")[:5])
         return amount
-       
-
-            
+                  
             
     def return_pointer(self):
         spinz = Stake.unspinnedx(self.user)
@@ -70,19 +66,26 @@ class XspinConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         ipointer = text_data_json["ipointer"]
-        
         message = text_data_json['message']
-        print('P-INIT',ipointer)
-        print('MESSAGE',message)           
+        real_cash = text_data_json['real_cash']
+        
+        print('REAL_CAS',real_cash)
         
         if message =="None":
             ipointer,win_a = self.return_pointer()
-            print('POINTER',ipointer)
             self.send(text_data=json.dumps({"ipointer": ipointer,"win_a": win_a,}))
-        else:           
-           
-            trans_logz=self.place_bet(message)
-            print(trans_logz)
-            print("EEEEEE")
-            self.send(text_data=json.dumps({"trans_logz": trans_logz,}))
+        else:
+            try:
+                message=int(message)
+                trans_logz=self.place_bet(message)           
+                self.send(text_data=json.dumps({"trans_logz": trans_logz,}))
+            except:
+                pass
+                #print('NO_INTTT')
+               
+                
+                     
+            
+            
+
             
