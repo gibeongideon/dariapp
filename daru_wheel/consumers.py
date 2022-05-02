@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
 from .models import OutCome, Stake
+from account.models import current_account_bal_of
 
 
 class QspinConsumer(WebsocketConsumer):
@@ -43,6 +44,7 @@ class XspinConsumer(WebsocketConsumer):
 
     def update_stake_as_spinned(self, stakeid):
         Stake.objects.filter(user=self.user, id=stakeid).update(spinned=True)
+       
         
     def place_bet(self,amount):
         amount=int(amount)
@@ -77,8 +79,15 @@ class XspinConsumer(WebsocketConsumer):
         else:
             try:
                 message=int(message)
-                trans_logz=self.place_bet(message)           
-                self.send(text_data=json.dumps({"trans_logz": trans_logz,}))
+                bal=current_account_bal_of(self.user.id)
+                if bal>=message:
+                   bet=self.place_bet(message)
+                   bet_s='BET'
+                else:
+                    bet_s ='NC' 
+                    bet=0 
+                                                  
+                self.send(text_data=json.dumps({"bet": bet,"bet_s": bet_s,"bal": bal,}))
             except:
                 pass
                 #print('NO_INTTT')
