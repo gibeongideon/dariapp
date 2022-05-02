@@ -15,7 +15,7 @@ from pathlib import Path
 
 # import dj_database_url
 #from decouple import config
-from decouple import Csv
+#from decouple import Csv
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -281,7 +281,6 @@ PAYPAL_WPP_SIGNATURE = "AM1aGgn2bz5QbLwfJWgM8rQPCVdfAjz3hKc8w9Pa8XdIFnHt-9r143O2
 
 
 DJANGO_SETTINGS_MODULE = 'dariapp.settings'
-
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
