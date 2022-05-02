@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-SECRET_ADMIN_URL = "dadmin"
+SECRET_ADMIN_URL = "dadl0v4d@r1uz"
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "dadsboy"
+SECRET_KEY = "ferfiuw598t7q305tu0q34ejsi958t7934qfieifi0394r9wjerblepNKKKOOUou~1!U)(#&@(**#@(*@)#&)"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -231,7 +231,8 @@ JET_SIDE_MENU_COMPACT = True
 # B2C (Bulk Payment) Configs
 # see https://developer.safaricom.co.ke/test_credentials
 # https://developer.safaricom.co.ke/b2c/apis/post/paymentrequest
-SECRET_MPESA_URL=''# config("SECRET_MPESA_URL", default=SECRET_ADMIN_URL)
+#SECRET_MPESA_URL=''# config("SECRET_MPESA_URL", default=SECRET_ADMIN_URL)
+SECRET_MPESA_URL="h6__pz5m$yks2l93$c6ux=%!r1hm%3h%5-^$pb9wzv5^gp*@2"
 MPESA_B2C_ACCESS_KEY = ''#config("MPESA_B2C_ACCESS_KEY", default="")
 MPESA_B2C_CONSUMER_SECRET = ''#config("MPESA_B2C_CONSUMER_SECRET", default="")
 
@@ -265,9 +266,9 @@ TOKEN_THRESHOLD = ''#config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 
 
 PAYPAL_BUY_BUTTON_IMAGE="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
-PAYPAL_RECEIVER_EMAIL ="darius.option@gmail.com"
+PAYPAL_RECEIVER_EMAIL ="elihu.kipyegon@gmail.com"
 
-PAYPAL_TEST = True
+PAYPAL_TEST = False
 
 
 ###USA/CANADA&UK
