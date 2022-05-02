@@ -280,7 +280,11 @@ PAYPAL_WPP_SIGNATURE = "AM1aGgn2bz5QbLwfJWgM8rQPCVdfAjz3hKc8w9Pa8XdIFnHt-9r143O2
 
 
 
+<<<<<<< HEAD
 DJANGO_SETTINGS_MODULE = 'dariapp.settings'
+=======
+DJANGO_SETTINGS_MODULE = 'dariapp.settings')
+>>>>>>> 5f3058a83cea31bbd9e2abc0a2fa35fe9902f02d
 
 
 
