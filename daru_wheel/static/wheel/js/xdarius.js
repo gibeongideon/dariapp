@@ -19,11 +19,14 @@
             startSpinB(data.ipointer);
             winPrice=data.win_a;
         } ;
-        if (data.trans_logz){
-            ssg='You place a bet of '+data.trans_logz + '.Click SPIN BUTTON NOW!';
+        if (data.bet_s=="NC"){
+            ssg='You Bet more than your account balance of '+data.bal +'.Deposit cash to place such a bet and start winning!';
             alert(ssg)
-        } ;  
-        
+        } ; 
+        if (data.bet_s=="BET"){
+            ssg='You place a bet of '+data.bet + '.Click SPIN BUTTON NOW!';
+            alert(ssg)
+        } ; 
         
        // document.querySelector('#chat-log').value += ('You place a bet of '+data.bet_a + '.SPIN NOW!'+'\n');
     };

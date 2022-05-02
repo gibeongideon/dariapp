@@ -28,7 +28,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "auto_approve",
         "auto_approve_cash_trasfer",
         "withraw_factor",
-        "created_at"
+       # "created_at"
     )
 
 
@@ -64,7 +64,7 @@ class AccountAdmin(admin.ModelAdmin):
         "trial_balance",
         "cum_deposit",
         "cum_withraw",
-        "created_at",
+      #  "created_at",
     )
     list_filter = ("user", "created_at", "updated_at")
 

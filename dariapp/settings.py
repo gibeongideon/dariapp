@@ -27,12 +27,12 @@ SECRET_ADMIN_URL = "dadl0v4d@r1uz"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "ferfiuw598t7q305tu0q34ejsi958t7934qfieifi0394r9wjerblepNKKKOOUou~1!U)(#&@(**#@(*@)#&)"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
-    #"channels",
+    "channels",
         # "functional_tests",
     # ...
     "admin_interface",
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -67,7 +68,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'dariapp.urls'
-TEMPLATE_DIR = BASE_DIR / "templates"
+TEMPLATE_DIR = BASE_DIR / "./dariapp/templates"
 
 TEMPLATES = [
     {
@@ -93,7 +94,7 @@ ASGI_APPLICATION = "dariapp.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "./db.sqlite3",
+        "NAME": BASE_DIR / "./dariapp/db.sqlite3",
 
     }
  }
@@ -215,7 +216,7 @@ LOGGING = {
         "logfile": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": BASE_DIR / "./logfile",
+            "filename": BASE_DIR / "./dariapp/logfile",
         },
     },
     "root": {"level": "INFO", "handlers": ["console", "logfile"]},
