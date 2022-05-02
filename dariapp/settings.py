@@ -27,7 +27,7 @@ SECRET_ADMIN_URL = "dadl0v4d@r1uz"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "ferfiuw598t7q305tu0q34ejsi958t7934qfieifi0394r9wjerblepNKKKOOUou~1!U)(#&@(**#@(*@)#&)"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
