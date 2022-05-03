@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 SECRET_ADMIN_URL = config("SECRET_ADMIN_URL", default="dadmin")
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default="dadsboy")
+SECRET_KEY = config("SECRET_KEY", default="3r5-insecure-cbk=3tx++3-x+1$ohy2g960+o$+f1y5*cv4o*mrp-hphmxgc8p")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
@@ -96,7 +96,6 @@ DATABASES = {
 
     }
  }
- 
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -227,7 +226,11 @@ JET_SIDE_MENU_COMPACT = True
 # B2C (Bulk Payment) Configs
 # see https://developer.safaricom.co.ke/test_credentials
 # https://developer.safaricom.co.ke/b2c/apis/post/paymentrequest
-SECRET_MPESA_URL= config("SECRET_MPESA_URL", default=SECRET_ADMIN_URL)
+SITE_DOMAIN = config("SITE_DOMAIN", default="www.dariplay.ga")
+SECRET_MPESA_URL=config("SECRET_MPESA_URL", default="secret_pesa_uri")
+PESA_BASE_URI=SITE_DOMAIN+"/"+SECRET_MPESA_URL+"/pesa"
+MPESA_URL = config("MPESA_URL", default="https://sandbox.safaricom.co.ke")
+
 MPESA_B2C_ACCESS_KEY = config("MPESA_B2C_ACCESS_KEY", default="")
 MPESA_B2C_CONSUMER_SECRET = config("MPESA_B2C_CONSUMER_SECRET", default="")
 
@@ -235,9 +238,8 @@ B2C_SECURITY_TOKEN = config("B2C_SECURITY_TOKEN", default="")###B1
 B2C_INITIATOR_NAME = config("B2C_INITIATOR_NAME", default="Darius Option")###B2
 B2C_COMMAND_ID = config("B2C_COMMAND_ID", default="")###B3
 B2C_SHORTCODE = config("B2C_SHORTCODE", default="")###B4
-B2C_QUEUE_TIMEOUT_URL = config("B2C_QUEUE_TIMEOUT_URL", default="https://www.dariplay.ga/pesa/b2c/timeout")
-B2C_RESULT_URL = config("B2C_RESULT_URL", default="https://www.dariplay.ga/pesa/b2c/result")
-MPESA_URL = config("MPESA_URL", default="https://sandbox.safaricom.co.ke")
+B2C_QUEUE_TIMEOUT_URL = PESA_BASE_URI+"/b2c/timeout"
+B2C_RESULT_URL = PESA_BASE_URI+"/b2c/result"
 
 # C2B (Paybill) Configs
 # See https://developer.safaricom.co.ke/c2b/apis/post/registerurl
@@ -246,28 +248,23 @@ MPESA_C2B_ACCESS_KEY = config("MPESA_C2B_ACCESS_KEY", default="")
 MPESA_C2B_CONSUMER_SECRET = config("MPESA_C2B_CONSUMER_SECRET", default="")
 
 C2B_REGISTER_URL = config("C2B_REGISTER_URL", default="")#
-C2B_VALIDATE_URL = config("C2B_VALIDATE_URL", default="https://www.dariplay.ga/pesa/c2b/validate")
-C2B_CONFIRMATION_URL = config("C2B_CONFIRMATION_URL", default="https://www.dariplay.ga/pesa/c2b/confirmation")
+C2B_VALIDATE_URL = PESA_BASE_URI+"/c2b/validate"
+C2B_CONFIRMATION_URL = PESA_BASE_URI+"/c2b/confirmation"
 C2B_SHORT_CODE = config("C2B_SHORT_CODE", default="")###N1
 C2B_RESPONSE_TYPE = config("C2B_RESPONSE_TYPE", default="Completed")
-C2B_ONLINE_CHECKOUT_CALLBACK_URL = config(
-    "C2B_ONLINE_CHECKOUT_CALLBACK_URL", default="https://www.dariplay.ga/pesa/c2b/online_checkout/callback"
-)##N3
+C2B_ONLINE_CHECKOUT_CALLBACK_URL = PESA_BASE_URI+"/c2b/online_checkout/callback"
 C2B_ONLINE_PASSKEY = config("C2B_ONLINE_PASSKEY", default="")###N2
 C2B_ONLINE_SHORT_CODE = config("C2B_ONLINE_SHORT_CODE", default="")###N1
 C2B_ONLINE_PARTY_B = config("C2B_ONLINE_PARTY_B", default="")###N1
 
-TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600)  # , cast=int)
+TOKEN_THRESHOLD = config("TOKEN_THRESHOLD", default=600, cast=int)
+
 
 #Paypal
 
+PAYPAL_RECEIVER_EMAIL =config("PAYPAL#_RECEIVER_EMAIL",default="elihu.kipyegon@gmail.com")
 
-PAYPAL_BUY_BUTTON_IMAGE="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
-PAYPAL_RECEIVER_EMAIL =config(
-     "PAYPAL_RECEIVER_EMAIL",
-     default="darius.option@gmail.com")
-
-PAYPAL_TEST = config("PAYPAL_TEST", default=True, cast=bool)
+PAYPAL_TEST = config("PAYPAL_TEST", default=True)
 
 
 ###USA/CANADA&UK
@@ -292,19 +289,9 @@ DJANGO_SETTINGS_MODULE = config(
 
 
 
-# Heroku: Update database configuration from $DATABASE_URL.
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
-
-SITE_DOMAIN = config(
-    "SITE_DOMAIN",
-    default="www.dariplay.ga")
-
-
 # Creating Access Token for Sandbox
 PAYPAL_CLIENT_ID = config("PAYPAL_CLIENT_ID", default="")
 PAYPAL_CLIENT_SECRET = config("PAYPAL_CLIENT_SECRET", default="")
 
-
-WHEEL_MAP = [20,6,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,30,0,4,2,1,0,1000,0]
+WHEEL_MAP = [20,10,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,15,0,3,2,1,0,1000,0]
 
