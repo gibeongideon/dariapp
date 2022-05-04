@@ -455,17 +455,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 					</div>
 				</div>
 			</div>
@@ -634,11 +623,11 @@
 							{% csrf_token %}
 							
 							  <div class="form-group">
-								<input type="number" name="amount" min="1" max="1000000" class="form-control" placeholder="amount in USD" required id="id_amount">      
+								<input type="number" name="amount" min="1" max="1000000" step=0.1 class="form-control" placeholder="amount in USD" required id="d_amount">      
 							  </div>
 							
 							
-							<button class="mybtn1 type="submit">Proceed To Paypal</button>
+							<button class="mybtn1" type="submit">Proceed To Paypal</button>
 							</form>
 
 					</div>						
@@ -663,7 +652,7 @@
 						
 						<p class="sub-title">Once you submit, you get a prompt to enter m-pesa pin to complete deposit on</p>					
 						<h4 class="title">{{user.phone_number}}</h4>
-						<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Phone No.</a>
+						<a href="{% url 'users:profile' %}" class="mybtn2" >Update Phone No.</a>
 						
 							
 					</div>
@@ -673,7 +662,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-    <input type="number" name="amount" class="form-control" min=50 max="70000" placeholder="amount to deposit" required id="id_amount"">      
+    <input type="number" name="amount" class="form-control" min=50 max="70000" placeholder="amount to deposit" required id="p_amount"">      
   </div>
 
 
@@ -764,7 +753,7 @@
 							
 				        </p>
 				        
-								<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Phone No.</a>
+								<a href="{% url 'users:profile' %}" class="mybtn2" ">Change Phone No.</a>
 					</div>
 					
 					<div class="form-area">
@@ -772,7 +761,7 @@
 {% csrf_token %}
 
   <div class="form-group">
-          <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="100"   max="{{user.user_accounts.withrawable_balance}}" required id="id_amount">        
+          <input type="number" name="amount" class="form-control" placeholder="amount here" step="10"  min="100"   max="{{user.user_accounts.withrawable_balance}}" required id="wp_amount">        
   </div>
 
 
@@ -803,15 +792,15 @@
 							
 				        </p>
 				        
-								<a href="{% url 'users:profile' %}" class="mybtn2" ">Update Email</a>
+								<a href="{% url 'users:profile' %}" class="mybtn2" >Change Email</a>
 					</div>
 					<div class="form-area">
 					<form action="{% url 'account:paypal_withrawal' %}" method="post">
 					{% csrf_token %}
 					<div class="form-group">
-					<input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{user.user_accounts.withrawable_balance_usd}}" required id="id_amount">        
+					<input type="number" name="amount" class="form-control" placeholder="amount here" step="1"  min="10"   max="{{user.user_accounts.withrawable_balance_usd}}" required id="pw_amount">        
 					</div>
-					<button class="mybtn1 type="submit">Submit</button>
+					<button class="mybtn1" type="submit" >Submit</button>
 					
 					</form>
 
@@ -857,7 +846,7 @@
     
     <div class="col-lg-6 col-8 d-flex align-self-center">
         <div class="form-area"> 
-            <input type="number" name="amount" class="input-field" placeholder="Amount" step="10" min="50" max="{{user.user_accounts.balance}}"" required id="id_amount" autofocus>                    
+            <input type="number" name="amount" class="input-field" placeholder="Amount" step="10" min="50" max="{{user.user_accounts.balance}}"" required id="ct_amount" autofocus>                    
         </div>
     </div>  
 
@@ -900,7 +889,7 @@
 
 <div class="col-md-4 pl-md-1">
   <div class="form-group">
-    <input type="number" name="amount" class="input-field" placeholder="amount here" step="10" min={{user.user_accounts.min_refer_to_transfer}} max={{user.user_accounts.refer_balance}} required id="id_amount"">    
+    <input type="number" name="amount" class="input-field" placeholder="amount here" step="10" min={{user.user_accounts.min_refer_to_transfer}} max={{user.user_accounts.refer_balance}} required id="rc_amount"">    
 	
   </div>
 </div>
@@ -980,7 +969,7 @@
 						    {% csrf_token %}
 							<div class="form-group">
 									<label for="login-input-email">Mobile No*</label>
-									<input type="text"  class="input-field" name="username" id="username" placeholder="Phone number you sign up with" required autofocus>
+									<input type="text"  class="input-field" name="username" id="id_username" placeholder="Phone number you sign up with" required autofocus>
 									
 							</div>
 							<div class="form-group">
@@ -1084,7 +1073,7 @@
 		<!-- SignIn Area End -->					
   {% include 'includes/scripts.html' %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+    <!-- <script>
 
  
 function getCookie(name) {
@@ -1207,7 +1196,7 @@ function getCookie(name) {
     }).render('#paypal-button-container');
   }
   initPayPalButton();
-  </script>
+  </script> -->
 
 
 
@@ -1229,6 +1218,29 @@ function getCookie(name) {
   }
 
   </script>
+
+  <!-- <script>
+	  $(document).ready(function(){
+		  $('.mybtn1').click(function(e){
+			  e.preventDefault();
+			  var cmail = $('#cmail').val();
+			  var message = $('#message').val();
+			  $.ajax({
+				  type:"POST",
+				  url:"{% url 'home:contact_us' %}",
+				  data:{"cmail":cmail,"message":message},
+				  success:function(data){
+					  $('.result').html(data);
+					  $('#contactform')[0].reset();
+
+				  }
+			  } );
+			  
+		  } );
+	  } );
+
+
+  </script> -->
 
  
   {% endblock javascripts %}

@@ -36,7 +36,7 @@ def mpesa_deposit(request):
             Mpesa.stk_push(
                 phone_number,
                 amount,
-                account_reference=f"Pay Darius Option KSH {amount} for account of {request.user} using mobile no {phone_number}",
+                account_reference=f"Pay Darius Option KSH {amount} for account of {request.user.username} using mobile no {phone_number}",
                 is_paybill=False,
             )
         except Exception  as e:
@@ -218,7 +218,7 @@ def process_payment(request):
 
     try:
         dlatest=CashDeposit.objects.filter(user=request.user).latest('id')
-        if dlatest.amount== amount:
+        if dlatest.amount== amount and dlatest.confirmed!=True:
             depo=dlatest
         else:
             depo=CashDeposit.objects.create(
@@ -237,7 +237,7 @@ def process_payment(request):
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': f'{amount}',
-        'item_name': 'Dariplay-Deposit',
+        'item_name': 'Deposit to {request.user.username} account at Dariplay',
         'invoice': f'{depo.id}',
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
