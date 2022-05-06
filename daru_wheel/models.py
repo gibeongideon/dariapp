@@ -235,7 +235,7 @@ class CashStore(TimeStamp):
     @property
     def all_amount(self):
         try:
-            return self.give_away+self.to_keep
+            return self.give_away+self.to_keep+self.marketer_give_away+self.marketer_to_keep
         except:
             return 0
 
