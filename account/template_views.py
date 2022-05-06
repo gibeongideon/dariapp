@@ -95,26 +95,34 @@ def mpesa_withrawal(request):
     except Currency.DoesNotExist:
         Currency.objects.create(name="KSH",rate=1) ###
         currency=Currency.objects.get(name="KSH")
+
+    if request.user.is_marketer:
+        withr_type='shop'
+    else:
+        withr_type = 'mpesa'
+
     form = CashWithrawalForm()
     if request.method == "POST":
         data = {}
         data["user"] = request.user
         data["amount"] = request.POST.get("amount")
-        data["withr_type"] = 'mpesa'
+        data["withr_type"] = withr_type
         data["currency"] = currency
         form = CashWithrawalForm(data=data)
         if form.is_valid():
             form.save()
             return redirect("/account/mpesa_withrawal")#
        
-    trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='mpesa').order_by("-id")[:10]
+    if request.user.is_marketer:
+        trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='shop').order_by("-id")[:10]
+    else:
+        trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='mpesa').order_by("-id")[:10]
 
     return render(
         request,
         "account/mpesa_withrawal.html",
         {"form": form, "trans_logz": trans_logz,"uf": uf},
     )
-
 
 
 @login_required(login_url="/user/login")
@@ -125,6 +133,10 @@ def paypal_withrawal(request):
     except Currency.DoesNotExist:
         Currency.objects.create(name="USD",rate=100) ###
         currency=Currency.objects.get(name="USD")
+    if request.user.is_marketer:
+        withr_type='shop'
+    else:
+        withr_type = 'paypal'
 
 
     form = CashWithrawalForm()
@@ -132,14 +144,18 @@ def paypal_withrawal(request):
         data = {}
         data["user"] = request.user
         data["amount"] = request.POST.get("amount")
-        data["withr_type"] = 'paypal'
+        data["withr_type"] = withr_type
         data["currency"] = currency
         form = CashWithrawalForm(data=data)
         if form.is_valid():
             form.save()
             return redirect("/account/paypal_withrawal/")#
        
-    trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='paypal').order_by("-id")[:10]
+    
+    if request.user.is_marketer:
+        trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='shop').order_by("-id")[:10]
+    else:
+        trans_logz = CashWithrawal.objects.filter(user=request.user,withr_type='paypal').order_by("-id")[:10]
 
     return render(
         request,
@@ -174,7 +190,14 @@ def cash_trans(request):
                 recipient=format_mobile_no(recipient)
                 recipient = User.objects.get(phone_number=recipient.strip())
             except:
-                pass    
+                pass
+       
+        if  (request.user.is_marketer  and (not recipient.is_marketer)) or ((not request.user.is_marketer)  and recipient.is_marketer):
+            trans_logz0 = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
+            trans_logz1 = CashTransfer.objects.filter(recipient=request.user).order_by("-id")[:10]
+            trans_logz=list(trans_logz0)+list(trans_logz1) 
+            return render(request, "account/cash_trans.html", {"form": form, "trans_logz": trans_logz}  )
+
 
         data["recipient"] = recipient
         data["amount"] = request.POST.get("amount")
@@ -182,9 +205,7 @@ def cash_trans(request):
         if form.is_valid():
             form.save()
 
-        if form.errors:
-            pass
-            # return redirect('/')#sError For TODO
+ 
     trans_logz0 = CashTransfer.objects.filter(sender=request.user).order_by("-id")[:10]
     trans_logz1 = CashTransfer.objects.filter(recipient=request.user).order_by("-id")[:10]
     trans_logz=list(trans_logz0)+list(trans_logz1)
