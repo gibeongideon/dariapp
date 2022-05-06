@@ -113,8 +113,10 @@ admin.site.register(OutCome, OutComeAdmin)
 class CashStoreAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "give_away",
+        "give_away",        
         "to_keep",
+        "marketer_give_away",
+        "marketer_to_keep",
         "created_at",
         "updated_at",
     )

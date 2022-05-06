@@ -226,7 +226,12 @@ class CashStore(TimeStamp):
     to_keep = models.DecimalField(
         ("to_keep"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
-
+    marketer_give_away = models.DecimalField(
+        ("marketer_give_away"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
+    )
+    marketer_to_keep = models.DecimalField(
+        ("marketer_to_keep"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
+    )
     @property
     def all_amount(self):
         try:
@@ -262,6 +267,16 @@ class OutCome(TimeStamp):
             return self.stake.bet_on_real_account
         except:
             return None
+    @property
+    def marketer_current_update_give_away(self):
+        return CashStore.objects.get(id=1).marketer_give_away#self.cashstore.give_away
+
+    @staticmethod
+    def marketer_update_give_away(new_bal):
+        # idd=CashStore.objects.last().id
+        # CashStore.objects.filter(id=idd).update(give_away=new_bal)
+        CashStore.objects.filter(id=1).update(marketer_give_away=new_bal)
+
 
     @property
     def current_update_give_away(self):
@@ -272,6 +287,16 @@ class OutCome(TimeStamp):
         # idd=CashStore.objects.last().id
         # CashStore.objects.filter(id=idd).update(give_away=new_bal)
         CashStore.objects.filter(id=1).update(give_away=new_bal)
+    @property
+    def marketer_current_update_to_keep(self):
+        return CashStore.objects.get(id=1).marketer_to_keep
+
+    @staticmethod
+    def marketer_update_to_keep(new_bal):
+        idd=CashStore.objects.last().id
+        CashStore.objects.filter(id=idd).update(marketer_to_keep=new_bal)
+        CashStore.objects.filter(id=1).update(marketer_to_keep=new_bal)
+
 
     @property
     def current_update_to_keep(self):
@@ -518,7 +543,49 @@ class OutCome(TimeStamp):
                 return self.real_account_result_algo()
             else:
                 return  
-  
+    def marketer_update_giveaway_tokeep_onlose(self): 
+        set_up = wheel_setting()
+        current_give_away_bal = float(self.marketer_current_update_give_away)
+        current_to_keep_bal = float(self.marketer_current_update_to_keep)
+        win_amount,ref_credit = self.update_values()
+        
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(self.stake.amount)
+        _away = (float(self.stake.amount)) - (_to_keep + ref_credit)  # re
+
+        away = current_give_away_bal + _away
+        to_keep = current_to_keep_bal + _to_keep        
+        self.marketer_update_give_away(away)
+        self.marketer_update_to_keep(to_keep)  
+        
+        if ref_credit > 0:
+           trans_type = "credit on LOSE"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)              
+        
+        
+    def marketer_update_giveaway_tokeep_onwin(self): 
+        set_up=wheel_setting()
+        win_amount, ref_credit = self.update_values()
+
+        all_amount=float(self.stake.amount) + float(win_amount)
+        current_give_away_bal = float(self.marketer_current_update_give_away)
+        current_to_keep_bal = float(self.marketer_current_update_to_keep) 
+
+        _to_keep = (float(set_up.per_to_keep) / 100) * float(win_amount)
+        _away = float(win_amount) + ref_credit +_to_keep # re
+
+        away = current_give_away_bal - _away
+        to_keep = current_to_keep_bal + _to_keep
+        
+        # new_bal = current_give_away_bal - win_amount - ref_credit        
+        self.marketer_update_give_away(away)
+        self.marketer_update_to_keep(to_keep)
+
+        self.update_user_real_account(self.stake.user.id, all_amount)         
+       
+        if ref_credit > 0:
+           trans_type = "credit on WIN"
+           self.update_reference_account(self.stake.user.id, ref_credit, trans_type)
+
     def update_giveaway_tokeep_onlose(self): 
         set_up = wheel_setting()
         current_give_away_bal = float(self.current_update_give_away)
@@ -564,10 +631,14 @@ class OutCome(TimeStamp):
 
 
     def spinnerx_account_update(self):
-        current_bal = float(self.current_update_give_away)
         amount=self.stake.amount
         if self.stake.bet_on_real_account:
-            pointer,winner_multiplier = self.winner_selector(current_bal,amount)
+            if self.stake.user.is_marketer:
+                current_bal = float(self.marketer_current_update_give_away)
+                pointer,winner_multiplier = self.winner_selector(current_bal,amount)
+            else:
+                current_bal = float(self.current_update_give_away)
+                pointer,winner_multiplier = self.winner_selector(current_bal,amount)
         else:
             set_up=wheel_setting()
             virtual_acc=randint(0,set_up.virtual_acc)           
@@ -578,11 +649,19 @@ class OutCome(TimeStamp):
         Stake.objects.filter(id=self.stake_id).update(win_multiplier=winner_multiplier)    
         win_amount=float(winner_multiplier)*float(amount)  
               
-        if self.stake.bet_on_real_account:       
-            if winner_multiplier==0:
-                self.update_giveaway_tokeep_onlose()
+        if self.stake.bet_on_real_account:
+
+            if self.stake.user.is_marketer:
+                if winner_multiplier==0:
+                    self.marketer_update_giveaway_tokeep_onlose()
+                else:
+                    self.marketer_update_giveaway_tokeep_onwin() 
             else:
-                self.update_giveaway_tokeep_onwin()
+                if winner_multiplier==0:
+                    self.update_giveaway_tokeep_onlose()
+                else:
+                    self.update_giveaway_tokeep_onwin() 
+
         else:
             self.update_user_trial_account(self.stake.user.id, win_amount)  
                       

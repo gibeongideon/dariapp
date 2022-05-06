@@ -17,7 +17,7 @@ class User(AbstractUser):
         max_length=150, blank=True, null=True
     )
     phone_number = models.CharField(max_length=150, blank=True, null=True)
-    #active = models.BooleanField(default=True, blank=True, null=True)
+    is_marketer = models.BooleanField(default=False, blank=True)
     update_count= models.IntegerField(default=10, blank=True, null=True)
 
     def __str__(self):
@@ -56,6 +56,8 @@ class User(AbstractUser):
                     )  # Auto generate code
                        # if self.phone_number is None:
                 self.phone_number = self.format_mobile_no(self.username)
+            if self.is_marketer:#remove this to manually edit
+                self.referer_code=self.code  #remove this to manually edit
                 
             super(User, self).save(*args, **kwargs)    
                

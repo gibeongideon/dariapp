@@ -21,14 +21,15 @@ class DuserAdmin(UserAdmin):
         "update_count",
         "is_active",
         "is_staff",
-        "is_superuser"
+        "is_superuser",
+        "is_marketer"
     )
 
     list_display_links = ("id","username")
     search_fields = ("phone_number","email","username","referer_code","code","email",)
     ordering = ("id",)
 
-    list_filter = ("username","phone_number","referer_code","last_login","update_count","is_active")
+    list_filter = ("username","phone_number","referer_code","last_login","update_count","is_active","is_marketer")
 
     list_editable = (
         "phone_number",
@@ -36,7 +37,8 @@ class DuserAdmin(UserAdmin):
         "referer_code",
         "email",
         "update_count",
-        "is_active"
+        "is_active",
+        "is_marketer"
     )
     readonly_fields = ("password",)
 
