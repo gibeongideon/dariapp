@@ -207,7 +207,10 @@ def stop_cash_trans(request):
 
 @login_required(login_url="/user/login")
 def process_payment(request):
-    amount = float(request.session['paypal_deposit_amount'])
+    try:
+        amount = float(request.session['paypal_deposit_amount'])
+    except:
+        amount = 5#
     #host =settings.SITE_DOMAIN  # 
     host = request.get_host()
     try:
