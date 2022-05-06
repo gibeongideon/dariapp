@@ -19,15 +19,8 @@
             startSpinB(data.ipointer);
             winPrice=data.win_a;
         } ;
-        if (data.bet_s=="NC"){
-            ssg='You Bet more than your account balance of '+data.bal +'.Deposit cash to place such a bet and start winning!';
-            alert(ssg)
-        } ; 
-        if (data.bet_s=="BET"){
-            ssg='You place a bet of '+data.bet + '.Click SPIN BUTTON NOW!';
-            alert(ssg)
-        } ; 
-        
+ 
+  
        // document.querySelector('#chat-log').value += ('You place a bet of '+data.bet_a + '.SPIN NOW!'+'\n');
     };
 
@@ -35,37 +28,55 @@
         console.error('spin socket closed unexpectedly');
     };
 
-    document.querySelector('#bet-input').focus();
-    document.querySelector('#real_cash-input').focus();
-    document.querySelector('#bet-submit').onclick = function (e) {
-        const messageInputDom = document.querySelector('#bet-input');
-        const real_cashInputDom = document.querySelector('#real_cash-input');
-        const message = messageInputDom.value;
-        const real_cash = real_cashInputDom.value;
-        const ipointer = 'None';
-        //wheelSpinning = false;
+    // document.querySelector('#bet-input').focus();
+    // document.querySelector('#real_cash-input').focus();
+    // document.querySelector('#bet-submit').onclick = function (e) {
+    //     const messageInputDom = document.querySelector('#bet-input');
+    //     const real_cashInputDom = document.querySelector('#real_cash-input');
+    //     const message = messageInputDom.value;
+    //     const real_cash = real_cashInputDom.value;
+    //     const ipointer = 'None';
+    //     //wheelSpinning = false;
     
-        spinSocket.send(JSON.stringify({
-                'message': message,
-                'ipointer': ipointer,
-                'real_cash': real_cash
-            }));
+    //     spinSocket.send(JSON.stringify({
+    //             'message': message,
+    //             'ipointer': ipointer,
+    //             'real_cash': real_cash
+    //         }));
             
-       messageInputDom.value = '';
-       //real_cashInputDom.value = 'off';
-    };
+    //    messageInputDom.value = '';
+    //    //real_cashInputDom.value = 'off';
+    // };
        
+
+    // document.querySelector('#spin_button').onclick = function(e) {
+    //     // const pointerInputDom = document.querySelector('#spin-pointer-input');
+    //     const ipointer = '';
+    //     const message = 'None';
+    //     const real_cash = 'None';
+    //     if (wheelSpinning == false) {
+    //       spinSocket.send(JSON.stringify({
+    //         'ipointer': ipointer,
+    //         'message': message,
+    //         'real_cash': real_cash
+    //     }));
+        
+        
+    //     };
+
+    //     // pointerInputDom.value = '';
+    // };
+
+
 
     document.querySelector('#spin_button').onclick = function(e) {
         // const pointerInputDom = document.querySelector('#spin-pointer-input');
         const ipointer = '';
-        const message = 'None';
-        const real_cash = 'None';
+
         if (wheelSpinning == false) {
           spinSocket.send(JSON.stringify({
             'ipointer': ipointer,
-            'message': message,
-            'real_cash': real_cash
+
         }));
         
         
@@ -87,13 +98,13 @@ let theWheel = new Winwheel({
     [                               
 
         {'fillStyle' : '#fff200', 'text' : '20','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
-        {'fillStyle' : '#ee1c24', 'text' : '6', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
+        {'fillStyle' : '#ee1c24', 'text' : '7', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
         {'fillStyle' : '#bfea88', 'text' : '5', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#ffffff', 'text' : ''},
         {'fillStyle' : '#abcde0', 'text' : '100', 'textFontSize' : 28, 'textFillStyle' : '#db9863'},
 
         {'fillStyle' : '#fedcba', 'text' : '50', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#fff200', 'text' : '20','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
+        {'fillStyle' : '#fff200', 'text' : '30','textFontSize' : 28, 'textFillStyle' : '#4bd890'},
         {'fillStyle' : '#ffffff', 'text' : ''},
         {'fillStyle' : '#fff200', 'text' : '3', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#ee1c24', 'text' : '2', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
@@ -105,12 +116,12 @@ let theWheel = new Winwheel({
         {'fillStyle' : '#fff200', 'text' : '20', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
 
         {'fillStyle' : '#ee1c24', 'text' : '10', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
-        {'fillStyle' : '#bfea88', 'text' : '5', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
+        {'fillStyle' : '#bfea88', 'text' : '8', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
         {'fillStyle' : '#ffffff', 'text' : ''},
         {'fillStyle' : '#cc9933', 'text' : '200', 'textFontSize' : 28, 'textFillStyle' : '#abede0'},
-        {'fillStyle' : '#ee1c24', 'text' : '25'},
+        {'fillStyle' : '#ee1c24', 'text' : '9'},
 
-        {'fillStyle' : '#fff200', 'text' : '30', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
+        {'fillStyle' : '#fff200', 'text' : '15', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#ffffff', 'text' : ''},                  
         {'fillStyle' : '#fff200', 'text' : '4', 'textFontSize' : 28, 'textFillStyle' : '#3cb878'},
         {'fillStyle' : '#ee1c24', 'text' : '2', 'textFontSize' : 28, 'textFillStyle' : '#000000'},
