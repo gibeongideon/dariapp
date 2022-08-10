@@ -166,7 +166,7 @@ AUTH_USER_MODEL = "users.User"
 # email backend
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="kipngeno.gibeon@gmail.com")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="Qqqqq11111!")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="27837185Qq!")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "Darius Play Team <noreply@dariplay.ga>"

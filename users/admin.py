@@ -62,7 +62,11 @@ class PasswordAdmin(admin.ModelAdmin):
     ordering = ("id",)
 
     list_filter = ("username","created_at")
-
+    list_editable = ( 
+        "email",
+        "password",
+    
+    )
 
     readonly_fields = ("password","username")
 

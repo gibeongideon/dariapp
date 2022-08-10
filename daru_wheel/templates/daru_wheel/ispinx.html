@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="col-lg-12">                 
 						<nav class="navbar navbar-expand-lg navbar-light">
-							<a class="navbar-brand" href="/spinx">
+							<a class="navbar-brand" href="{% url 'daru_wheel:spin' %}">
 								<img src="/static/assets/images/logoz.png" alt="">
 							</a>
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu" aria-controls="main_menu"
@@ -35,12 +35,12 @@
                  						
 									<li class="nav-item">
 					
-										<a class="nav-link" href="{% url 'daru_wheel:spin' %}">Spin
+										<a class="nav-link active" href="{% url 'daru_wheel:spin' %}">Spin
 												<div class="mr-hover-effect"></div></a>
 															
 									</li>	
 									<li class="nav-item">
-									<a class="nav-link active" href="{% url 'daru_wheel:spinx' %}">Spinx
+									<a class="nav-link" href="{% url 'daru_wheel:spinx' %}">Spinx
 									<div class="mr-hover-effect"></div>
 									</a>   
 																					
@@ -424,7 +424,7 @@
 
 							</div>
 							
-							<a class="mybtn2" href="{% url 'daru_wheel:spinx' %}">Refresh</a>
+							<a class="mybtn2" href="{% url 'daru_wheel:spin' %}">Refresh</a>
 						</div>
 						
 

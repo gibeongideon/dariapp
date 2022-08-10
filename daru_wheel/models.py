@@ -1,8 +1,7 @@
-from email import message
-import email
 from django.db import models
 from django.conf import settings
 from random import randint
+from  datetime import date
 try:
     from account.models import (
     current_account_trialbal_of,current_account_bal_of,
@@ -168,7 +167,11 @@ class Stake(TimeStamp):
 
     @property
     def active_spins(self):
-        return self.unspinned(self.user.id)
+        try:
+            return self.unspinned(self.user.id)
+        except  Exception as e:
+            return e
+        
         # pass
         
     @classmethod
@@ -226,6 +229,9 @@ class CashStore(TimeStamp):
     to_keep = models.DecimalField(
         ("to_keep"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
+    prev_to_keep = models.DecimalField(
+        ("prev_to_keep"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
+    )
     marketer_give_away = models.DecimalField(
         ("marketer_give_away"), max_digits=12, decimal_places=2, default=0,blank=True, null=True
     )
@@ -238,7 +244,8 @@ class CashStore(TimeStamp):
             return self.give_away+self.to_keep+self.marketer_give_away+self.marketer_to_keep
         except:
             return 0
-
+   
+            
 class OutCome(TimeStamp):
     stake = models.OneToOneField(
         Stake, on_delete=models.CASCADE, related_name="istakes", blank=True, null=True
@@ -336,8 +343,14 @@ class OutCome(TimeStamp):
             odd = float(stake_obj.marketselection.odds)
             stak = float(stake_obj.amount)
             set_up = wheel_setting()
-
-            if float(self.current_update_give_away) >= set_up.big_win_multiplier * (
+            
+            if self.stake.user.is_marketer:
+                current_update_give_away= self.marketer_current_update_give_away
+            else:
+                current_update_give_away= self.current_update_give_away
+                
+                
+            if float(current_update_give_away) >= set_up.big_win_multiplier * (
                 stak * odd
             ):
                 # print('quolify_4_B-WIN')
@@ -349,7 +362,8 @@ class OutCome(TimeStamp):
                     # print('..but_no_luck!')
                     pass
 
-            if float(self.current_update_give_away) >= (
+
+            if float(current_update_give_away) >= (
                 stak * odd
             ):  # *self.stake.marketselection.odds):  ##TO IMPLEMENT
                 # print('N-Win')
@@ -408,11 +422,15 @@ class OutCome(TimeStamp):
             return 28  # Loose_Turn
 
     def selection(self):
-        if self.stake.marketselection:
-            if self.stake is not None:
-                return self.stake.marketselection.id
-            else:
-                return None
+        try:
+            if self.stake.marketselection is not None:
+                if self.stake is not None:
+                    return self.stake.marketselection.id
+                else:
+                    return None
+        except Exception as e:
+            return e
+
                 
     @property
     def segment(self):
@@ -520,8 +538,33 @@ class OutCome(TimeStamp):
             new_bal = current_bal - sub_amount
             self.update_give_away(new_bal)
             
-            self.update_user_real_account(user_id, all_amount)                   
+            self.update_user_real_account(user_id, all_amount)   
+                            
+    def marketer_run_update_winner_losser_on_real_account(self):       
+        this_user_stak_obj=self.stake
+        user_id = this_user_stak_obj.user.id        
+        win_amount, ref_credit = self.update_values()
+        
+        if self.result == 1:  ###
+            trans_type = "Ispin Win"
+            self.marketer_update_giveaway_tokeep_onwin()
 
+        elif self.result == 2:
+            # UUB
+            self.marketer_update_giveaway_tokeep_onlose()         
+
+        if self.result == 5:  ###
+            set_up = wheel_setting()
+            trans_type = "Big Win"
+            all_amount = float(win_amount * set_up.big_win_multiplier) + float(this_user_stak_obj.amount)
+            
+            # UUB
+            sub_amount = all_amount - float(this_user_stak_obj.amount)
+            current_bal = float(self.marketer_current_update_give_away)
+            new_bal = current_bal - sub_amount
+            self.marketer_update_give_away(new_bal)
+            
+            self.update_user_real_account(user_id, all_amount) 
              
     def run_update_winner_losser_on_trial_account(self ):
         this_user_stak_obj=self.stake
@@ -661,10 +704,18 @@ class OutCome(TimeStamp):
                     self.update_giveaway_tokeep_onlose()
                 else:
                     self.update_giveaway_tokeep_onwin() 
-
         else:
             self.update_user_trial_account(self.stake.user.id, win_amount)  
-                      
+            
+    def create_stats(self):
+        userstat=CashStore.objects.last()
+        today=str(date.today())
+        last_stat_date=str(userstat.created_at).split(" ")[0]
+        #print(today,last_stat_date)
+        #print("DATE")
+        if today!=last_stat_date:
+           CashStore.objects.create()  
+                           
     def run_account_update(self):
         if  self.stake.spinx:
             self.spinnerx_account_update()        
@@ -672,7 +723,10 @@ class OutCome(TimeStamp):
             stake_obj = self.stake
             if stake_obj.bet_on_real_account:
                 self.pointer = self.segment
-                self.run_update_winner_losser_on_real_account()
+                if self.stake.user.is_marketer:
+                    self.marketer_run_update_winner_losser_on_real_account()
+                else:
+                    self.run_update_winner_losser_on_real_account()
             else:
                 self.pointer = self.segment
                 self.run_update_winner_losser_on_trial_account() 
@@ -685,6 +739,7 @@ class OutCome(TimeStamp):
             try:
                 if self.stake.marketselection:
                     self.result=self.determine_result_algo
+                self.create_stats()    
                 self.run_account_update()
                 self.closed = True
                 super().save(*args, **kwargs)

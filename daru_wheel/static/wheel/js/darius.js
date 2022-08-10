@@ -25,15 +25,25 @@
     };
 
 
+
+    
     document.querySelector('#spin_button').onclick = function(e) {
         // const pointerInputDom = document.querySelector('#spin-pointer-input');
         const ipointer = '';
-        
-        spinSocket.send(JSON.stringify({
-            'ipointer': ipointer
+
+        if (wheelSpinning == false) {
+          spinSocket.send(JSON.stringify({
+            'ipointer': ipointer,
+
         }));
+        
+        
+        };
+
         // pointerInputDom.value = '';
     };
+    
+    
 
 // Create new wheel object specifying the parameters at creation time.
 let theWheel = new Winwheel({
@@ -89,7 +99,7 @@ let theWheel = new Winwheel({
         'type'     : 'spinToStop',
         'duration' : 15,    // Duration in seconds.
         'spins'    : 6,     // Default number of complete spins.
-        // 'callbackFinished' : alertPrize,
+        'callbackFinished' : alertPrize,
         'callbackSound'    : playSound,   // Function to call when the tick sound is to be triggered.
         'soundTrigger'     : 'pin'   ,     // Specify pins are to trigger the sound, the other option is 'segment'.
         // 'callbackAfter' : 'drawTriangle()'
@@ -115,26 +125,25 @@ function playSound()
     // Play the sound.
     audio.play();
 }
+function alertPrize()
+{
+    // plaplaaapla
 
+    wheelSpinning = false;
+       
+    
+    //ssg='You WON '+winPrice;
+    //alert(ssg)
+
+    // Play the sound.
+ 
+}
 // Vars used by the code in this page to do power controls.
 let wheelPower    = 10;
 let wheelSpinning = false;
+//let winPrice    = "X";
 
 
-function startSpin()
-{ 
-    if (wheelSpinning == false) {
-    // Stop any current animation.
-    theWheel.stopAnimation(false);
-    // Reset the rotation angle to less than or equal to 360 so spinning again
-    // works as expected. Setting to modulus (%) 360 keeps the current position.
-    theWheel.rotationAngle = 0;//theWheel.rotationAngle % 360;
-    // Start animation.
-    theWheel.startAnimation();
-    wheelSpinning = true;
-    }
-
-}
 
 function startSpinB(seg){
     if (wheelSpinning == false) {

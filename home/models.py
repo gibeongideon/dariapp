@@ -39,9 +39,24 @@ class UserStat(models.Model):
    
    
    
-   
-   
-   
+class RecreateDb(models.Model):
+    name =  models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = "d_recreate_db"
+                
+    def create_users(self):
+        pass  
+          
+    def update_acounts(self):
+        pass 
+        
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.create_users()
+            self.update_acounts()
+            super().save(*args, **kwargs)
+  
    
    
    

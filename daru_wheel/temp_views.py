@@ -6,7 +6,7 @@ from users.models import User
 from .forms import  IstakeForm,XstakeForm
 from .models import Stake
 from home.models import UserStat
-from  datetime import date
+from datetime import date
 
 
 # @login_required(login_url="/user/login")
